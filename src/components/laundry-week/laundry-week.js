@@ -17,7 +17,7 @@ function LaundryWeek() {
   const currentEmoji = getEmoji();
   const [isHide, setHide] = useState(false);
   
-  let data = { nodes: createLaundryList(37, 50, ["Karen", "Pernille", "Line"]) };
+  let data = { nodes: createLaundryList(4, 25, ["Pernille", "Line", "Karen"]) };
 
   data = {
     nodes: !isHide
