@@ -25,6 +25,7 @@ function App() {
     try {
       const trips = await Api.fetchNhhBusRides();
       const cityTrips = await Api.fetchCenterBusRides();
+
       const qoute = await Api.fetchKanyeQuote();
       const elecPries = await Api.fetchElectricityPrices();
       setTripData(trips);
@@ -95,7 +96,7 @@ function App() {
           <div className="col-md-7 col-12">
             <div className="mb-2">
               {tripData && <BusCards 
-                title={"Skutevikstoget - NHH"} 
+                title={"National Theateret - Solli"} 
                 travelData={tripData}  
                 configCard={{
                   numRows: 5, 
@@ -109,7 +110,7 @@ function App() {
             </div>
             <div>
               {tripData && <BusCards 
-                title={"Øvre Sandviksvei - Sentrum"} 
+                title={"Frydenlund - Jhon Collets vei"} 
                 travelData={cityCenterData} 
                 configCard={{numRows: 3, minFilter: 1}} 
                 configColors={{

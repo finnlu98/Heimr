@@ -56,11 +56,11 @@ const fetchData = async (fromPlace, toPlace) => {
 
 
 const fetchNhhBusRides = async () => {
-    return fetchData("NSR:StopPlace:30924", "NSR:StopPlace:30927")
+    return fetchData("NSR:StopPlace:58404", "NSR:StopPlace:62019")
 }
 
 const fetchCenterBusRides = async () => {
-  return fetchData("NSR:StopPlace:30960", "NSR:StopPlace:59838")
+  return fetchData("NSR:StopPlace:6258", "NSR:StopPlace:6323")
 }
 
 const fetchKanyeQuote = async () => {

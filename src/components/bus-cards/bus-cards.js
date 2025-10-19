@@ -36,12 +36,14 @@ function BusCards({ title, travelData, configCard, configColors, fetchData }) {
 
 
   function filterBusRides(tripPatterns) {
+    var modes = ["bus", "tram"]
+
     return tripPatterns
       .map((tripPattern) => ({
         ...tripPattern,
         legs: tripPattern.legs.filter(
           (leg) =>
-            leg.mode === "bus" &&
+            modes.includes(leg.mode) &&
             calculateMinutesUntil(leg.expectedStartTime) >= minFilter
         ),
       }))

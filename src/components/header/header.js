@@ -18,7 +18,7 @@ function Header({ kanyeQoute }) {
       <div className="row header-row">
         <div className="header-column col-8">
           <header className="header-text">
-            <h1><strong>Øvre Sandviksveien 20</strong></h1>
+            <h1><strong>Stensberggata 21</strong></h1>
             <p><strong>{kanyeQoute}</strong></p>
           </header>
         </div>
