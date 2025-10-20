@@ -58,6 +58,14 @@ function BusCard({
     return name;
   }
 
+  function formatShowTime(minutes) {
+    if(minutes < 10) {
+      return minutes + " min"
+    } else {
+      return moment(startTime).format("HH:mm")
+    }
+  }
+
   return (
     <div key={tripIndex} className="bus-card card text-white mb-2 container">
       <div className="card-body">
@@ -69,32 +77,16 @@ function BusCard({
               </div>
               <div className="public-header">
                 <h5 className="card-title">
-                  {nameCleaned} {publicCode} - {moment(startTime).format("HH:mm")}
+                  {nameCleaned} {publicCode}
                 </h5>
               </div>
             </div>
-          { mainCard ? (
-            <div></div>
-          ) : (
-            <div>
-              <p className="list-group-item">
-                Forventet ankomst: {moment(endTime).format("HH:mm")}
-              </p>
-            </div>
-          )}
           </div>
 
-          { mainCard ? (
             <div className={`col-md-3 d-flex flex-column align-items-center minutes ${badTime}`}>
-              <h5>{minutes} min</h5>
+              <h5>{formatShowTime(minutes)}</h5>
             </div>
 
-          ) : (
-            <div className={`col-md-3 d-flex flex-column justify-content-center align-items-center minutes ${badTime}`}>
-              <h1>{minutes}</h1>
-              <p>min</p>
-            </div>
-          )}
         </div>
       </div>
     </div>

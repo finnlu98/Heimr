@@ -96,27 +96,27 @@ function App() {
           <div className="col-md-7 col-12">
             <div className="mb-2">
               {tripData && <BusCards 
-                title={"National Theateret - Solli"} 
+                title={"St. Hanshaugen - Solli"} 
                 travelData={tripData}  
                 configCard={{
-                  numRows: 5, 
+                  numRows: 4, 
                   minFilter: 5
                 }} 
                 configColors={{
-                  general: 13, 
-                  green: 9, 
-                  yellow: 6}} 
+                  general: 8, 
+                  green: 6, 
+                  yellow: 4}} 
                 fetchData={Api.fetchNhhBusRides} />}
             </div>
             <div>
               {tripData && <BusCards 
                 title={"Frydenlund - Jhon Collets vei"} 
                 travelData={cityCenterData} 
-                configCard={{numRows: 3, minFilter: 1}} 
+                configCard={{numRows: 4, minFilter: 1}} 
                 configColors={{
-                  general: 7, 
-                  green: 5, 
-                  yellow: 2}} 
+                  general: 8, 
+                  green: 6, 
+                  yellow: 4}} 
                 fetchData={Api.fetchCenterBusRides} />}
             </div>            
           </div>
