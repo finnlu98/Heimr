@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
+import HomeAvatar from "../home-avatar/home-avatar";
 
 function Header({ kanyeQoute }) {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
@@ -24,6 +25,12 @@ function Header({ kanyeQoute }) {
         </div>
         <div className="header-column col header-text header-text-clock">
           <h1>{minutes}</h1>
+          <div className="avatars">
+            <div className="avatar"><HomeAvatar name={"Finn"}></HomeAvatar></div> 
+            <div className="avatar"><HomeAvatar name={"Pernille"}></HomeAvatar></div> 
+            <div className="avatar"><HomeAvatar name={"Line"}></HomeAvatar></div> 
+          </div>
+          
         </div>
       </div>
     </div>

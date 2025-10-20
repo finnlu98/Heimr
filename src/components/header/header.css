@@ -41,6 +41,14 @@
   text-align: right;
 }
 
+.avatars {
+  display: flex;
+  justify-content: flex-end; /* aligns items to the left */
+}
+
+.avatar {
+  margin-left: 10px;
+}
 @media only screen and (max-width: 750px) {
   .header-text,
   .header-text-clock {
