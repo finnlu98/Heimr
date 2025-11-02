@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from "react";
-import finnImage from './img/finn.jpg';
-import pernilleImage from './img/pernille.jpg';
-import lineImage from './img/line.jpg';
+import React, { useState, useEffect } from 'react';
 import "./home-avatar.css"
 
-function HomeAvatar({name}) {
-    const [avatarImg, setAvatarImg] = useState(null)
+interface HomeAvatarProps  {
+    name : string
+} 
+
+const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
+    const [avatarImg, setAvatarImg] = useState("")
     
     useEffect(() => {
         setAvatarImg(findImg(name)) 
-    })
+    }, [name])
 
-    function findImg(name) {
+    function findImg(name : string) : string {
         console.log(name)
         if(name === "Finn") {
-            return finnImage
+            return "./img/finn.jpg"
         } else if (name === "Pernille") {
-            return pernilleImage
+            return "./img/pernille.jpg"
         } else if (name === "Line") {
-            return lineImage
+            return "./img/line.jpg"
         } 
+        return ""
     }
-
 
     return (
         <div className="circle">

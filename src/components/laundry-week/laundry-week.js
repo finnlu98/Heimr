@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import moment from "moment";
-
-import laundryData from "./laundry-week-data.json";
 import "./laundry-week.css";
 import logo from "./img/rodt_logo.png";
 
@@ -71,7 +69,7 @@ function LaundryWeek() {
       </div>
 
       <div className="rodt-slogan">
-        <img src={logo} width={40} height={40}></img>
+        <img src={logo} width={40} height={40} alt="Fordi felleskap fungerer"/>
         <p>Fordi felleskap fungerer</p>
       </div>
     </div>
@@ -101,7 +99,7 @@ function LaundryWeek() {
       </div>
 
       <div className="rodt-slogan">
-        <img src={logo} width={40} height={40}></img>
+        <img src={logo} width={40} height={40} alt="Fordi felleskap fungerer"></img>
         <p>Fordi felleskap fungerer</p>
       </div>
     </div>
