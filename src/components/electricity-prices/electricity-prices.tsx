@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './electricity-prices.css'
-import moment, { Moment } from "moment";
+import moment from "moment";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,22 +22,7 @@ ChartJS.register(
   );
 
 interface ElectrictyPricesProps {
-  electrictyPrices :ElecPrice[]
-}
-
-interface ElecPrice {
-  time_start: string,
-  NOK_per_kWh: number
-}
-
-interface ComponentData {
-  labels: string[]
-  datasets: Datasets[]
-}
-
-interface Datasets {
-  data: Number[]
-  backgroundColor: string
+  electrictyPrices: ElectricityPrice[]
 }
 
 const ElectrictyPrices: React.FC<ElectrictyPricesProps> = ({ electrictyPrices }) => {

@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 
 
 const fetchData = async (fromPlace, toPlace) => {
@@ -63,44 +62,9 @@ const fetchCenterBusRides = async () => {
   return fetchData("NSR:StopPlace:6258", "NSR:StopPlace:6323")
 }
 
-const fetchKanyeQuote = async () => {
-  try {
-    const response = await axios.get(
-      "https://api.kanye.rest/"
-    );
-
-    return response.data; 
-  } catch (error) {
-    console.error("Can't get Kanye quote");
-    throw error;
-  }
-};
-
-
-const fetchElectricityPrices = async () => {
-  try {
-    const year = moment().year();
-    const month =  moment().format('MM');
-    const day = moment().format('DD');
-
-    const response = await axios.get(
-      `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_NO5.json`
-    );
-
-    return response.data; 
-  } catch (error) {
-    console.error("Can't get electrictyprices quote");
-    throw error;
-  }
-}
-
-
-
 
 
 export default {
   fetchNhhBusRides,
-  fetchCenterBusRides,
-  fetchKanyeQuote,
-  fetchElectricityPrices,
+  fetchCenterBusRides
 };

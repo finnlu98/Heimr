@@ -9,14 +9,17 @@ import Header from "./components/header/header";
 import Dailyweather from "./components/weather-widget/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
-import FetchBustimes from "./api/bustimes/bus-time-fetcher";
+import FetchBustimes from "./api/fetchers/bus-time-fetcher";
+import FetchKanyeQuote from "./api/fetchers/kanye-fetcher";
+import FetchElectricityPrices from "./api/fetchers/electricity-price-fetcher";
+import TravelResponse from "./model/Deziarilize/TravelResponse";
 
 function App() {
-  const [tripData, setTripData] = useState(null);
-  const [cityCenterData, setCityCenterData] = useState(null)
+  const [tripData, setTripData] = useState<TravelResponse>();
+  const [cityCenterData, setCityCenterData] = useState<TravelResponse>()
 
-  const [kanyeQoute, setKanyeQoute] = useState(null);
-  const [electrictyPrices, setElectrictyPrices] = useState(null);
+  const [kanyeQoute, setKanyeQoute] = useState<string>();
+  const [electrictyPrices, setElectrictyPrices] = useState<ElectricityPrice[]>();
   const [loading, setLoading] = useState(true);
 
   const reloadHour = 5;
@@ -25,13 +28,15 @@ function App() {
   const fetchandSetData = async () => {
     try {
       const trips = await FetchBustimes("NSR:StopPlace:6274", "NSR:StopPlace:62019");
-      const cityTrips = await Api.fetchCenterBusRides();
+      const cityTrips = await FetchBustimes("NSR:StopPlace:6258", "NSR:StopPlace:6323")
 
-      const qoute = await Api.fetchKanyeQuote();
-      const elecPries = await Api.fetchElectricityPrices();
       setTripData(trips);
       setCityCenterData(cityTrips);
-      setKanyeQoute(qoute.quote);
+
+      const qoute = await FetchKanyeQuote();
+      const elecPries = await FetchElectricityPrices();
+      
+      setKanyeQoute(qoute);
       setElectrictyPrices(elecPries);
       setLoading(false);
     } catch (error) {
@@ -55,7 +60,7 @@ function App() {
 
     const reloadAtTargetHour = () => {
       if (shouldReload()) {
-        window.location.reload(true);
+        window.location.reload();
       }
     };
 
@@ -90,7 +95,7 @@ function App() {
     <div className="app">
       <div className="dash-container container mt-2 mb-4">
         <div className="row">
-          <Header kanyeQoute={kanyeQoute} />
+          {kanyeQoute && <Header kanyeQoute={kanyeQoute} />}
         </div>
 
         <div className="row dash-rows">
@@ -110,7 +115,7 @@ function App() {
                 fetchData={Api.fetchNhhBusRides} />}
             </div>
             <div>
-              {tripData && <BusCards 
+              {cityCenterData && <BusCards 
                 title={"Frydenlund - Jon Collets vei"} 
                 travelData={cityCenterData} 
                 configCard={{numRows: 4, minFilter: 1}} 
@@ -127,7 +132,7 @@ function App() {
               <Dailyweather />
             </div>
             <div className="row mb-2">
-              <ElectrictyPrices electrictyPrices={electrictyPrices} />
+              {electrictyPrices && <ElectrictyPrices electrictyPrices={electrictyPrices} />}
             </div>
             <div className="row mb-2">
               <LaundryWeek />
