@@ -3,23 +3,14 @@ import moment from "moment";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import BusCards from "./components/bus-cards/bus-cards";
-import Api from "./api/Api";
 import { TailSpin } from "react-loader-spinner";
 import Header from "./components/header/header";
 import Dailyweather from "./components/weather-widget/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
-import FetchBustimes from "./api/fetchers/bus-time-fetcher";
-import FetchKanyeQuote from "./api/fetchers/kanye-fetcher";
-import FetchElectricityPrices from "./api/fetchers/electricity-price-fetcher";
-import TravelResponse from "./model/Deziarilize/TravelResponse";
 
 function App() {
-  const [tripData, setTripData] = useState<TravelResponse>();
-  const [cityCenterData, setCityCenterData] = useState<TravelResponse>()
 
-  const [kanyeQoute, setKanyeQoute] = useState<string>();
-  const [electrictyPrices, setElectrictyPrices] = useState<ElectricityPrice[]>();
   const [loading, setLoading] = useState(true);
 
   const reloadHour = 5;
@@ -27,17 +18,7 @@ function App() {
 
   const fetchandSetData = async () => {
     try {
-      const trips = await FetchBustimes("NSR:StopPlace:6274", "NSR:StopPlace:62019");
-      const cityTrips = await FetchBustimes("NSR:StopPlace:6258", "NSR:StopPlace:6323")
-
-      setTripData(trips);
-      setCityCenterData(cityTrips);
-
-      const qoute = await FetchKanyeQuote();
-      const elecPries = await FetchElectricityPrices();
-      
-      setKanyeQoute(qoute);
-      setElectrictyPrices(elecPries);
+      // Logikk for å si ifra at vi er ferdig lastet :D
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -95,35 +76,35 @@ function App() {
     <div className="app">
       <div className="dash-container container mt-2 mb-4">
         <div className="row">
-          {kanyeQoute && <Header kanyeQoute={kanyeQoute} />}
+          <Header />
         </div>
 
         <div className="row dash-rows">
           <div className="col-md-7 col-12">
             <div className="mb-2">
-              {tripData && <BusCards 
+              {<BusCards 
                 title={"St. Hanshaugen - Solli"} 
-                travelData={tripData}  
+                startPlace="NSR:StopPlace:6274"
+                stopPlace="NSR:StopPlace:62019"
                 configCard={{
                   numRows: 4, 
                   minFilter: 5
                 }} 
-                configColors={{
+                configColor={{
                   general: 8, 
                   green: 6, 
-                  yellow: 4}} 
-                fetchData={Api.fetchNhhBusRides} />}
+                  yellow: 4}} />}
             </div>
             <div>
-              {cityCenterData && <BusCards 
+              {<BusCards 
                 title={"Frydenlund - Jon Collets vei"} 
-                travelData={cityCenterData} 
+                startPlace="NSR:StopPlace:6258"
+                stopPlace="NSR:StopPlace:6323"
                 configCard={{numRows: 4, minFilter: 1}} 
-                configColors={{
+                configColor={{
                   general: 8, 
                   green: 6, 
-                  yellow: 4}} 
-                fetchData={Api.fetchCenterBusRides} />}
+                  yellow: 4}}/>}
             </div>            
           </div>
           
@@ -132,7 +113,7 @@ function App() {
               <Dailyweather />
             </div>
             <div className="row mb-2">
-              {electrictyPrices && <ElectrictyPrices electrictyPrices={electrictyPrices} />}
+              <ElectrictyPrices/>
             </div>
             <div className="row mb-2">
               <LaundryWeek />

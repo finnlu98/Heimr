@@ -1,8 +1,6 @@
 import axios from "axios";
 import TravelResponse from "../../model/Deziarilize/TravelResponse";
 
-// const BusTimeFetcher = () => {
-
     const FetchBustimes = async (fromPlace: string, toPlace: string) => {
     
         try {
@@ -41,7 +39,6 @@ import TravelResponse from "../../model/Deziarilize/TravelResponse";
               }
             `;
             
-            // Should be configurable
             const endpoint = "https://api.entur.io/journey-planner/v3/graphql";
         
             const response = await axios.post<TravelResponse>(
@@ -56,6 +53,5 @@ import TravelResponse from "../../model/Deziarilize/TravelResponse";
             throw error;
           }
     }
-// }
 
 export default FetchBustimes

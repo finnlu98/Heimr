@@ -1,33 +1,36 @@
-import moment, { min } from "moment";
+import moment from "moment";
 import BusCard from "./bus-card";
 import React, { useState, useEffect } from "react";
 import "./bus-cards.css";
 import TravelResponse from "../../model/Deziarilize/TravelResponse";
-import { Mode } from "../../model/data/Mode";
-
+import { Mode } from "../../model/data/Enum/Mode";
+import { ConfigColor } from "./ConfigColor";
+import FetchBustimes from "../../api/fetchers/bus-time-fetcher";
 
 interface BusCardsProps {
   title: string,
-  travelData: TravelResponse,
+  startPlace: string
+  stopPlace: string
   configCard: {
     numRows: number,
     minFilter: number
   },
-  configColors: {
-    general: number
-    green: number
-    yellow: number
-  }
-  fetchData: () => Promise<TravelResponse>
+  configColor: ConfigColor
 }
 
-const BusCards: React.FC<BusCardsProps> = ({ title, travelData, configCard, configColors, fetchData }) => {
+const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, configCard, configColor }) => {
   
   const { numRows, minFilter } = configCard;
   
   const [tripPatterns, settripPatterns] = useState<TravelResponse>();
-
-  useEffect(() => {settripPatterns(filterBusRides(travelData))}, [])
+ 
+  useEffect(() => {
+    const fetchAndFilter = async () => {
+    settripPatterns(filterBusRides(await FetchBustimes(startPlace, stopPlace)));
+    
+  };
+    fetchAndFilter();
+  }, [])
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -75,7 +78,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, travelData, configCard, conf
   
   async function updateTravelData() {
     try {
-      const updatedTravelData = await fetchData();
+      const updatedTravelData = await FetchBustimes(startPlace, stopPlace);
       settripPatterns(filterBusRides(updatedTravelData));
     } catch (error) {
       console.error("Can't update data:", error);
@@ -102,7 +105,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, travelData, configCard, conf
                   tripPattern.legs[0].expectedStartTime
                 )}
                 calculateMinutesUntil={calculateMinutesUntil}
-                configColors={configColors}
+                configColor={configColor}
               />
             );
           })}

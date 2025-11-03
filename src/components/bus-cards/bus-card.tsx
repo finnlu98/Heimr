@@ -2,6 +2,7 @@ import moment, { Moment } from "moment";
 import React, { useState, useEffect } from "react";
 import "./bus-card.css";
 import { FaBus } from "react-icons/fa";
+import { ConfigColor } from "./ConfigColor";
 
 interface BusCardProps {
   tripIndex: number
@@ -10,11 +11,7 @@ interface BusCardProps {
   startTime: string
   minutesUntil: number
   calculateMinutesUntil: (startTime: string) => number
-  configColors: {
-    general: number
-    green: number
-    yellow: number
-  }
+  configColor: ConfigColor
 }
 
 
@@ -25,7 +22,7 @@ const BusCard: React.FC<BusCardProps> = ({
   startTime,
   minutesUntil,
   calculateMinutesUntil,
-  configColors,
+  configColor,
 }) => {
   const [minutes, setMinutes] = useState<number>(minutesUntil);
   const [badTime, setBadTime] = useState(evalBadTime(minutes));
@@ -46,15 +43,15 @@ const BusCard: React.FC<BusCardProps> = ({
 
 
   function evalBadTime(time: number) {
-    if (time > configColors.general) {
+    if (time > configColor.general) {
       return "general-time";
     }
 
-    if (time > configColors.green) {
+    if (time > configColor.green) {
       return "good-time";
     }
 
-    if (time > configColors.yellow) {
+    if (time > configColor.yellow) {
       return "medium-time";
     }
     return "bad-time";

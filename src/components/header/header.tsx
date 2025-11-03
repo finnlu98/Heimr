@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../home-avatar/home-avatar";
+import FetchKanyeQuote from "../../api/fetchers/kanye-fetcher";
 
-interface HeaderProps {
-  kanyeQoute : string
-}
 
-const Header : React.FC<HeaderProps> = ({ kanyeQoute }) => {
+
+const Header : React.FC = () => {
+  const [kanyeQoute, setKanyeQoute] = useState<string>()
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
+
+  useEffect(() => {
+    const setAndFetchQoute = async () => setKanyeQoute(await FetchKanyeQuote())
+    setAndFetchQoute()
+  }, [])
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {

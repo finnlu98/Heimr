@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import FetchElectricityPrices from "../../api/fetchers/electricity-price-fetcher";
 
 ChartJS.register(
     CategoryScale,
@@ -21,12 +22,9 @@ ChartJS.register(
     Legend
   );
 
-interface ElectrictyPricesProps {
-  electrictyPrices: ElectricityPrice[]
-}
 
-const ElectrictyPrices: React.FC<ElectrictyPricesProps> = ({ electrictyPrices }) => {
-  const [elecPrices, setElecPrices] = useState(electrictyPrices);
+const ElectrictyPrices: React.FC = () => {
+  const [elecPrices, setElecPrices] = useState<ElectricityPrice[]>();
   const [dynamicData, setData] = useState<ComponentData>();
 
   const todaysDate = moment().format('DD/MM/YY')
@@ -62,6 +60,11 @@ const ElectrictyPrices: React.FC<ElectrictyPricesProps> = ({ electrictyPrices })
         },
       }
   };
+
+  useEffect(() => {
+    const setAndFetchElecPrices = async () => setElecPrices(await FetchElectricityPrices())
+    setAndFetchElecPrices()
+  }, [])
 
   useEffect(() => {
     if (elecPrices && elecPrices.length > 0) {
