@@ -3,12 +3,13 @@ import moment from "moment";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import BusCards from "./components/bus-cards/bus-cards";
-import Api from "./Api";
+import Api from "./api/Api";
 import { TailSpin } from "react-loader-spinner";
 import Header from "./components/header/header";
 import Dailyweather from "./components/weather-widget/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
+import FetchBustimes from "./api/bustimes/bus-time-fetcher";
 
 function App() {
   const [tripData, setTripData] = useState(null);
@@ -23,7 +24,7 @@ function App() {
 
   const fetchandSetData = async () => {
     try {
-      const trips = await Api.fetchNhhBusRides();
+      const trips = await FetchBustimes("NSR:StopPlace:6274", "NSR:StopPlace:62019");
       const cityTrips = await Api.fetchCenterBusRides();
 
       const qoute = await Api.fetchKanyeQuote();
@@ -110,7 +111,7 @@ function App() {
             </div>
             <div>
               {tripData && <BusCards 
-                title={"Frydenlund - Jhon Collets vei"} 
+                title={"Frydenlund - Jon Collets vei"} 
                 travelData={cityCenterData} 
                 configCard={{numRows: 4, minFilter: 1}} 
                 configColors={{
@@ -130,7 +131,6 @@ function App() {
             </div>
             <div className="row mb-2">
               <LaundryWeek />
-
             </div>
           </div>
         </div>

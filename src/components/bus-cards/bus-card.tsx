@@ -1,21 +1,33 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 import React, { useState, useEffect } from "react";
 import "./bus-card.css";
 import { FaBus } from "react-icons/fa";
 
-function BusCard({
+interface BusCardProps {
+  tripIndex: number
+  name: string
+  publicCode: string
+  startTime: string
+  minutesUntil: number
+  calculateMinutesUntil: (startTime: string) => number
+  configColors: {
+    general: number
+    green: number
+    yellow: number
+  }
+}
+
+
+const BusCard: React.FC<BusCardProps> = ({
   tripIndex,
   name,
   publicCode,
   startTime,
-  endTime,
   minutesUntil,
   calculateMinutesUntil,
   configColors,
-  mainCard
-
-}) {
-  const [minutes, setMinutes] = useState(minutesUntil);
+}) => {
+  const [minutes, setMinutes] = useState<number>(minutesUntil);
   const [badTime, setBadTime] = useState(evalBadTime(minutes));
   const [nameCleaned, setName] = useState(name)
 
@@ -33,7 +45,7 @@ function BusCard({
   })
 
 
-  function evalBadTime(time) {
+  function evalBadTime(time: number) {
     if (time > configColors.general) {
       return "general-time";
     }
@@ -48,7 +60,7 @@ function BusCard({
     return "bad-time";
   }
 
-  function cleanName(name) {
+  function cleanName(name : string) {
     if (name.includes('/')) {
       const parts = name.split('/');
       
@@ -58,7 +70,7 @@ function BusCard({
     return name;
   }
 
-  function formatShowTime(minutes) {
+  function formatShowTime(minutes: number) {
     if(minutes < 10) {
       return minutes + " min"
     } else {
@@ -82,11 +94,9 @@ function BusCard({
               </div>
             </div>
           </div>
-
             <div className={`col-md-3 d-flex flex-column align-items-center minutes ${badTime}`}>
               <h5>{formatShowTime(minutes)}</h5>
             </div>
-
         </div>
       </div>
     </div>
@@ -95,13 +105,3 @@ function BusCard({
 }
 
 export default BusCard;
-
-<div>
-{ false ? (
-  <div> True div </div>
-) : (
-  <div> False div</div>
-)
-
-}
-</div>

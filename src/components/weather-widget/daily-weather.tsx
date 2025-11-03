@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 
 import './daily-weather.css'
 
-function Dailyweather() {
+const Dailyweather : React.FC = () => {
 
   const [widget, setWidget] = useState("https://www.yr.no/nb/innhold/1-72837/card.html")
 

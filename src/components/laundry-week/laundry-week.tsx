@@ -1,7 +1,6 @@
 import { useState } from "react";
 import moment from "moment";
 import "./laundry-week.css";
-import logo from "./img/rodt_logo.png";
 
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
@@ -9,7 +8,7 @@ import { SlArrowUp } from "react-icons/sl";
 
 const washingEmojis = ["✨", "💧", "🛁", "🧴", "🧼", "🧽", "🚿", "🧹", "🧤", "🫧"];
 
-function LaundryWeek() {
+const LaundryWeek : React.FC = () => {
   
   const currentWeek = moment().isoWeekday(1).isoWeek();
   const currentEmoji = getEmoji();
@@ -24,7 +23,7 @@ function LaundryWeek() {
   };
 
 
-  function createLaundryList(startWeek, endWeek, names) {
+  function createLaundryList(startWeek : number, endWeek : number, names : string[]) {
     const records = [];
     const totalNames = names.length;
     
@@ -69,7 +68,7 @@ function LaundryWeek() {
       </div>
 
       <div className="rodt-slogan">
-        <img src={logo} width={40} height={40} alt="Fordi felleskap fungerer"/>
+        <img src={"./img/laundry-week/rodt_logo.png"} width={40} height={40} alt="Fordi felleskap fungerer"/>
         <p>Fordi felleskap fungerer</p>
       </div>
     </div>
@@ -99,7 +98,7 @@ function LaundryWeek() {
       </div>
 
       <div className="rodt-slogan">
-        <img src={logo} width={40} height={40} alt="Fordi felleskap fungerer"></img>
+        <img src={"./img/laundry-week/rodt_logo.png"} width={40} height={40} alt="Fordi felleskap fungerer"></img>
         <p>Fordi felleskap fungerer</p>
       </div>
     </div>

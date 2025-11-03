@@ -1,21 +1,33 @@
-import moment from "moment";
+import moment, { min } from "moment";
 import BusCard from "./bus-card";
 import React, { useState, useEffect } from "react";
-import Api from "../../Api";
 import "./bus-cards.css";
+import TravelResponse from "../../model/Deziarilize/TravelResponse";
+import { Mode } from "../../model/data/Mode";
 
 
+interface BusCardsProps {
+  title: string,
+  travelData: TravelResponse,
+  configCard: {
+    numRows: number,
+    minFilter: number
+  },
+  configColors: {
+    general: number
+    green: number
+    yellow: number
+  }
+  fetchData: () => Promise<TravelResponse>
+}
 
-
-
-function BusCards({ title, travelData, configCard, configColors, fetchData }) {
+const BusCards: React.FC<BusCardsProps> = ({ title, travelData, configCard, configColors, fetchData }) => {
   
   const { numRows, minFilter } = configCard;
   
-  
-  const [tripPatterns, settripPatterns] = useState(
-    filterBusRides(travelData.data.trip.tripPatterns)
-  );
+  const [tripPatterns, settripPatterns] = useState<TravelResponse>();
+
+  useEffect(() => {settripPatterns(filterBusRides(travelData))}, [])
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -34,23 +46,26 @@ function BusCards({ title, travelData, configCard, configColors, fetchData }) {
   }, []);
 
 
+  function filterBusRides(tripPatterns: TravelResponse | undefined): TravelResponse {
 
-  function filterBusRides(tripPatterns) {
-    var modes = ["bus", "tram"]
+    if(tripPatterns === undefined)
+      return new TravelResponse();
 
-    return tripPatterns
+    tripPatterns.data.trip.tripPatterns = tripPatterns.data.trip.tripPatterns
       .map((tripPattern) => ({
         ...tripPattern,
         legs: tripPattern.legs.filter(
           (leg) =>
-            modes.includes(leg.mode) &&
+            Object.values(Mode).includes(leg.mode.toLocaleUpperCase() as Mode)    &&
             calculateMinutesUntil(leg.expectedStartTime) >= minFilter
         ),
       }))
       .filter((tripPattern) => tripPattern.legs.length === 1);
+
+    return tripPatterns
   }
 
-  function calculateMinutesUntil(startTime) {
+  function calculateMinutesUntil(startTime : string) {
     const now = moment().utc();
     const tripStartTime = moment(startTime).utc();
     const diffInMinutes = tripStartTime.diff(now, "minutes");
@@ -61,7 +76,7 @@ function BusCards({ title, travelData, configCard, configColors, fetchData }) {
   async function updateTravelData() {
     try {
       const updatedTravelData = await fetchData();
-      settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
+      settripPatterns(filterBusRides(updatedTravelData));
     } catch (error) {
       console.error("Can't update data:", error);
     }
@@ -75,21 +90,19 @@ function BusCards({ title, travelData, configCard, configColors, fetchData }) {
         </div>
         
         <div>
-          {tripPatterns.slice(0, numRows).map((tripPattern, tripIndex) => {
+          {tripPatterns?.data.trip.tripPatterns.slice(0, numRows).map((tripPattern, tripIndex) => {
             return (
               <BusCard
                 key={tripIndex}
                 name={tripPattern.legs[0].line.name.split(" ")[0]}
                 publicCode={tripPattern.legs[0].line.publicCode}
                 startTime={tripPattern.legs[0].expectedStartTime}
-                endTime={tripPattern.legs[0].expectedEndTime}
                 tripIndex={tripIndex}
                 minutesUntil={calculateMinutesUntil(
                   tripPattern.legs[0].expectedStartTime
                 )}
                 calculateMinutesUntil={calculateMinutesUntil}
                 configColors={configColors}
-                mainCard={true}
               />
             );
           })}

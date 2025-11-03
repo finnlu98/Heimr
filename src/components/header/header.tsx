@@ -3,7 +3,11 @@ import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../home-avatar/home-avatar";
 
-function Header({ kanyeQoute }) {
+interface HeaderProps {
+  kanyeQoute : string
+}
+
+const Header : React.FC<HeaderProps> = ({ kanyeQoute }) => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
 
   useEffect(() => {

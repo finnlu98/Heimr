@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './electricity-prices.css'
-import moment from "moment";
+import moment, { Moment } from "moment";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,11 +21,28 @@ ChartJS.register(
     Legend
   );
 
+interface ElectrictyPricesProps {
+  electrictyPrices :ElecPrice[]
+}
 
+interface ElecPrice {
+  time_start: string,
+  NOK_per_kWh: number
+}
 
-function ElectrictyPrices({ electrictyPrices }) {
+interface ComponentData {
+  labels: string[]
+  datasets: Datasets[]
+}
+
+interface Datasets {
+  data: Number[]
+  backgroundColor: string
+}
+
+const ElectrictyPrices: React.FC<ElectrictyPricesProps> = ({ electrictyPrices }) => {
   const [elecPrices, setElecPrices] = useState(electrictyPrices);
-  const [dynamicData, setData] = useState(null);
+  const [dynamicData, setData] = useState<ComponentData>();
 
   const todaysDate = moment().format('DD/MM/YY')
 

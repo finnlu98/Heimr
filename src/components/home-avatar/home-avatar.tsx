@@ -13,15 +13,7 @@ const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
     }, [name])
 
     function findImg(name : string) : string {
-        console.log(name)
-        if(name === "Finn") {
-            return "./img/finn.jpg"
-        } else if (name === "Pernille") {
-            return "./img/pernille.jpg"
-        } else if (name === "Line") {
-            return "./img/line.jpg"
-        } 
-        return ""
+        return `./img/${name.toLowerCase()}.jpg` 
     }
 
     return (
