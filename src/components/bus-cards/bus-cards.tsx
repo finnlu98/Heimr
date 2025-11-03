@@ -31,7 +31,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
     
   };
     fetchAndFilter();
-  })
+  }, [])
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -50,7 +50,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
     }, 7 * 60 * 1000);
 
     return () => clearInterval(updateInterval);
-  });
+  }, []);
 
 
   function filterBusRides(tripPatterns: TripPatterns[] | undefined): TripPatterns[] {
@@ -90,7 +90,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
     <div>
     <div className="bus-card-contianter">
       <div className="busstider-header mb-2">
-          <h5><strong>{title}</strong></h5>
+          <h5>{title}</h5>
         </div>
         
         <div>
