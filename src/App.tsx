@@ -88,7 +88,7 @@ function App() {
                 stopPlace="NSR:StopPlace:62019"
                 configCard={{
                   numRows: 4, 
-                  minFilter: 5
+                  minFilter: 3
                 }} 
                 configColor={{
                   general: 8, 

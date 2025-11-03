@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../home-avatar/home-avatar";
-import FetchKanyeQuote from "../../api/fetchers/kanye-fetcher";
+import FetchKanyeQuote from "../../api/kanye-fetcher";
 
 
 

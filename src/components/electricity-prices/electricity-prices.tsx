@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import FetchElectricityPrices from "../../api/fetchers/electricity-price-fetcher";
+import FetchElectricityPrices from "../../api/electricity-price-fetcher";
 
 ChartJS.register(
     CategoryScale,

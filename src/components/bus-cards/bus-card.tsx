@@ -1,11 +1,10 @@
-import moment, { Moment } from "moment";
-import React, { useState, useEffect } from "react";
+import moment from "moment";
+import React, { useState, useEffect, useCallback } from "react";
 import "./bus-card.css";
 import { FaBus } from "react-icons/fa";
 import { ConfigColor } from "./ConfigColor";
 
 interface BusCardProps {
-  tripIndex: number
   name: string
   publicCode: string
   startTime: string
@@ -16,7 +15,6 @@ interface BusCardProps {
 
 
 const BusCard: React.FC<BusCardProps> = ({
-  tripIndex,
   name,
   publicCode,
   startTime,
@@ -25,37 +23,39 @@ const BusCard: React.FC<BusCardProps> = ({
   configColor,
 }) => {
   const [minutes, setMinutes] = useState<number>(minutesUntil);
-  const [badTime, setBadTime] = useState(evalBadTime(minutes));
+  const [badTime, setBadTime] = useState<string>();
   const [nameCleaned, setName] = useState(name)
+  
+  const evalBadTimeCallback = useCallback((time: number) => {
+    let timeClass = "bad-time";
+
+    if (time > configColor.yellow) 
+      timeClass = "medium-time";
+
+    if (time > configColor.green) 
+      timeClass = "good-time";
+    
+    if (time > configColor.general)
+      timeClass = "general-time";
+
+    setBadTime(timeClass);
+  }, [configColor])
+
+  useEffect(() => evalBadTimeCallback(minutes))
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       setMinutes(calculateMinutesUntil(startTime));
-      setBadTime(evalBadTime(minutes));
+      evalBadTimeCallback(minutes)
     }, 1000);
 
     return () => clearInterval(countdownInterval);
-  }, [startTime, calculateMinutesUntil]);
+  }, [startTime, minutes, calculateMinutesUntil, evalBadTimeCallback]);
 
   useEffect(() => {
     setName(cleanName(nameCleaned)) 
-  })
+  }, [nameCleaned, setName])
 
-
-  function evalBadTime(time: number) {
-    if (time > configColor.general) {
-      return "general-time";
-    }
-
-    if (time > configColor.green) {
-      return "good-time";
-    }
-
-    if (time > configColor.yellow) {
-      return "medium-time";
-    }
-    return "bad-time";
-  }
 
   function cleanName(name : string) {
     if (name.includes('/')) {
@@ -76,7 +76,7 @@ const BusCard: React.FC<BusCardProps> = ({
   }
 
   return (
-    <div key={tripIndex} className="bus-card card text-white mb-2 container">
+    <div className="bus-card card text-white mb-2 container">
       <div className="card-body">
         <div className="row">
           <div className="col-md-9 public">

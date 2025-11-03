@@ -1,5 +1,5 @@
 import axios from "axios";
-import TravelResponse from "../../model/Deziarilize/TravelResponse";
+import {TravelResponse} from "../model/Deziarilize/TravelResponse";
 
     const FetchBustimes = async (fromPlace: string, toPlace: string) => {
     

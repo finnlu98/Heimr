@@ -1,4 +1,4 @@
-export default class TravelResponse {
+export class TravelResponse {
     data!: Data
 }
 
@@ -10,11 +10,11 @@ class Trip {
     tripPatterns !: TripPatterns[]
 }
 
-class TripPatterns {
+export class TripPatterns {
     legs!: Leg[]
 }
 
-class Leg {
+export class Leg {
     expectedStartTime!: string
     expectedEndTime!: string
     mode!: string

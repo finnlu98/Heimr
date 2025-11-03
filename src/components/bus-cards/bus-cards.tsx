@@ -2,10 +2,10 @@ import moment from "moment";
 import BusCard from "./bus-card";
 import React, { useState, useEffect } from "react";
 import "./bus-cards.css";
-import TravelResponse from "../../model/Deziarilize/TravelResponse";
+import { TripPatterns } from "../../model/Deziarilize/TravelResponse";
 import { Mode } from "../../model/data/Enum/Mode";
 import { ConfigColor } from "./ConfigColor";
-import FetchBustimes from "../../api/fetchers/bus-time-fetcher";
+import FetchBustimes from "../../api/bus-time-fetcher";
 
 interface BusCardsProps {
   title: string,
@@ -22,23 +22,27 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
   
   const { numRows, minFilter } = configCard;
   
-  const [tripPatterns, settripPatterns] = useState<TravelResponse>();
+  const [tripPatterns, settripPatterns] = useState<TripPatterns[]>();
  
   useEffect(() => {
     const fetchAndFilter = async () => {
-    settripPatterns(filterBusRides(await FetchBustimes(startPlace, stopPlace)));
+    var busTimes = await FetchBustimes(startPlace, stopPlace)
+    settripPatterns(filterBusRides(busTimes.data.trip.tripPatterns));
     
   };
     fetchAndFilter();
-  }, [])
+  })
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
-      settripPatterns((prevTripPatterns) => filterBusRides(prevTripPatterns));
+      
+      var filteredBusTimes = filterBusRides(tripPatterns)
+      if(filteredBusTimes.length !== 0)
+        settripPatterns(filteredBusTimes);
     }, 1000);
 
     return () => clearInterval(countdownInterval);
-  }, [tripPatterns]);
+  });
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -46,26 +50,23 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
     }, 7 * 60 * 1000);
 
     return () => clearInterval(updateInterval);
-  }, []);
+  });
 
 
-  function filterBusRides(tripPatterns: TravelResponse | undefined): TravelResponse {
-
-    if(tripPatterns === undefined)
-      return new TravelResponse();
-
-    tripPatterns.data.trip.tripPatterns = tripPatterns.data.trip.tripPatterns
+  function filterBusRides(tripPatterns: TripPatterns[] | undefined): TripPatterns[] {
+    if (tripPatterns === undefined || !tripPatterns) 
+      return [];
+    
+    return tripPatterns
       .map((tripPattern) => ({
         ...tripPattern,
         legs: tripPattern.legs.filter(
           (leg) =>
-            Object.values(Mode).includes(leg.mode.toLocaleUpperCase() as Mode)    &&
+            Object.values(Mode).includes(leg.mode.toUpperCase() as Mode) &&
             calculateMinutesUntil(leg.expectedStartTime) >= minFilter
         ),
       }))
       .filter((tripPattern) => tripPattern.legs.length === 1);
-
-    return tripPatterns
   }
 
   function calculateMinutesUntil(startTime : string) {
@@ -79,7 +80,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
   async function updateTravelData() {
     try {
       const updatedTravelData = await FetchBustimes(startPlace, stopPlace);
-      settripPatterns(filterBusRides(updatedTravelData));
+      settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
     } catch (error) {
       console.error("Can't update data:", error);
     }
@@ -93,14 +94,13 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
         </div>
         
         <div>
-          {tripPatterns?.data.trip.tripPatterns.slice(0, numRows).map((tripPattern, tripIndex) => {
+          {tripPatterns && tripPatterns.slice(0, numRows).map((tripPattern) => {
             return (
               <BusCard
-                key={tripIndex}
+                key={tripPattern.legs[0].expectedStartTime}
                 name={tripPattern.legs[0].line.name.split(" ")[0]}
                 publicCode={tripPattern.legs[0].line.publicCode}
                 startTime={tripPattern.legs[0].expectedStartTime}
-                tripIndex={tripIndex}
                 minutesUntil={calculateMinutesUntil(
                   tripPattern.legs[0].expectedStartTime
                 )}
