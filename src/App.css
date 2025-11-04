@@ -1,5 +1,5 @@
 * {
-    color: white;
+    color: var(--color-off-white);
 }
 
 html, body, #root { 
@@ -41,7 +41,6 @@ html, body, #root {
 
 
 /* reusable colors */
-
 :root {
   --color-off-white: rgb(248, 248, 248);
 }

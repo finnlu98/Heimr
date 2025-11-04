@@ -8,7 +8,7 @@ import Header from "./components/header/header";
 import Dailyweather from "./components/weather-widget/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
-
+import Configuration from "./Configuration";
 function App() {
 
   const [loading, setLoading] = useState(true);
@@ -79,36 +79,21 @@ function App() {
         <div className="row">
           <Header />
         </div>
-
         <div className="row dash-rows">
           <div className="col-md-7 col-12">
-            <div className="widget-container mb-2">
-              {<BusCards 
-                title={"St. Hanshaugen - Solli"} 
-                startPlace="NSR:StopPlace:6274"
-                stopPlace="NSR:StopPlace:62019"
-                configCard={{
-                  numRows: 4, 
-                  minFilter: 3
-                }} 
-                configColor={{
-                  general: 8, 
-                  green: 6, 
-                  yellow: 4}} />}
-            </div>
-            <div className="widget-container">
-              {<BusCards 
-                title={"Frydenlund - Jon Collets vei"} 
-                startPlace="NSR:StopPlace:6258"
-                stopPlace="NSR:StopPlace:6323"
-                configCard={{numRows: 4, minFilter: 1}} 
-                configColor={{
-                  general: 8, 
-                  green: 6, 
-                  yellow: 4}}/>}
-            </div>            
+            {Configuration.getBusStopConfigs().map((busStop) => {
+              return (
+                <div className="widget-container mb-2">
+                  <BusCards
+                    title={busStop.title} 
+                    startPlace={busStop.startPlace} 
+                    stopPlace={busStop.stopPlace}
+                    configCard={busStop.configCard}
+                    configColor={busStop.configColor}/>  
+                </div>
+                )
+            })}
           </div>
-          
           <div className="col-md-5 col-12">
             <div className="widget-container row mb-2">
               <Dailyweather />

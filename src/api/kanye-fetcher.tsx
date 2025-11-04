@@ -1,9 +1,10 @@
 import axios from "axios";
+import Configuration from "../Configuration";
 
 const FetchKanyeQuote = async () => {
   try {
     const response = await axios.get(
-      "https://api.kanye.rest/"
+      Configuration.getKanyeQuoteEndpoint()
     );
 
     return response.data.quote as string; 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {TravelResponse} from "../model/Deziarilize/TravelResponse";
+import Configuration from "../Configuration";
 
     const FetchBustimes = async (fromPlace: string, toPlace: string) => {
     
@@ -39,12 +40,13 @@ import {TravelResponse} from "../model/Deziarilize/TravelResponse";
               }
             `;
             
-            const endpoint = "https://api.entur.io/journey-planner/v3/graphql";
-        
+            const config = Configuration.getEnturConfig()
+            const endpoint = config.Endpoint;
+
             const response = await axios.post<TravelResponse>(
               endpoint,
               { query: graphqlQuery },
-              { headers: { "ET-Client-Name": "FinnGriggsProduksjoner" } }
+              { headers: { "ET-Client-Name": config.Identifier } }
             );
         
             return response.data;

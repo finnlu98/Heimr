@@ -1,14 +1,22 @@
 import axios from "axios";
 import moment from "moment";
-
+import Configuration from "../Configuration";
 const FetchElectricityPrices = async () => {
   try {
     const year = moment().year();
     const month =  moment().format('MM');
     const day = moment().format('DD');
 
+    var endpoint = Configuration.getElectricityEndpoint()
+
+    endpoint = endpoint
+                .replace(":year", year.toString())
+                .replace(":month", month.toString())
+                .replace(":day", day.toString())
+
+
     const response = await axios.get<ElectricityPrice[]>(
-      `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_NO5.json`
+      endpoint
     );
 
     return response.data; 

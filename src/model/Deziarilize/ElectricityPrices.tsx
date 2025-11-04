@@ -1,5 +1,3 @@
-
-
 class ElectricityPrice {
   time_start!: string
   NOK_per_kWh!: number
@@ -10,7 +8,6 @@ class ComponentData {
   datasets!: Datasets[]
 }
 
-// what?
 class Datasets {
   data!: Number[]
   backgroundColor!: string
