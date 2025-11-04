@@ -1,3 +1,23 @@
+* {
+    color: white;
+}
+
+html, body, #root { 
+    height: 100%; 
+    margin: 0; 
+    background-color: #f5d4b5ff}
+
+.app {
+    height: 100%;
+    width: 100%;
+}
+
+.widget-container {
+    border: 3px solid var(--color-off-white);
+    padding: 5px;
+    border-radius: 8px;
+}
+
 .loading-container {
     font-weight: bold;
     display: flex;
@@ -17,4 +37,11 @@
         align-items: center;
         justify-content: center;
     }
+}
+
+
+/* reusable colors */
+
+:root {
+  --color-off-white: rgb(248, 248, 248);
 }

@@ -89,7 +89,7 @@ const ElectrictyPrices: React.FC = () => {
 
   return (
     <div className="electricity-widget">
-      <Bar options={options} data={dynamicData} />;
+      <Bar options={options} data={dynamicData} />
     </div>
   );
 }

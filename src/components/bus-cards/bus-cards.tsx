@@ -88,11 +88,9 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
 
   return (
     <div>
-    <div className="bus-card-contianter">
       <div className="busstider-header mb-2">
           <h5>{title}</h5>
         </div>
-        
         <div>
           {tripPatterns && tripPatterns.slice(0, numRows).map((tripPattern) => {
             return (
@@ -110,8 +108,6 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
             );
           })}
         </div>
-    </div>
-      
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +19,7 @@ function App() {
   const fetchandSetData = async () => {
     try {
       // Logikk for å si ifra at vi er ferdig lastet :D
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -74,14 +75,14 @@ function App() {
 
   return (
     <div className="app">
-      <div className="dash-container container mt-2 mb-4">
+      <div className="container mt-2 mb-2">
         <div className="row">
           <Header />
         </div>
 
         <div className="row dash-rows">
           <div className="col-md-7 col-12">
-            <div className="mb-2">
+            <div className="widget-container mb-2">
               {<BusCards 
                 title={"St. Hanshaugen - Solli"} 
                 startPlace="NSR:StopPlace:6274"
@@ -95,7 +96,7 @@ function App() {
                   green: 6, 
                   yellow: 4}} />}
             </div>
-            <div>
+            <div className="widget-container">
               {<BusCards 
                 title={"Frydenlund - Jon Collets vei"} 
                 startPlace="NSR:StopPlace:6258"
@@ -109,13 +110,13 @@ function App() {
           </div>
           
           <div className="col-md-5 col-12">
-            <div className="row mb-2">
+            <div className="widget-container row mb-2">
               <Dailyweather />
             </div>
-            <div className="row mb-2">
+            <div className="widget-container row mb-2">
               <ElectrictyPrices/>
             </div>
-            <div className="row mb-2">
+            <div className="widget-container row mb-2">
               <LaundryWeek />
             </div>
           </div>
