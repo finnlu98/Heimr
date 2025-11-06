@@ -27,6 +27,10 @@ class Configuration {
     public getWeatherEndpoint(): string {
         return this.configuration.Weather.Endpoint;
     }
+
+    public getSunriseEndpoint(): string {
+        return this.configuration.Sunrise.Endpoint;
+    }
 }
 
 interface AppConfiguration {
@@ -34,6 +38,7 @@ interface AppConfiguration {
     ElectricityPrices: ElectricityPricesConfig;
     KanyeQuoute: KanyeQuoteConfig;
     Weather: WeatherConfig;
+    Sunrise: SunriseConfig;
 }
 
 interface EnturConfig {
@@ -61,18 +66,19 @@ interface BusStopConfiguration {
     configColor: ConfigColor;
 }
 
-
-interface ElectricityPricesConfig {
-    Endpoint: string;
-}
-
-interface KanyeQuoteConfig {
-    Endpoint: string;
-}
-
-interface WeatherConfig {
+interface EndpointConfig {
     Endpoint: string
 }
+
+interface ElectricityPricesConfig extends EndpointConfig {}
+
+interface KanyeQuoteConfig extends EndpointConfig {}
+
+interface WeatherConfig extends EndpointConfig {}
+
+interface SunriseConfig extends EndpointConfig {}
+
+
 
 
 const configuration = new Configuration();

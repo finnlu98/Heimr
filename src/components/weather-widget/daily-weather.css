@@ -1,9 +1,14 @@
 .weather-widget {
-    overflow: hidden;
-    display: flex;
-    height: 100%;
-    width: 100%;
+    text-align: center;
+}
 
+.weather-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+} 
+
+.weather-section {
+    display: flex;
 }
 
 .main-widget {
@@ -39,3 +44,12 @@
     width: 80px;
 }
 
+.sunrise-section {
+    display: flex;
+    font-size: small;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: ;
+}

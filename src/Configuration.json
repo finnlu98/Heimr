@@ -47,5 +47,9 @@
     },
     "Weather": {
         "Endpoint": "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=:lat&lon=:lon"
+    },
+    "Sunrise": {
+        "Endpoint": "https://api.met.no/weatherapi/sunrise/3.0/sun?lat=:lat&lon=:lon&offset=+01:00"
     }
+
 }

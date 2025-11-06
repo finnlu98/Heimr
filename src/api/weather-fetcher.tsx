@@ -2,23 +2,25 @@ import axios from "axios";
 import configuration from "../Configuration";
 import { WeatherResponse } from "../model/Deziarilize/WeatherResponse";
 import { WeatherForecast } from "../model/data/WeatherForecast";
+import { SunriseResponse } from "../model/Deziarilize/SunriseResponse";
+import { WeatherData } from "../model/data/WeatherData";
 
-const FetchWeather = async () => {
+const FetchWeatherAndSunset = async () => {
     const geoLocator = navigator.geolocation;
 
     if(!geoLocator)
         return;
 
     var pos = await getCurrentPosition();
-    var endpoint = configuration.getWeatherEndpoint()
-                    .replace(":lat", pos.coords.latitude.toString())
-                    .replace(":lon", pos.coords.longitude.toString())
+    var weatherEndpoint = formatEndpointWithCoordinates(configuration.getWeatherEndpoint(), pos);
+    var sunriseEndpoint = formatEndpointWithCoordinates(configuration.getSunriseEndpoint(), pos);
+    
 
-    const res = await axios.get<WeatherResponse>(endpoint)
-    const weatherForecast = new WeatherForecast(res.data)
+    const weatherRes = await axios.get<WeatherResponse>(weatherEndpoint)
+    const sunriseRes = await axios.get<SunriseResponse>(sunriseEndpoint)
+    const weatherForecast = new WeatherForecast(weatherRes.data)
 
-
-    return weatherForecast
+    return new WeatherData(weatherForecast, sunriseRes.data)
 }
 
 function getCurrentPosition(): Promise<GeolocationPosition> {
@@ -27,4 +29,10 @@ function getCurrentPosition(): Promise<GeolocationPosition> {
   });
 }
 
-export default FetchWeather;
+function formatEndpointWithCoordinates(endpoint: string, pos: GeolocationPosition) : string {
+    return endpoint
+            .replace(":lat", pos.coords.latitude.toString())
+            .replace(":lon", pos.coords.longitude.toString())
+}
+
+export default FetchWeatherAndSunset;
