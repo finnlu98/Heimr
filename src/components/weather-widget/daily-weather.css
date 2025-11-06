@@ -1,7 +1,55 @@
 .weather-widget {
-    height: 420px;
-    border: 3px solid rgb(248, 248, 248); 
-    border-radius: 8px; 
-    overflow: hidden;
-    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.weather-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+} 
+
+.weather-section {
+    display: flex;
+}
+
+.main-widget {
+    display: flex;
+    flex: 0 0 25%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondary-widget {
+    display: flex;
+    flex: 0 0 75%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main-temp {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size:larger;
+}
+
+.main-rain {
+    color: rgb(68, 166, 199);
+    font-size:large;
+}
+
+
+.main-icon {
+    height: 80px;
+    width: 80px;
+}
+
+.sunrise-section {
+    display: flex;
+    font-size: small;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: ;
 }

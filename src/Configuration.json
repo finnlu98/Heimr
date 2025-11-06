@@ -1,0 +1,55 @@
+{
+    "Entur": 
+    {
+        "Endpoint": "https://api.entur.io/journey-planner/v3/graphql",
+        "Identifier": "FinnGriggsProduksjoner",
+        "BusStopConfiguration":
+        [
+            {
+                "title": "St. Hanshaugen - Solli",
+                "startPlace": "NSR:StopPlace:6274",
+                "stopPlace": "NSR:StopPlace:62019",
+                "configCard": 
+                {
+                    "numRows": 4,
+                    "minFilter": 3
+                },
+                "configColor":
+                {
+                    "general": 8,
+                    "green": 6,
+                    "yellow": 4 
+                }
+            },
+            {
+                "title": "Frydenlund - Jon Collets vei",
+                "startPlace": "NSR:StopPlace:6258",
+                "stopPlace": "NSR:StopPlace:6323",
+                "configCard":
+                {
+                    "numRows": 4,
+                    "minFilter": 3
+                },
+                "configColor":
+                {
+                    "general": 8,
+                    "green": 6,
+                    "yellow": 4 
+                }
+            }
+        ]
+    },
+    "ElectricityPrices": {
+        "Endpoint": "https://www.hvakosterstrommen.no/api/v1/prices/:year/:month-:day_NO1.json"
+    },
+    "KanyeQuoute": {
+        "Endpoint": "https://api.kanye.rest/"
+    },
+    "Weather": {
+        "Endpoint": "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=:lat&lon=:lon"
+    },
+    "Sunrise": {
+        "Endpoint": "https://api.met.no/weatherapi/sunrise/3.0/sun?lat=:lat&lon=:lon&offset=+01:00"
+    }
+
+}

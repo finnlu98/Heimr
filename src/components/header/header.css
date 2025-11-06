@@ -1,13 +1,13 @@
 .header-style {
   position: relative;
-  background-image: url("./img/mohlenpris.jpg");
+  background-image: url("../../../public/img/header/mohlenpris.jpg");
   background-size: cover;
   background-position: center;
-  color: rgb(248, 248, 248);
+  color: var(--color-off-white);
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 10px;
-  border: 3px solid rgb(248, 248, 248);
+  border: 3px solid var(--color-off-white);
 }
 
 .header-style::after {

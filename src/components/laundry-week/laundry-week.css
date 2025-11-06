@@ -1,7 +1,4 @@
-.laundry-week {
-  color: white;
-  border: 3px solid rgb(248, 248, 248);
-  border-radius: 8px;
+ .laundry-week {
   overflow: hidden;
 }
 
@@ -34,7 +31,6 @@
 .week-table-header {
   display: flex;
   justify-content: space-between;
-  color: white;
   width: 90%;
   margin: 0 auto;
   align-items: center;
@@ -54,7 +50,6 @@
 .week-row {
   display: flex;
   justify-content: space-between;
-  color: white;
   width: 90%;
   margin: 0 auto;
   align-items: center;
@@ -62,8 +57,6 @@
   padding: 5px;
   font-size: 25px;
 }
-
-
 
 .week-row div {
   flex: 1;
