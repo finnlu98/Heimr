@@ -1,7 +1,3 @@
-// export class WeatherResponse {
-//     data!: MainData
-// }
-
 export class WeatherResponse {
     properties!: Properties
 }

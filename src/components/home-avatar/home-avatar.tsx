@@ -23,6 +23,23 @@ const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
         setAvatarImg(findImg(name)) 
     }, [name])
 
+    useEffect(() => {
+      const updateInterval = setInterval(() => {
+        updateHomeStatus();
+      }, 15 * 60 * 1000);
+  
+      return () => clearInterval(updateInterval);
+    }, []);
+
+    async function updateHomeStatus() {
+        try {
+        const updatedHomeStatus = await HomeFetcher(name);
+        setHomeStatus(updatedHomeStatus);
+        } catch (error) {
+        console.error("Can't update data:", error);
+        }
+    }
+
     function findImg(name : string) : string {
         return `./img/${name.toLowerCase()}.jpg` 
     }
@@ -36,7 +53,6 @@ const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
                 <FaHome/>
             </div>
         </div>
-        
     )
 }
 
