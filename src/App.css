@@ -12,6 +12,11 @@ html, body, #root {
     width: 100%;
 }
 
+/* Not optimal solution. Bootsrap grid was off. This works but destroys bootstrap logic */
+.col-md-7 {
+  padding-left: 0 !important;
+}
+
 .widget-container {
     border: 3px solid var(--color-off-white);
     padding: 5px;
@@ -27,18 +32,6 @@ html, body, #root {
     text-align: center;
     color: white;
 }
-
-
-@media only screen and (max-width: 750px) {
-    
-    .dash-rows {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
 
 /* reusable colors */
 :root {

@@ -79,12 +79,13 @@ function App() {
         <div className="row">
           <Header />
         </div>
-        <div className="row dash-rows">
-          <div className="col-md-7 col-12">
+        <div className="row">
+          <div className="col-md-7">
             {Configuration.getBusStopConfigs().map((busStop) => {
               return (
                 <div className="widget-container mb-2">
                   <BusCards
+                    key={busStop.title}
                     title={busStop.title} 
                     startPlace={busStop.startPlace} 
                     stopPlace={busStop.stopPlace}
@@ -94,7 +95,7 @@ function App() {
                 )
             })}
           </div>
-          <div className="col-md-5 col-12">
+          <div className="col-md-5">
             <div className="widget-container row mb-2">
               <Dailyweather />
             </div>

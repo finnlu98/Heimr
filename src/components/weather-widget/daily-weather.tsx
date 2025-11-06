@@ -70,6 +70,7 @@ const Dailyweather : React.FC = () => {
       <div className='secondary-widget'>
           {weatherData && weatherData?.weatherForecast.forecast_next_hours.map((forecast_next_hour) => {
             return <DailyweatherRow 
+                      key={forecast_next_hour.intervall}
                       time={forecast_next_hour.intervall} 
                       degree={forecast_next_hour.air_temperature} 
                       rain={forecast_next_hour.precipitation_amount}
