@@ -11,9 +11,10 @@ const FetchWeatherAndSunset = async () => {
     if(!geoLocator)
         return;
 
-    var pos = await getCurrentPosition();
-    var weatherEndpoint = formatEndpointWithCoordinates(configuration.getWeatherEndpoint(), pos);
-    var sunriseEndpoint = formatEndpointWithCoordinates(configuration.getSunriseEndpoint(), pos);
+    // temp solution
+    // var pos = await getCurrentPosition();
+    var weatherEndpoint = formatEndpointWithCoordinates(configuration.getWeatherEndpoint());
+    var sunriseEndpoint = formatEndpointWithCoordinates(configuration.getSunriseEndpoint());
     
 
     const weatherRes = await axios.get<WeatherResponse>(weatherEndpoint)
@@ -29,10 +30,10 @@ function getCurrentPosition(): Promise<GeolocationPosition> {
   });
 }
 
-function formatEndpointWithCoordinates(endpoint: string, pos: GeolocationPosition) : string {
+function formatEndpointWithCoordinates(endpoint: string) : string {
     return endpoint
-            .replace(":lat", pos.coords.latitude.toString())
-            .replace(":lon", pos.coords.longitude.toString())
+            .replace(":lat", "59.91273")
+            .replace(":lon", "10.74609")
 }
 
 export default FetchWeatherAndSunset;
