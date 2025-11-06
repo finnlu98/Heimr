@@ -1,9 +1,9 @@
 .bus-card {
   border-top: none;
-  border-bottom: 3px solid rgba(248, 248, 248, 0.611);
+  border-bottom: 3px solid var(--color-off-gray);
   border-left: none;
   border-right: none;
-  background-color: #f5d4b5ff;
+  background-color: var(--color-background);
   border-radius: 0px;
 }
 
@@ -29,13 +29,13 @@
 }
 
 .bad-time {
-  color: firebrick;
+  color: var(--color-standard-red);
 }
 
 .medium-time {
-  color: rgb(255, 145, 101);
+  color: var(--color-standard-yellow);
 }
 
 .good-time {
-  color: rgb(57, 187, 115);
+  color: var(--color-standard-green);
 }

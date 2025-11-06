@@ -35,9 +35,9 @@ const Header : React.FC = () => {
         <div className="header-column col header-text header-text-clock">
           <h1>{minutes}</h1>
           <div className="avatars">
-            <div className="avatar"><HomeAvatar name={"Finn"}></HomeAvatar></div> 
-            <div className="avatar"><HomeAvatar name={"Pernille"}></HomeAvatar></div> 
-            <div className="avatar"><HomeAvatar name={"Line"}></HomeAvatar></div> 
+            <div className="avatar"><HomeAvatar name={"finn_griggs"}></HomeAvatar></div> 
+            <div className="avatar"><HomeAvatar name={"pernille"}></HomeAvatar></div> 
+            <div className="avatar"><HomeAvatar name={"line"}></HomeAvatar></div> 
           </div>
           
         </div>

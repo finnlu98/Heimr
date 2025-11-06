@@ -6,6 +6,7 @@ class Configuration {
     constructor() {
         
         this.configuration = config as AppConfiguration;
+        this.getHomeAssistantConfig().secret_token = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
     }
 
     public getEnturConfig(): EnturConfig {
@@ -31,6 +32,10 @@ class Configuration {
     public getSunriseEndpoint(): string {
         return this.configuration.Sunrise.Endpoint;
     }
+
+    public getHomeAssistantConfig(): HomeAssitantConfig {
+        return this.configuration.HomeAssistant;
+    }
 }
 
 interface AppConfiguration {
@@ -39,10 +44,10 @@ interface AppConfiguration {
     KanyeQuoute: KanyeQuoteConfig;
     Weather: WeatherConfig;
     Sunrise: SunriseConfig;
+    HomeAssistant: HomeAssitantConfig;
 }
 
-interface EnturConfig {
-    Endpoint: string;
+interface EnturConfig extends EndpointConfig {
     Identifier: string;
     BusStopConfiguration: BusStopConfiguration[];
 }
@@ -78,7 +83,9 @@ interface WeatherConfig extends EndpointConfig {}
 
 interface SunriseConfig extends EndpointConfig {}
 
-
+interface HomeAssitantConfig extends EndpointConfig {
+    secret_token: string
+}
 
 
 const configuration = new Configuration();

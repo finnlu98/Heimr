@@ -5,7 +5,7 @@
 html, body, #root { 
     height: 100%; 
     margin: 0; 
-    background-color: #f5d4b5ff}
+    background-color: var(--color-background)}
 
 .app {
     height: 100%;
@@ -42,5 +42,10 @@ html, body, #root {
 
 /* reusable colors */
 :root {
+  --color-background:#f5d4b5ff;
   --color-off-white: rgb(248, 248, 248);
+  --color-off-gray: rgba(248, 248, 248, 0.611);
+  --color-standard-green: rgb(57, 187, 115);
+  --color-standard-yellow: rgb(255, 145, 101);
+  --color-standard-red: firebrick;
 }
