@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import FetchElectricityPrices from "../../api/electricity-price-fetcher";
+import { ElectricityPrice, ComponentData } from "../../model/Deziarilize/ElectricityPrices";
 
 ChartJS.register(
     CategoryScale,

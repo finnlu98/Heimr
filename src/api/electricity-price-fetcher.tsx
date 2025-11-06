@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import Configuration from "../Configuration";
+import { ElectricityPrice } from "../model/Deziarilize/ElectricityPrices";
 const FetchElectricityPrices = async () => {
   try {
     const year = moment().year();

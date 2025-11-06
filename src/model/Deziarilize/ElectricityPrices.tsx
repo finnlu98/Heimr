@@ -1,9 +1,9 @@
-class ElectricityPrice {
+export class ElectricityPrice {
   time_start!: string
   NOK_per_kWh!: number
 }
 
-class ComponentData {
+export class ComponentData {
   labels!: string[]
   datasets!: Datasets[]
 }
