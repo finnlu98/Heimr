@@ -6,6 +6,10 @@ import FetchWeather from '../../api/weather-fetcher';
 import { WeatherType } from '../../model/data/Enum/WeatherType';
 import { WeatherData } from '../../model/data/WeatherData';
 import moment from 'moment';
+import { GiSunrise } from "react-icons/gi";
+import { GiSunset } from "react-icons/gi";
+
+
 const Dailyweather : React.FC = () => {
 
   const [weatherData, setWeatherData] = useState<WeatherData>()
@@ -74,8 +78,16 @@ const Dailyweather : React.FC = () => {
       </div>
       </div>
       <div className='sunrise-section'>
-        <div>{moment(weatherData?.sunriseData.properties.sunrise.time).format("HH:mm") } 🌇</div>
-        <div>{moment(weatherData?.sunriseData.properties.sunset.time).format("HH:mm")} 🌆</div>
+        <div className='sunset-column'>
+          <div >
+            {moment(weatherData?.sunriseData.properties.sunrise.time).format("HH:mm") }
+          </div>
+          <GiSunrise fill='#e6c93aff' size="25px"/>
+        </div>
+        <div className='sunset-column'>
+          <div>{moment(weatherData?.sunriseData.properties.sunset.time).format("HH:mm")}</div>
+          <GiSunset fill='#f3a71aff'  size="25px"/>
+        </div>
       </div>
     </div>
   );
