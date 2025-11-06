@@ -1,4 +1,41 @@
 .weather-widget {
-    height: 420px;
     overflow: hidden;
+    display: flex;
+    height: 100%;
+    width: 100%;
+
 }
+
+.main-widget {
+    display: flex;
+    flex: 0 0 25%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondary-widget {
+    display: flex;
+    flex: 0 0 75%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main-temp {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size:larger;
+}
+
+.main-rain {
+    color: rgb(68, 166, 199);
+    font-size:large;
+}
+
+
+.main-icon {
+    height: 80px;
+    width: 80px;
+}
+

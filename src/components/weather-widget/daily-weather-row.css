@@ -1,0 +1,24 @@
+.secondary-icon {
+    height: 30px;
+    width: 30px;
+}
+
+.secondary-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-column {
+    border-right: 1px solid var(--color-off-white);
+    padding-right: 8px;
+    text-align: left;
+}
+
+.temp-column {
+    color: #e74c3c;
+}
+
+.rain-column {
+    color: rgb(68, 166, 199);
+}

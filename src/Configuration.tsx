@@ -23,12 +23,17 @@ class Configuration {
     public getElectricityEndpoint(): string {
         return this.configuration.ElectricityPrices.Endpoint;
     }
+
+    public getWeatherEndpoint(): string {
+        return this.configuration.Weather.Endpoint;
+    }
 }
 
 interface AppConfiguration {
     Entur: EnturConfig;
     ElectricityPrices: ElectricityPricesConfig;
     KanyeQuoute: KanyeQuoteConfig;
+    Weather: WeatherConfig;
 }
 
 interface EnturConfig {
@@ -63,6 +68,10 @@ interface ElectricityPricesConfig {
 
 interface KanyeQuoteConfig {
     Endpoint: string;
+}
+
+interface WeatherConfig {
+    Endpoint: string
 }
 
 

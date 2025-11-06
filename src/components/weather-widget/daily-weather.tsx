@@ -1,28 +1,45 @@
 import React, { useState, useEffect }  from 'react';
 
 import './daily-weather.css'
+import DailyweatherRow from './daily-weather-row';
+import FetchWeather from '../../api/weather-fetcher';
+import { WeatherForecast } from '../../model/data/WeatherForecast';
 
 const Dailyweather : React.FC = () => {
 
-  const [widget, setWidget] = useState("https://www.yr.no/nb/innhold/1-72837/card.html")
+  const [weatherForecast, setWeatherForecast] = useState<WeatherForecast>()
 
   useEffect(() => {
-    const countdownInterval = setInterval(() => {
-      setWidget("https://www.yr.no/nb/innhold/1-72837/card.html");
-    }, 1000*60);
+    const CallFetchWeather = async () => {
+      const weatherResponse = await FetchWeather();
+      setWeatherForecast(weatherResponse);
+      
+    }
 
-    return () => clearInterval(countdownInterval);
-  }, [widget]);
+    CallFetchWeather();
+  }, [])
+
 
 
   return (
     <div className='weather-widget'>
-      <iframe
-        title="Weather Widget"
-        src={widget}
-        width="100%"
-        height="420px"
-      />
+      <div className='main-widget'>
+        <img src={`./img/weather/icons/${weatherForecast?.symbol_code}.svg`} alt="Logo" className='main-icon'/>
+        <div className='main-temp'>{weatherForecast?.air_temperature}°</div>
+        <div className='main-rain'>{weatherForecast?.precipitation_amount} mm</div>
+
+      </div>
+      <div className='secondary-widget'>
+          {weatherForecast && weatherForecast.forecast_next_hours.map((forecast_next_hour) => {
+            return <DailyweatherRow 
+                      time={forecast_next_hour.intervall} 
+                      degree={forecast_next_hour.air_temperature} 
+                      rain={forecast_next_hour.precipitation_amount}
+                      icon={forecast_next_hour.symbol_code}/>
+          })}
+        </div>
+
+        
     </div>
   );
 };
