@@ -76,7 +76,7 @@ const BusCard: React.FC<BusCardProps> = ({
   }
 
   return (
-    <div className="bus-card card text-white mb-2 container">
+    <div className="standard-rows text-white mb-2 container">
       <div className="card-body">
         <div className="row">
           <div className="col-md-9 public">

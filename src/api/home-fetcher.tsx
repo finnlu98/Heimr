@@ -13,7 +13,7 @@ const HomeFetcher = async (entityId: string) => {
 
         return response.data; 
     } catch (error) {
-        console.error("Can't get Kanye quote");
+        console.error("Can't get Home Assistant data");
         throw error;
     }
 }

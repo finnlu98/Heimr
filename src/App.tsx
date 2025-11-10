@@ -5,10 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BusCards from "./components/bus-cards/bus-cards";
 import { TailSpin } from "react-loader-spinner";
 import Header from "./components/header/header";
-import Dailyweather from "./components/weather-widget/daily-weather";
+import Dailyweather from "./components/weather/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
 import Configuration from "./Configuration";
+import Calender from "./components/calender/calender";
 function App() {
 
   const [loading, setLoading] = useState(true);
@@ -79,12 +80,13 @@ function App() {
         <div className="row">
           <Header />
         </div>
-        <div className="row dash-rows">
-          <div className="col-md-7 col-12">
+        <div className="row">
+          <div className="col-md-7">
             {Configuration.getBusStopConfigs().map((busStop) => {
               return (
                 <div className="widget-container mb-2">
                   <BusCards
+                    key={busStop.title}
                     title={busStop.title} 
                     startPlace={busStop.startPlace} 
                     stopPlace={busStop.stopPlace}
@@ -94,16 +96,20 @@ function App() {
                 )
             })}
           </div>
-          <div className="col-md-5 col-12">
+          <div className="col-md-5">
             <div className="widget-container row mb-2">
               <Dailyweather />
             </div>
             <div className="widget-container row mb-2">
-              <ElectrictyPrices/>
+              <Calender />
             </div>
+            {/* <div className="widget-container row mb-2">
+              <ElectrictyPrices/>
+            </div> */}
             <div className="widget-container row mb-2">
               <LaundryWeek />
             </div>
+            
           </div>
         </div>
       </div>

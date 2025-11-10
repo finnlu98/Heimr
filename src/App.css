@@ -12,11 +12,45 @@ html, body, #root {
     width: 100%;
 }
 
+/* Not optimal solution. Bootsrap grid was off. This works but destroys bootstrap logic */
+.col-md-7 {
+  padding-left: 0 !important;
+}
+
 .widget-container {
     border: 3px solid var(--color-off-white);
     padding: 5px;
     border-radius: 8px;
 }
+
+.standard-rows {
+    border-top: none;
+    border-bottom: 3px solid var(--color-off-gray);
+    border-left: none;
+    border-right: none;
+    background-color: var(--color-background);
+    border-radius: 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
 
 .loading-container {
     font-weight: bold;
@@ -27,18 +61,6 @@ html, body, #root {
     text-align: center;
     color: white;
 }
-
-
-@media only screen and (max-width: 750px) {
-    
-    .dash-rows {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
 
 /* reusable colors */
 :root {

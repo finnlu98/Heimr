@@ -1,11 +1,4 @@
-.bus-card {
-  border-top: none;
-  border-bottom: 3px solid var(--color-off-gray);
-  border-left: none;
-  border-right: none;
-  background-color: var(--color-background);
-  border-radius: 0px;
-}
+
 
 .public {
   font-size: larger;
