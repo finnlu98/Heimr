@@ -19,7 +19,7 @@ const Calender: React.FC = () => {
     return (
         <div className="calender-container">
             <div className="main-item-container">
-                <div className="main-subheader">🗓️ Next activities..</div>
+                <div className="main-subheader">Next activities..</div>
                 <CalenderRow item={firstEvent} hiearchy="main"/>
             </div>
             <div className="secondary-items-container">

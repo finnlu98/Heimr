@@ -37,13 +37,13 @@ const CalenderRow: React.FC<CalenderRowProps> = ({item, hiearchy}) => {
         if(email === undefined)
             return "undefined"
 
-        if(email.includes("finn"))
+        if(email.toLocaleLowerCase().includes("finn"))
             return "finn_griggs";
 
-        if(email.includes("pernille"))
+        if(email.toLocaleLowerCase().includes("pernille"))
             return "pernille"
 
-        if(email.includes("line"))
+        if(email.toLocaleLowerCase().includes("line"))
             return "line"
 
         return "unknown"
@@ -53,7 +53,7 @@ const CalenderRow: React.FC<CalenderRowProps> = ({item, hiearchy}) => {
         <div className={`standard-rows ${hiearchy}-item`}>
             <div className="content-container">
                 <div className="date-row">
-                    <div className={`${hiearchy}-item-date`}>{item && formatDate(item.start.dateTime)}</div>
+                    <div className={`${hiearchy}-item-date`}>🗓️ {item && formatDate(item.start.dateTime)}</div>
                     <div className="avatar circle">
                         {item?.creator?.email && <img src={`./img/${setAvatarImg(item?.creator?.email)}.jpg`} className="avatar-img"/>} 
                      </div>
