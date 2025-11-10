@@ -9,7 +9,6 @@ import moment from 'moment';
 import { GiSunrise } from "react-icons/gi";
 import { GiSunset } from "react-icons/gi";
 
-
 const Dailyweather : React.FC = () => {
 
   const [weatherData, setWeatherData] = useState<WeatherData>()

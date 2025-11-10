@@ -5,10 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BusCards from "./components/bus-cards/bus-cards";
 import { TailSpin } from "react-loader-spinner";
 import Header from "./components/header/header";
-import Dailyweather from "./components/weather-widget/daily-weather";
+import Dailyweather from "./components/weather/daily-weather";
 import ElectrictyPrices from "./components/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
 import Configuration from "./Configuration";
+import Calender from "./components/calender/calender";
 function App() {
 
   const [loading, setLoading] = useState(true);
@@ -100,11 +101,15 @@ function App() {
               <Dailyweather />
             </div>
             <div className="widget-container row mb-2">
-              <ElectrictyPrices/>
+              <Calender />
             </div>
+            {/* <div className="widget-container row mb-2">
+              <ElectrictyPrices/>
+            </div> */}
             <div className="widget-container row mb-2">
               <LaundryWeek />
             </div>
+            
           </div>
         </div>
       </div>

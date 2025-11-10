@@ -36,6 +36,10 @@ class Configuration {
     public getHomeAssistantConfig(): HomeAssitantConfig {
         return this.configuration.HomeAssistant;
     }
+
+    public getCalenderEndpoint(): string {
+        return this.configuration.Calender.Endpoint;
+    }
 }
 
 interface AppConfiguration {
@@ -45,6 +49,7 @@ interface AppConfiguration {
     Weather: WeatherConfig;
     Sunrise: SunriseConfig;
     HomeAssistant: HomeAssitantConfig;
+    Calender: CalenderConfig;
 }
 
 interface EnturConfig extends EndpointConfig {
@@ -87,6 +92,7 @@ interface HomeAssitantConfig extends EndpointConfig {
     secret_token: string
 }
 
+interface CalenderConfig extends EndpointConfig {}
 
 const configuration = new Configuration();
 export default configuration;
