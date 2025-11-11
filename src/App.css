@@ -12,11 +12,6 @@ html, body, #root {
     width: 100%;
 }
 
-/* Not optimal solution. Bootsrap grid was off. This works but destroys bootstrap logic */
-.col-md-7 {
-  padding-left: 0 !important;
-}
-
 .widget-container {
     border: 3px solid var(--color-off-white);
     padding: 5px;

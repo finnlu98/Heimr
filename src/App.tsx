@@ -76,44 +76,60 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container mt-2 mb-2">
-        <div className="row">
-          <Header />
+  <div className="container mt-2 mb-2">
+    {/* Header */}
+    <div className="row">
+      <div className="col-12">
+        <Header />
+      </div>
+    </div>
+
+    <div className="row g-2">
+      <div className="col-md-7">
+        <div className="row g-2">
+          {Configuration.getBusStopConfigs().map((busStop) => (
+            <div className="col-12" key={busStop.title}>
+              <div className="widget-container">
+                <BusCards
+                  title={busStop.title}
+                  startPlace={busStop.startPlace}
+                  stopPlace={busStop.stopPlace}
+                  configCard={busStop.configCard}
+                  configColor={busStop.configColor}
+                />
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="row">
-          <div className="col-md-7">
-            {Configuration.getBusStopConfigs().map((busStop) => {
-              return (
-                <div className="widget-container mb-2">
-                  <BusCards
-                    key={busStop.title}
-                    title={busStop.title} 
-                    startPlace={busStop.startPlace} 
-                    stopPlace={busStop.stopPlace}
-                    configCard={busStop.configCard}
-                    configColor={busStop.configColor}/>  
-                </div>
-                )
-            })}
-          </div>
-          <div className="col-md-5">
-            <div className="widget-container row mb-2">
+      </div>
+
+      <div className="col-md-5">
+        <div className="row g-2">
+          <div className="col-12">
+            <div className="widget-container">
               <Dailyweather />
             </div>
-            <div className="widget-container row mb-2">
+          </div>
+          <div className="col-12">
+            <div className="widget-container">
               <Calender />
             </div>
-            {/* <div className="widget-container row mb-2">
-              <ElectrictyPrices/>
-            </div> */}
-            <div className="widget-container row mb-2">
+          </div>
+          {/* <div className="col-12">
+            <div className="widget-container">
+              <ElectrictyPrices />
+            </div>
+          </div> */}
+          <div className="col-12">
+            <div className="widget-container">
               <LaundryWeek />
             </div>
-            
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
   );
 }
 

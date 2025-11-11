@@ -16,18 +16,27 @@ const Calender: React.FC = () => {
         getCalenderItems()
     }, [])
 
+    function setCalenderRows() {
+        if(calenderItems?.items.length === 0)
+            return (<div>No activities planned here, come on guys. Have some fun 🤦‍♂️</div>)
+        
+        return (
+            <div className="secondary-items-container">
+                {secondaryEvents?.map((item) => {
+                    return <CalenderRow item={item} hiearchy="secondary" />
+                })}
+            </div>
+        )
+    }
+
+
     return (
         <div className="calender-container">
             <div className="main-item-container">
                 <div className="main-subheader">Next activities..</div>
                 <CalenderRow item={firstEvent} hiearchy="main"/>
             </div>
-            <div className="secondary-items-container">
-                {secondaryEvents?.map((item) => {
-                    return <CalenderRow item={item} hiearchy="secondary" />
-                })}
-            </div>
-            
+            {setCalenderRows()}
         </div>
         )
 }

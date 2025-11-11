@@ -55,7 +55,8 @@
         "Endpoint": "http://homeassistant.local:8123/api/states"  
     },
     "Calender": {
-        "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=5&timeMin=:TIME_MIN"
+        "maxResults": 3,
+        "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=:MAX_RESULTS&timeMin=:TIME_MIN"
     }
 
 }

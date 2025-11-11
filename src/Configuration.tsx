@@ -37,8 +37,8 @@ class Configuration {
         return this.configuration.HomeAssistant;
     }
 
-    public getCalenderEndpoint(): string {
-        return this.configuration.Calender.Endpoint;
+    public getCalenderConfig(): CalenderConfig {
+        return this.configuration.Calender;
     }
 }
 
@@ -92,7 +92,9 @@ interface HomeAssitantConfig extends EndpointConfig {
     secret_token: string
 }
 
-interface CalenderConfig extends EndpointConfig {}
+interface CalenderConfig extends EndpointConfig {
+    maxResults: number
+}
 
 const configuration = new Configuration();
 export default configuration;
