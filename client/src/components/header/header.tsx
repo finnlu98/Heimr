@@ -39,7 +39,6 @@ const Header : React.FC = () => {
             <div className="avatar"><HomeAvatar name={"pernille"}></HomeAvatar></div> 
             <div className="avatar"><HomeAvatar name={"line"}></HomeAvatar></div> 
           </div>
-          
         </div>
       </div>
     </div>

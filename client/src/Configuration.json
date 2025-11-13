@@ -57,6 +57,14 @@
     "Calender": {
         "maxResults": 3,
         "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=:MAX_RESULTS&timeMin=:TIME_MIN"
+    },
+    "Elvia": {
+        "Tariffs": {
+            "Endpoint": ""
+        },
+        "Consumption": {
+            "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
+        }
     }
 
 }

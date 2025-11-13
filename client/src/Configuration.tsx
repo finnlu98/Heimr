@@ -6,7 +6,7 @@ class Configuration {
     constructor() {
         
         this.configuration = config as AppConfiguration;
-        this.getHomeAssistantConfig().secret_token = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
+        this.getHomeAssistantConfig().secreToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
     }
 
     public getEnturConfig(): EnturConfig {
@@ -40,6 +40,10 @@ class Configuration {
     public getCalenderConfig(): CalenderConfig {
         return this.configuration.Calender;
     }
+
+    public getElviaConfig(): ElviaConfig {
+        return this.configuration.Elvia;
+    }
 }
 
 interface AppConfiguration {
@@ -50,6 +54,7 @@ interface AppConfiguration {
     Sunrise: SunriseConfig;
     HomeAssistant: HomeAssitantConfig;
     Calender: CalenderConfig;
+    Elvia: ElviaConfig
 }
 
 interface EnturConfig extends EndpointConfig {
@@ -89,12 +94,18 @@ interface WeatherConfig extends EndpointConfig {}
 interface SunriseConfig extends EndpointConfig {}
 
 interface HomeAssitantConfig extends EndpointConfig {
-    secret_token: string
+    secreToken?: string
 }
 
 interface CalenderConfig extends EndpointConfig {
     maxResults: number
 }
+
+interface ElviaConfig {
+    Consumption: EndpointConfig
+    Tariffs: EndpointConfig
+}
+
 
 const configuration = new Configuration();
 export default configuration;

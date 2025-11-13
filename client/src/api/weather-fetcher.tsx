@@ -30,6 +30,7 @@ function getCurrentPosition(): Promise<GeolocationPosition> {
   });
 }
 
+// Todo: fix https tunneling on local network
 function formatEndpointWithCoordinates(endpoint: string) : string {
     return endpoint
             .replace(":lat", "59.91273")
