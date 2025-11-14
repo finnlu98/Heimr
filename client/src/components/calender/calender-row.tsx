@@ -55,7 +55,7 @@ const CalenderRow: React.FC<CalenderRowProps> = ({item, hiearchy}) => {
                 <div className="date-row">
                     <div className={`${hiearchy}-item-date`}>🗓️ {item && formatDate(item.start.dateTime)}</div>
                     <div className="avatar circle">
-                        {item?.creator?.email && <img src={`./img/${setAvatarImg(item?.creator?.email)}.jpg`} className="avatar-img"/>} 
+                        {item?.creator?.email && <img src={`./img/${setAvatarImg(item?.creator?.email)}.jpg`} className="avatar-img" alt="avatar"/>} 
                      </div>
                 </div>
                  <div className={`summary ${hiearchy}-item-summary`}>{item && formatSummary(item.summary)}</div> 

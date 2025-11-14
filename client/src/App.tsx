@@ -87,6 +87,11 @@ function App() {
         <div className="row g-2">
           <div className="col-md-7">
             <div className="row g-2">
+              <div className="col-12">
+                <div className="widget-container">
+                  <ElectricyConsumption />
+                </div>
+              </div>
               {Configuration.getBusStopConfigs().map((busStop) => (
                 <div className="col-12" key={busStop.title}>
                   <div className="widget-container">
@@ -100,11 +105,7 @@ function App() {
                   </div>
                 </div>
               ))}
-              <div className="col-12">
-                <div className="widget-container">
-                  <ElectricyConsumption />
-                </div>
-              </div>
+              
             </div>
           </div>
 

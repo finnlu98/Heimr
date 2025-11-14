@@ -11,7 +11,7 @@
                 "stopPlace": "NSR:StopPlace:62019",
                 "configCard": 
                 {
-                    "numRows": 4,
+                    "numRows": 3,
                     "minFilter": 3
                 },
                 "configColor":
@@ -27,7 +27,7 @@
                 "stopPlace": "NSR:StopPlace:6323",
                 "configCard":
                 {
-                    "numRows": 4,
+                    "numRows": 3,
                     "minFilter": 3
                 },
                 "configColor":

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ComponentData } from "../../../model/Deziarilize/ElectricityPrices";
 import {
   Chart as ChartJS,

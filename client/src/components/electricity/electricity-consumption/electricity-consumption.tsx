@@ -5,7 +5,6 @@ import { ComponentData } from "../../../model/Deziarilize/ElectricityPrices";
 import moment from "moment";
 import "./electricity-consumption.css"
 import { ImPower } from "react-icons/im";
-import { setDatasets } from "react-chartjs-2/dist/utils";
 import BarChart from "../charts/bar-chart";
 
 const ElectricyConsumption: React.FC = () => {
@@ -21,6 +20,23 @@ const ElectricyConsumption: React.FC = () => {
 
     useEffect(() => setData(elecService?.getChartFormattedData()), [elecService])
     
+    useEffect(() => {
+        const updateInterval = setInterval(() => {
+          updateElectricityData();
+        }, 60 * 60 * 1000);
+    
+        return () => clearInterval(updateInterval);
+      }, []);
+
+    async function updateElectricityData() {
+        try {
+        const updatedElecData = await ElviaFetcher();
+        setElecService(updatedElecData);
+        setData(updatedElecData.getChartFormattedData())
+        } catch (error) {
+        console.error("Can't update data:", error);
+        }
+    }
 
     return (
         <div className="consumption-container">
