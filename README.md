@@ -1,4 +1,4 @@
-# HEIMR
+# Heimr
 
 Heimr is a home dashboard that provides useful information about your household and local conditions.
 
