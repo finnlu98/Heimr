@@ -41,8 +41,8 @@ class Configuration {
         return this.configuration.Calender;
     }
 
-    public getElviaConfig(): ElviaConfig {
-        return this.configuration.Elvia;
+    public getElviaConfig(): string {
+        return process.env.REACT_APP_ELECTRICITY_CONSUMPTION ?? "";
     }
 }
 
@@ -54,7 +54,6 @@ interface AppConfiguration {
     Sunrise: SunriseConfig;
     HomeAssistant: HomeAssitantConfig;
     Calender: CalenderConfig;
-    Elvia: ElviaConfig
 }
 
 interface EnturConfig extends EndpointConfig {

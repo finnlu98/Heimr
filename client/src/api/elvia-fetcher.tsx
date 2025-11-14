@@ -6,7 +6,7 @@ import { ElviaService } from "../services/ElviaService";
 
 
 const ElviaFetcher = async () => {
-    const consumptionEndpoint = configuration.getElviaConfig().Consumption.Endpoint;
+    const consumptionEndpoint = configuration.getElviaConfig();
     const response = await axios.get<ElviaConsumptionResponse>(consumptionEndpoint)
     const elviaService = new ElviaService(response.data);
     elviaService.getConsumptionToday();

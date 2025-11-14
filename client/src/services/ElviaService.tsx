@@ -49,8 +49,6 @@ export class ElviaService {
                 return acc;
             }, {} as Record<number, typeof monthlyData>);
             
-            
-            
             days.forEach((value, index) => {
                 var consDay = highestConsumption[(index + 1)]
                 var maxConsumption = consDay?.reduce((maxHour, curr) => maxHour.value < curr.value ? curr : maxHour)
