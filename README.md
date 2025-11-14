@@ -1,6 +1,6 @@
 # HEIMR
 
-Heimr is a dashboard for the home that gives useful information about the home and conditions in your area.
+Heimr is a home dashboard that provides useful information about your household and local conditions.
 
 Feel free to contribute.
 
