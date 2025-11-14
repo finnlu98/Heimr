@@ -1,17 +1,17 @@
 export interface ElviaConsumptionResponse {
-    meteringPoints: MeteringPoint
+    meteringpoints: MeteringPoint[]
 }
 
-interface MeteringPoint {
+export interface MeteringPoint {
     meteringPointId: string
-    meterValue: MeterValue
+    metervalue: MeterValue
 }
 
 interface MeterValue {
     timeSeries: TimeSerie[]
 }
 
-interface TimeSerie {
+export interface TimeSerie {
     startTime: string
     endTime: string
     value: number

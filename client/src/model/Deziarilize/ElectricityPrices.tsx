@@ -4,11 +4,22 @@ export class ElectricityPrice {
 }
 
 export class ComponentData {
-  labels!: string[]
-  datasets!: Datasets[]
+  labels: string[]
+  datasets: Datasets[]
+
+  constructor(labels: string[], datasets: Datasets[]) {
+    this.labels = labels;
+    this.datasets = datasets;
+  }
+
 }
 
-class Datasets {
-  data!: Number[]
-  backgroundColor!: string
+export class Datasets {
+  data: Number[]
+  backgroundColor: string
+
+  constructor(data: number[]) {
+    this.data = data;
+    this.backgroundColor = 'rgba(0, 184, 241, 0.8)';
+  }
 }

@@ -23,5 +23,4 @@ export class Routes {
         this.app.use("/", this.router)
         this.app.use("/api", electricty.route)
     }
-
 }

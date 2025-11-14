@@ -6,7 +6,7 @@ class Configuration {
     constructor() {
         
         this.configuration = config as AppConfiguration;
-        this.getHomeAssistantConfig().secreToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
+        this.getHomeAssistantConfig().secretToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
     }
 
     public getEnturConfig(): EnturConfig {
@@ -94,7 +94,7 @@ interface WeatherConfig extends EndpointConfig {}
 interface SunriseConfig extends EndpointConfig {}
 
 interface HomeAssitantConfig extends EndpointConfig {
-    secreToken?: string
+    secretToken?: string
 }
 
 interface CalenderConfig extends EndpointConfig {

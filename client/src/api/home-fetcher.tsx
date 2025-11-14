@@ -8,7 +8,7 @@ const HomeFetcher = async (entityId: string) => {
         var config = configuration.getHomeAssistantConfig()
         var endpoint = `${config.Endpoint}/person.${entityId}`
         const response = await axios.get<HomeStatus>(
-            endpoint, { headers: { "Authorization": `Bearer ${config.secreToken}`, "Content-Type": "text/plain" } }
+            endpoint, { headers: { "Authorization": `Bearer ${config.secretToken}`, "Content-Type": "text/plain" } }
         );
 
         return response.data; 

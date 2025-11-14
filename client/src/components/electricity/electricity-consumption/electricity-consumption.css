@@ -1,0 +1,28 @@
+.consumption-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.consumption-cards {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: stretch;
+    
+}
+
+.consumption-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;               
+    border-bottom: 2px solid;
+    padding: 3px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.card-sub-text {
+    font-size: small;
+}
