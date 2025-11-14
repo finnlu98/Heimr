@@ -57,7 +57,7 @@ const ElectricyConsumption: React.FC = () => {
                 </div>
                 <div className="consumption-card">
                     <div>Level 2</div>
-                    <div className="card-sub-text">2-5 kWh/h, 190 nok</div>
+                    <div className="card-sub-text">2-5 kWh/h</div>
                 </div>
             </div>
             <div>
