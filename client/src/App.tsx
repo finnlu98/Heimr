@@ -100,7 +100,7 @@ function App() {
                   </div>
                 </div>
               ))}
-              <div col-12>
+              <div className="col-12">
                 <div className="widget-container">
                   <ElectricyConsumption />
                 </div>

@@ -12,7 +12,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import FetchElectricityPrices from "../../../api/electricity-price-fetcher";
-import { ElectricityPrice, ComponentData } from "../../../model/Deziarilize/ElectricityPrices";
+import { ElectricityPrice, ComponentData, Datasets } from "../../../model/Deziarilize/ElectricityPrices";
+import BarChart from "../charts/bar-chart";
 
 ChartJS.register(
     CategoryScale,
@@ -23,44 +24,11 @@ ChartJS.register(
     Legend
   );
 
-
 const ElectrictyPrices: React.FC = () => {
   const [elecPrices, setElecPrices] = useState<ElectricityPrice[]>();
   const [dynamicData, setData] = useState<ComponentData>();
 
   const todaysDate = moment().format('DD/MM/YY')
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: true,
-        text: `${todaysDate} - NOK per kWh`,
-        color: "white"
-      },
-    },
-    scales: {
-        x: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            color: 'white', 
-          }
-        },
-        y: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            color: 'white' 
-          }
-        },
-      }
-  };
 
   useEffect(() => {
     const setAndFetchElecPrices = async () => setElecPrices(await FetchElectricityPrices())
@@ -72,15 +40,7 @@ const ElectrictyPrices: React.FC = () => {
       const labels = elecPrices.map((entry) => moment(entry.time_start).format('HH') );
       const nokData = elecPrices.map((entry) => entry.NOK_per_kWh);
   
-      setData({
-        labels,
-        datasets: [
-          {
-            data: nokData,
-            backgroundColor: 'rgba(0, 184, 241, 0.8)'
-          }
-        ],
-      });
+      setData(new ComponentData(labels, [new Datasets(nokData)]))
     }
   }, [elecPrices]);
 
@@ -90,7 +50,7 @@ const ElectrictyPrices: React.FC = () => {
 
   return (
     <div className="electricity-widget">
-      <Bar options={options} data={dynamicData} />
+      <BarChart title={`${todaysDate} - NOK per kWh`} chartData={dynamicData} />
     </div>
   );
 }

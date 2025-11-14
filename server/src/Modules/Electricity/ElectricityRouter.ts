@@ -8,11 +8,10 @@ export class ElectricityRouter {
     constructor() {
         this.route = Router()
         this.subRoute = "/electricity/consumption"
+        var elecFetcher = new ElectricityFetcher()
     
         this.route.get(this.subRoute, async (req: Request, res: Response) => {
-            var elecFetcher = new ElectricityFetcher()
-
-            res.send(await elecFetcher.GetElectricityConsumption())
+            res.send(await elecFetcher.GetCurrentMonthConsumption())
         })
 
     }
