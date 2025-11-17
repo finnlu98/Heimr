@@ -34,7 +34,7 @@ const Calender: React.FC = () => {
         <div className="calender-container">
             <div className="main-item-container">
                 <div className="main-subheader">Next activities..</div>
-                <CalenderRow item={firstEvent} hiearchy="main"/>
+                {calenderItems?.items.length !== 0 && <CalenderRow item={firstEvent} hiearchy="main"/>} 
             </div>
             {setCalenderRows()}
         </div>
