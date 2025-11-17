@@ -30,7 +30,7 @@ export class ElviaService {
     getConsumptionMonth(): number {
         var c = this.getMonthlyConsumption();
         if(c)
-            return Number((this.getSumConsumption(c)).toFixed(0));
+            return this.getSumConsumption(c);
         return -1
     }
 
