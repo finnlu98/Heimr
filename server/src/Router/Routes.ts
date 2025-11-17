@@ -1,5 +1,5 @@
 import { Application, Request, Response, Router } from "express";
-import { ElectricityRouter } from "../Modules/Electricity/ElectricityRouter";
+import BrokerRouter from "../Modules/Broker/BrokerRouter";
 
 export class Routes {
     app: Application
@@ -19,8 +19,8 @@ export class Routes {
     }
 
     RegisterRoutes() {
-        const electricty = new ElectricityRouter()
+        const broker = new BrokerRouter();
         this.app.use("/", this.router)
-        this.app.use("/api", electricty.route)
+        this.app.use("/api", broker.route)
     }
 }

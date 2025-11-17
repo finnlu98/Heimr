@@ -63,7 +63,7 @@
             "Endpoint": ""
         },
         "Consumption": {
-            "Endpoint": "http://localhost:8000/api/electricity/consumption"
+            "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
         }
     }
 

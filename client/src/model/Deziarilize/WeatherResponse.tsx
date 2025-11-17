@@ -1,4 +1,7 @@
-export class WeatherResponse {
+import BaseResponse from "./Common/BaseResponse"
+
+export class WeatherResponse extends BaseResponse {
+    static Identifier: "WeatherResponse"
     properties!: Properties
 }
 

@@ -1,4 +1,7 @@
-export class SunriseResponse {
+import BaseResponse from "./Common/BaseResponse"
+
+export class SunriseResponse extends BaseResponse {
+    static Identifier = "SunriseResponse"
     properties!: Properties
 }
 
