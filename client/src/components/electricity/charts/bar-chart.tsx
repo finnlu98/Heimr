@@ -26,12 +26,12 @@ const BarChart: React.FC<BarChartProps> = ({title, chartData}) => {
         responsive: true,
         plugins: {
             legend: {
-            display: false,
+                display: false,
             },
             title: {
-            display: true,
-            text: title,
-            color: "white",
+                display: true,
+                text: title,
+                color: "white",
             },
             annotation: {
             annotations: {

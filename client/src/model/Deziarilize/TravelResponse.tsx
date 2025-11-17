@@ -1,4 +1,7 @@
-export class TravelResponse {
+import BaseResponse from "./Common/BaseResponse"
+
+export class TravelResponse extends BaseResponse {
+    static Identifier = "TravelResponse"
     data!: Data
 }
 

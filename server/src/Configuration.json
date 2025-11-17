@@ -1,5 +1,2 @@
 {
-    "Elvia": {
-        "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
-    }
 }
