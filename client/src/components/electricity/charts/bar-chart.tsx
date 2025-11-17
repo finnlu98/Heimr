@@ -18,9 +18,10 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, annota
 interface BarChartProps {
     title: string
     chartData: ComponentData
+    meanMax: number
 }
 
-const BarChart: React.FC<BarChartProps> = ({title, chartData}) => {
+const BarChart: React.FC<BarChartProps> = ({title, chartData, meanMax}) => {
     
     const options: ChartOptions<"bar"> = {
         responsive: true,
@@ -34,24 +35,43 @@ const BarChart: React.FC<BarChartProps> = ({title, chartData}) => {
                 color: "white",
             },
             annotation: {
-            annotations: {
-                avgLine: {
-                type: "line",
-                yMin: 2,
-                yMax: 2,
-                borderColor: "white",
-                borderWidth: 1,
-                borderDash: [6, 6],
-                label: {
-                    display: true,
-                    content: "Level 2",
-                    position: "end",
-                    yAdjust: -15, 
-                    backgroundColor: "rgba(0,0,0,0)",
-                    color: "white",
+                annotations: {
+                    currentLevel: {
+                        type: "line",
+                        yMin: 2,
+                        yMax: 2,
+                        borderColor: "white",
+                        borderWidth: 1,
+                        label: {
+                            display: true,
+                            content: "",
+                            position: "end",
+                            yAdjust: -15, 
+                            backgroundColor: "rgba(0,0,0,0)",
+                            color: "white",
+                        },
+                    } as AnnotationOptions<"line">,
+                    avgLine: {
+                        type: "line",
+                        yMin: meanMax,
+                        yMax: meanMax,
+                        borderColor: "white",
+                        borderWidth: 1,
+                        borderDash: [6, 6],
+                        label: {
+                            display: true,
+                            content: `(Avg peak ${meanMax} kwh)`,
+                            position: "end",
+                            yAdjust: -13, 
+                            backgroundColor: "rgba(0,0,0,0)",
+                            color: "white",
+                            font: {
+                                weight: "normal",  
+                                size: 12,          
+                            }
+                        },
+                    } as AnnotationOptions<"line">,
                 },
-                } as AnnotationOptions<"line">,
-            },
             },
         },
         scales: {
