@@ -104,7 +104,13 @@ export class ElviaService {
 
     getChartFormattedData(): ComponentData {
         const [labels, values] = this.getHighestConsumptionEachDay()
-        return new ComponentData(labels, [new Datasets(values)])
+        const top3Indexes = values
+            .map((v, i) => ({ v, i }))
+            .sort((a, b) => b.v - a.v)
+            .slice(0, 3)
+            .map(x => x.i);
+        
+        return new ComponentData(labels, [new Datasets(values, top3Indexes)])
 
      }
 

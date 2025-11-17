@@ -16,10 +16,32 @@ export class ComponentData {
 
 export class Datasets {
   data: Number[]
-  backgroundColor: string
+  backgroundColor: string[]
+  defaultColor = 'rgba(0, 184, 241, 0.8)'
+  highlightindexes?: HighlightIndex
 
-  constructor(data: number[]) {
+  constructor(data: number[], highlightindexes?: number[]) {
     this.data = data;
-    this.backgroundColor = 'rgba(0, 184, 241, 0.8)';
+    this.highlightindexes = new HighlightIndex(highlightindexes);
+    
+    this.backgroundColor = data.map((_, i) => this.getBackgroundColor(i)); 
+  }
+
+  getBackgroundColor(i: number): string {
+    if(!this.highlightindexes)
+      return this.defaultColor
+    
+    if(this.highlightindexes.indexes.includes(i))
+      return this.highlightindexes.backgroundColor
+    return this.defaultColor;
+  }
+
+}
+
+export class HighlightIndex {
+  indexes: number[]
+  backgroundColor = 'rgba(0, 153, 241, 0.8)'
+  constructor(indexes?: number[]) {
+     this.indexes = indexes ?? [];
   }
 }
