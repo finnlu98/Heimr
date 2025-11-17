@@ -46,7 +46,7 @@ import FetcherHelper from "./fetcher/FetcherHelper";
 
             const fetcher = new FetcherHelper<TravelResponse>(60 * 6 * 1000)
 
-            const res = fetcher.getData(TravelResponse.Identifier, async () => {
+            const res = fetcher.getData(TravelResponse.Identifier + crypto.randomUUID(), async () => {
                 const response = await axios.post<TravelResponse>(
                 endpoint,
                 { query: graphqlQuery },
