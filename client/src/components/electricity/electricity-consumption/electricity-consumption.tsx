@@ -5,7 +5,11 @@ import { ComponentData } from "../../../model/Deziarilize/ElectricityPrices";
 import moment from "moment";
 import "./electricity-consumption.css"
 import { ImPower } from "react-icons/im";
+import { MdPriceChange } from "react-icons/md";
+import { GiLevelTwo } from "react-icons/gi";
+import { IoIosTimer } from "react-icons/io";
 import BarChart from "../charts/bar-chart";
+import {  ElectricityLevelFormatter } from "../../../model/data/Enum/ElectricityLevel";
 
 const ElectricyConsumption: React.FC = () => {
     const [elecService, setElecService] = useState<ElviaService>();
@@ -44,25 +48,30 @@ const ElectricyConsumption: React.FC = () => {
                 <div className="consumption-card">
                     <ImPower fill="#f3a71aff" />
                     <div>
-                    {elecService?.getConsumptionToday()} kwh
+                    {elecService?.getConsumptionMonth()} kwh
                     </div>
                 </div>
                 <div className="consumption-card">
-                    <div>
-                        Highest at {moment(elecService?.getHighestHour()?.startTime).format("h a")}
-                    </div>
+                    <MdPriceChange fill="rgb(57, 187, 115)" />
+                    <div>{elecService?.getEstimatedPriceMonth()} NOK</div>
+
+                </div>
+                <div className="consumption-card">
+                    <div className="level-header"><GiLevelTwo fill="#f3a71aff"/> {ElectricityLevelFormatter.formatLevel(elecService?.getCapacityLevel())}</div>
+                    <div className="card-sub-text">{ElectricityLevelFormatter.formatInterval(elecService?.getCapacityLevel())} kwh</div>
+                </div>
+                <div className="consumption-card">
+                    <div className="level-header"><IoIosTimer fill="#7c7a7aff" /> {moment(elecService?.getHighestHour()?.startTime).format("h a")}</div> 
                     <div className="card-sub-text">
-                        {elecService?.getHighestHour()?.value} kwh
+                    {elecService?.getHighestHour()?.value} kwh 
                     </div>
-                </div>
-                <div className="consumption-card">
-                    <div>Level 2</div>
-                    <div className="card-sub-text">2-5 kWh/h</div>
                 </div>
             </div>
-            <div>
+            
+            <div className="consumption-chart-container">
+                Peak kwh per day in {moment().format("MMMM")} 
                 {dynamicData && (
-                    <BarChart chartData={dynamicData} title={`Highest avg kWh per day in ${moment().format("MMMM")}`} />
+                    <BarChart chartData={dynamicData} title={`Highest avg kWh per day in ${moment().format("MMMM")}`} meanMax={elecService?.getMeanMaxLevel() ?? -1} />
                 )} 
             </div>
         </div>

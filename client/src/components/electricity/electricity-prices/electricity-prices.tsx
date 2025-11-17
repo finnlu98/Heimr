@@ -50,7 +50,7 @@ const ElectrictyPrices: React.FC = () => {
 
   return (
     <div className="electricity-widget">
-      <BarChart title={`${todaysDate} - NOK per kWh`} chartData={dynamicData} />
+      {/* <BarChart title={`${todaysDate} - NOK per kWh`} chartData={dynamicData} /> */}
     </div>
   );
 }

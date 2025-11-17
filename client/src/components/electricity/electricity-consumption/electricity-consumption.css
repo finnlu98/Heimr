@@ -23,6 +23,18 @@
     gap: 2px;
 }
 
+.level-header {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-weight: bold;
+}
+
 .card-sub-text {
+    font-size: small;
+}
+
+.consumption-chart-container {
+    text-align: center;
     font-size: small;
 }
