@@ -47,7 +47,7 @@ const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
     return (
         <div className='avatar-container'>
             <div className="circle">
-                <img src={avatarImg} alt="Avatar" className="avatar-img"/>
+                {avatarImg && <img src={avatarImg} alt="Avatar" className="avatar-img"/>} 
             </div>
             <div className={`icon-circle ${homeStatus?.state}`}>
                 <FaHome/>

@@ -49,7 +49,7 @@ const LaundryWeek : React.FC = () => {
     return (
       <div className="laundry-week">
       <div className="laundry-week-header">
-        <h5>Vasking uke {currentWeek}</h5>
+        <h5>Washing in week {currentWeek}</h5>
       </div>
       <div className="week-table-header">
       </div>
@@ -80,7 +80,7 @@ const LaundryWeek : React.FC = () => {
   return (
     <div className="laundry-week">
       <div className="laundry-week-header">
-        <h5>Vasking uke {currentWeek}</h5>
+        <h5>Washing in week {currentWeek}</h5>
       </div>
       <div className="week-table-header">
       </div>

@@ -8,6 +8,14 @@ class Configuration {
         this.configuration = config as AppConfiguration;
         this.getHomeAssistantConfig().secretToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
     }
+    
+    public getHomeConfig(): Home {
+        return this.configuration.ClientData.Home
+    }
+    
+    public getIdentifierConfig(): string {
+        return this.configuration.ClientData.ClientIdentifier
+    }
 
     public getEnturConfig(): EnturConfig {
         return this.configuration.Entur;
@@ -44,9 +52,14 @@ class Configuration {
     public getElviaConfig(): ElviaConfig {
         return this.configuration.Elvia;
     }
+
+    public getOsloCityBikeConfig(): OsloCityBikeConfig {
+        return this.configuration.OsloCityBike;
+    }
 }
 
 interface AppConfiguration {
+    ClientData: ClientData
     Entur: EnturConfig;
     ElectricityPrices: ElectricityPricesConfig;
     KanyeQuoute: KanyeQuoteConfig;
@@ -55,6 +68,17 @@ interface AppConfiguration {
     HomeAssistant: HomeAssitantConfig;
     Calender: CalenderConfig;
     Elvia: ElviaConfig;
+    OsloCityBike: OsloCityBikeConfig
+}
+
+interface ClientData {
+    ClientIdentifier: string
+    Home: Home
+}
+
+interface Home {
+    lat: number
+    lon: number
 }
 
 interface EnturConfig extends EndpointConfig {
@@ -107,6 +131,17 @@ interface ElviaConfig {
     Tariffs: EndpointConfig
 }
 
+interface OsloCityBikeConfig {
+    Stations: TrackStation[]
+    StationsInformation: EndpointConfig
+    Status: EndpointConfig
+}
+
+interface TrackStation {
+    StationId: number
+    Name: string
+
+}
 
 const configuration = new Configuration();
 export default configuration;
