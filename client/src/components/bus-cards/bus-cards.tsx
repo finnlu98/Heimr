@@ -6,9 +6,13 @@ import { TripPatterns } from "../../model/Deziarilize/TravelResponse";
 import { Mode } from "../../model/data/Enum/Mode";
 import { ConfigColor } from "./ConfigColor";
 import FetchBustimes from "../../api/bus-time-fetcher";
+import { CiSun } from "react-icons/ci";
+import { SlArrowDown } from "react-icons/sl";
+
 
 interface BusCardsProps {
   title: string,
+  imgPath: string
   startPlace: string
   stopPlace: string
   configCard: {
@@ -18,7 +22,7 @@ interface BusCardsProps {
   configColor: ConfigColor
 }
 
-const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, configCard, configColor }) => {
+const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPlace, configCard, configColor }) => {
   
   const { numRows, minFilter } = configCard;
   
@@ -87,11 +91,10 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
   }
 
   return (
-    <div>
-      <div className="busstider-header mb-2">
-          <h5>{title}</h5>
-        </div>
-        <div>
+    <div className="bus-cards">
+          <div className="bus-card-img circle">
+            <img className="avatar-img" src={`./img/bus-card/${imgPath}`}/>
+          </div>
           {tripPatterns && tripPatterns.slice(0, numRows).map((tripPattern) => {
             return (
               <BusCard
@@ -107,7 +110,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, startPlace, stopPlace, confi
               />
             );
           })}
-        </div>
+          {/* <div className="bus-card-arrow-down"><SlArrowDown size={12} /></div> */}
     </div>
   );
 }

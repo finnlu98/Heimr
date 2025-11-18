@@ -76,9 +76,9 @@ const BusCard: React.FC<BusCardProps> = ({
   }
 
   return (
-    <div className="standard-rows text-white mb-2 container">
-      <div className="card-body">
-        <div className="row">
+    <div className="bus-card">
+        <div>{formatShowTime(minutes)}</div>
+        {/* <div className="row">
           <div className="col-md-9 public">
             <div className="d-flex">
             <div className="public-icon">
@@ -94,8 +94,7 @@ const BusCard: React.FC<BusCardProps> = ({
             <div className={`col-md-3 d-flex flex-column align-items-center minutes ${badTime}`}>
               <h5>{formatShowTime(minutes)}</h5>
             </div>
-        </div>
-      </div>
+        </div> */}
     </div>
 
   );

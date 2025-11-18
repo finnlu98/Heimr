@@ -1,4 +1,13 @@
 
+.bus-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  border: 1px solid;
+  border-radius: 10%;
+  overflow: hidden;
+}
 
 .public {
   font-size: larger;
