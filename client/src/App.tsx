@@ -11,6 +11,7 @@ import LaundryWeek from "./components/laundry-week/laundry-week";
 import Configuration from "./Configuration";
 import Calender from "./components/calender/calender";
 import ElectricyConsumption from "./components/electricity/electricity-consumption/electricity-consumption";
+import TravelCard from "./components/bus-cards/travel-card";
 function App() {
 
   const [loading, setLoading] = useState(true);
@@ -83,32 +84,22 @@ function App() {
             <Header />
           </div>
         </div>
-
         <div className="row g-2">
           <div className="col-md-7">
             <div className="row g-2">
+              <div className="col-12" >
+                <div className="widget-container">
+                  <TravelCard />
+                </div>
+              </div>
               <div className="col-12">
                 <div className="widget-container">
                   <ElectricyConsumption />
                 </div>
               </div>
-              {Configuration.getBusStopConfigs().map((busStop) => (
-                <div className="col-12" key={busStop.title}>
-                  <div className="widget-container">
-                    <BusCards
-                      title={busStop.title}
-                      startPlace={busStop.startPlace}
-                      stopPlace={busStop.stopPlace}
-                      configCard={busStop.configCard}
-                      configColor={busStop.configColor}
-                    />
-                  </div>
-                </div>
-              ))}
               
             </div>
           </div>
-
           <div className="col-md-5">
             <div className="row g-2">
               <div className="col-12">
@@ -121,11 +112,6 @@ function App() {
                   <Calender />
                 </div>
               </div>
-              {/* <div className="col-12">
-                <div className="widget-container">
-                  <ElectrictyPrices />
-                </div>
-              </div> */}
               <div className="col-12">
                 <div className="widget-container">
                   <LaundryWeek />

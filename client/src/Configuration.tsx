@@ -75,6 +75,7 @@ interface ConfigCard {
 
 interface BusStopConfiguration {
     title: string;
+    imgPath: string;
     startPlace: string;
     stopPlace: string;
     configCard: ConfigCard;

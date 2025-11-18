@@ -1,0 +1,26 @@
+.travel-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  padding-bottom: 5px;
+}
+
+.travel-container-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.travel-container-header img {
+  width: 15px;
+  height: 15px;
+}
+
+.travel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
