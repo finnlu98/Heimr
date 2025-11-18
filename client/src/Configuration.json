@@ -1,4 +1,11 @@
 {
+    "ClientData": {
+        "ClientIdentifier": "FinnGriggsProduksjoner-HeimrHomeDash",
+        "Home": {
+            "lat": 59.92159991761743,
+            "lon": 10.737959825316603
+        }
+    },
     "Entur": 
     {
         "Endpoint": "https://api.entur.io/journey-planner/v3/graphql",
@@ -83,6 +90,33 @@
         },
         "Consumption": {
             "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
+        }
+    }, 
+    "OsloCityBike": {
+        "Stations": 
+            [
+                {
+                    "StationId": 400,
+                    "Name": "OsloMet"
+                },
+                {
+                    "StationId": 476,
+                    "Name": "Edvard Storms gate"
+                },
+                {
+                    "StationId": 389,
+                    "Name": "Pilestredet Studenthus"
+                },
+                {
+                    "StationId": 469,
+                    "Name": "Studentparlamentet"
+                }
+            ],
+        "StationsInformation": {
+            "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json"
+        },
+        "Status": {
+            "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json"
         }
     }
 

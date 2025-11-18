@@ -1,37 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import moment from "moment";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BusCards from "./components/bus-cards/bus-cards";
-import { TailSpin } from "react-loader-spinner";
 import Header from "./components/header/header";
 import Dailyweather from "./components/weather/daily-weather";
-import ElectrictyPrices from "./components/electricity/electricity-prices/electricity-prices";
 import LaundryWeek from "./components/laundry-week/laundry-week";
-import Configuration from "./Configuration";
 import Calender from "./components/calender/calender";
 import ElectricyConsumption from "./components/electricity/electricity-consumption/electricity-consumption";
 import TravelCard from "./components/bus-cards/travel-card";
+import CityBike from "./components/city-bike/city-bike";
+import 'leaflet/dist/leaflet.css';
+
 function App() {
-
-  const [loading, setLoading] = useState(true);
-
   const reloadHour = 5;
   const reloadMinute = 30;
-
-  const fetchandSetData = async () => {
-    try {
-      // Logikk for å si ifra at vi er ferdig lastet :D
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchandSetData();
-  }, []);
 
   useEffect(() => {
     const shouldReload = () => {
@@ -56,26 +38,6 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div>
-          <TailSpin
-            height="150"
-            width="150"
-            color="lightblue"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-          <div className="mt-4">Loading...</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="app">
       <div className="container mt-2 mb-2">
@@ -94,6 +56,11 @@ function App() {
               </div>
               <div className="col-12">
                 <div className="widget-container">
+                  <Dailyweather />
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="widget-container">
                   <ElectricyConsumption />
                 </div>
               </div>
@@ -103,9 +70,10 @@ function App() {
             <div className="row g-2">
               <div className="col-12">
                 <div className="widget-container">
-                  <Dailyweather />
+                  <CityBike />
                 </div>
               </div>
+              
               <div className="col-12">
                 <div className="widget-container">
                   <Calender />

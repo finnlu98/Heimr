@@ -43,6 +43,7 @@ import FetcherHelper from "./fetcher/FetcherHelper";
             
             const config = Configuration.getEnturConfig()
             const endpoint = config.Endpoint;
+            const identifier = Configuration.getIdentifierConfig()
 
             const fetcher = new FetcherHelper<TravelResponse>(60 * 6 * 1000)
 
@@ -50,7 +51,7 @@ import FetcherHelper from "./fetcher/FetcherHelper";
                 const response = await axios.post<TravelResponse>(
                 endpoint,
                 { query: graphqlQuery },
-                { headers: { "ET-Client-Name": config.Identifier } }
+                { headers: { "ET-Client-Name": identifier } }
               );
         
               return response.data;
