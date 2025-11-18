@@ -1,9 +1,6 @@
-import { ConfigColor } from "./ConfigColor"
 import Configuration from "../../Configuration"
 import BusCards from "./bus-cards"
 import "./travel-card.css"
-import { IoBus } from "react-icons/io5";
-
 
 const TravelCard: React.FC = () => {
     return (

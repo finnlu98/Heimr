@@ -3,7 +3,7 @@ import {TravelResponse} from "../model/Deziarilize/TravelResponse";
 import Configuration from "../Configuration";
 import FetcherHelper from "./fetcher/FetcherHelper";
 
-    const FetchBustimes = async (fromPlace: string, toPlace: string) => {
+    const FetchBustimes = async (id: string, fromPlace: string, toPlace: string) => {
     
         try {
             const graphqlQuery = `
@@ -46,7 +46,7 @@ import FetcherHelper from "./fetcher/FetcherHelper";
 
             const fetcher = new FetcherHelper<TravelResponse>(60 * 6 * 1000)
 
-            const res = fetcher.getData(TravelResponse.Identifier + crypto.randomUUID(), async () => {
+            const res = fetcher.getData(TravelResponse.Identifier + id, async () => {
                 const response = await axios.post<TravelResponse>(
                 endpoint,
                 { query: graphqlQuery },

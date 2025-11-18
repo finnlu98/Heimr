@@ -97,7 +97,6 @@ function App() {
                   <ElectricyConsumption />
                 </div>
               </div>
-              
             </div>
           </div>
           <div className="col-md-5">

@@ -1,6 +1,6 @@
 import moment from "moment";
 import BusCard from "./bus-card";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./bus-cards.css";
 import { TripPatterns } from "../../model/Deziarilize/TravelResponse";
 import { Mode } from "../../model/data/Enum/Mode";
@@ -8,6 +8,8 @@ import { ConfigColor } from "./ConfigColor";
 import FetchBustimes from "../../api/bus-time-fetcher";
 import { CiSun } from "react-icons/ci";
 import { SlArrowDown } from "react-icons/sl";
+import { v4 as uuidv4 } from "uuid";
+
 
 
 interface BusCardsProps {
@@ -27,10 +29,11 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
   const { numRows, minFilter } = configCard;
   
   const [tripPatterns, settripPatterns] = useState<TripPatterns[]>();
+  const idRef = useRef(uuidv4());
  
   useEffect(() => {
     const fetchAndFilter = async () => {
-    var busTimes = await FetchBustimes(startPlace, stopPlace)
+    var busTimes = await FetchBustimes(idRef.current, startPlace, stopPlace)
     settripPatterns(filterBusRides(busTimes.data.trip.tripPatterns));
     
   };
@@ -83,7 +86,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
   
   async function updateTravelData() {
     try {
-      const updatedTravelData = await FetchBustimes(startPlace, stopPlace);
+      const updatedTravelData = await FetchBustimes(idRef.current, startPlace, stopPlace);
       settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
     } catch (error) {
       console.error("Can't update data:", error);
