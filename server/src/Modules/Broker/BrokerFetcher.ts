@@ -1,2 +1,2 @@
-import BaseFetcher from "../Common/BaseFetcher";
-export default class BrokerFetcher extends BaseFetcher {}
+import BaseFetcherEndpoint from "../Common/BaseFetcherEndpoint";
+export default class BrokerFetcher extends BaseFetcherEndpoint {}

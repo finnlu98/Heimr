@@ -7,6 +7,7 @@ class Configuration {
         
         this.configuration = config as AppConfiguration;
         this.getHomeAssistantConfig().secretToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
+        this.configuration.Stocks.StockData.Endpoint = process.env.REACT_APP_STOCK_ENDPOINT ?? ""
     }
     
     public getHomeConfig(): Home {
@@ -60,10 +61,14 @@ class Configuration {
     public getNewsConfig(): NewsConfig {
         return this.configuration.News;
     }
+
+    public getStockConfig(): StockConfig {
+        return this.configuration.Stocks;
+    }
 }
 
 interface AppConfiguration {
-    ClientData: ClientData
+    ClientData: ClientData;
     Entur: EnturConfig;
     ElectricityPrices: ElectricityPricesConfig;
     KanyeQuoute: KanyeQuoteConfig;
@@ -72,8 +77,9 @@ interface AppConfiguration {
     HomeAssistant: HomeAssitantConfig;
     Calender: CalenderConfig;
     Elvia: ElviaConfig;
-    OsloCityBike: OsloCityBikeConfig
-    News: NewsConfig
+    OsloCityBike: OsloCityBikeConfig;
+    News: NewsConfig;
+    Stocks: StockConfig;
 }
 
 interface ClientData {
@@ -150,6 +156,11 @@ interface TrackStation {
 
 interface NewsConfig {
     NRK: EndpointConfig
+}
+
+interface StockConfig {
+    Tickers: string[]
+    StockData: EndpointConfig
 }
 
 const configuration = new Configuration();

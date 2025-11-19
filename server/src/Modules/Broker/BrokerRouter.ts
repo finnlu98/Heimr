@@ -1,11 +1,15 @@
-import {Request, Response } from "express";
+import { Request, Response } from "express";
 import { HeaderKeys } from "../Model/enum/HeaderKeys";
 import BaseRouter from "../Common/BaseRouter";
 import BrokerFetcher from "./BrokerFetcher";
+import IFethcerEndpoint from "../Model/Interface/IFethcerEndpoint";
 
 export default class BrokerRouter extends BaseRouter {
+    fetcher: IFethcerEndpoint
+    
     constructor() {
-        super("/broker", new BrokerFetcher(60 * 60_000))
+        super("/broker")
+        this.fetcher = new BrokerFetcher(60 * 60_000)
         this.setRoute();
     }
 
@@ -22,7 +26,6 @@ export default class BrokerRouter extends BaseRouter {
             if(authorization)
                 this.fetcher.setHeader({authorization})
 
-            console.log(`Sending request to external api with the following url: ${endpoint}`)
             res.send(await this.fetcher.getData())
         })
     }

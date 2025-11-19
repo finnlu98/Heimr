@@ -1,5 +1,6 @@
 import { Application, Request, Response, Router } from "express";
 import BrokerRouter from "../Modules/Broker/BrokerRouter";
+import StockRouter from "../Modules/Stock/StockRouter";
 
 export class Routes {
     app: Application
@@ -20,7 +21,10 @@ export class Routes {
 
     RegisterRoutes() {
         const broker = new BrokerRouter();
+        const stock = new StockRouter();
+
         this.app.use("/", this.router)
         this.app.use("/api", broker.route)
+        this.app.use("/api", stock.route)
     }
 }
