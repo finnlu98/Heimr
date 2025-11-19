@@ -16,6 +16,8 @@ html, body, #root {
     border: 3px solid var(--color-off-white);
     padding: 5px;
     border-radius: 8px;
+    background-color: rgb(201, 160, 113);
+    box-shadow: 1px 2.5px 5px black;
 }
 
 .widget-title {
@@ -37,7 +39,6 @@ html, body, #root {
     border-bottom: 3px solid var(--color-off-gray);
     border-left: none;
     border-right: none;
-    background-color: var(--color-background);
     border-radius: 0px;
     padding: 5px 0px 5px 0px;
 }
@@ -75,7 +76,7 @@ html, body, #root {
 
 /* reusable colors */
 :root {
-  --color-background:#f5d4b5ff;
+  --color-background:rgb(250, 229, 209);
   --color-off-white: rgb(248, 248, 248);
   --color-off-gray: rgba(248, 248, 248, 0.611);
   --color-standard-green: rgb(57, 187, 115);
