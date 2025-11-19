@@ -48,13 +48,6 @@
 
 }
 
-.city-bikes-container-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
 .header-icon {
     margin-top: 2px;
     height: 30px;

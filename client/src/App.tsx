@@ -10,6 +10,7 @@ import ElectricyConsumption from "./components/electricity/electricity-consumpti
 import TravelCard from "./components/bus-cards/travel-card";
 import CityBike from "./components/city-bike/city-bike";
 import 'leaflet/dist/leaflet.css';
+import News from "./components/news/news";
 
 function App() {
   const reloadHour = 5;
@@ -71,6 +72,11 @@ function App() {
               <div className="col-12">
                 <div className="widget-container">
                   <CityBike />
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="widget-container">
+                  <News />
                 </div>
               </div>
               

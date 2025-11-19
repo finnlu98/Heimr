@@ -16,4 +16,3 @@ class EventTime {
 
 class Sunrise extends EventTime { }
 class Sunset extends EventTime { }
-

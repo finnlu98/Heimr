@@ -2,12 +2,6 @@
     margin: 5px 0 5px 0;
 }
 
-.main-subheader {
-    font-size:large;
-    font-weight: bold;
-    border-bottom: 3px solid var(--color-off-white);
-}
-
 .main-item {
     border-bottom: 3px solid var(--color-off-white);
 }

@@ -5,7 +5,7 @@ import "./travel-card.css"
 const TravelCard: React.FC = () => {
     return (
     <div className="travel-container">
-        <div className="travel-container-header">Public transport <img src="./img/bus-card/sign.png"/></div>
+        <div className="widget-title">Public transport <img className="widget-title-icon" src="./img/bus-card/sign.png" alt="sign"/></div>
         <div className="travel-rows">
             {Configuration.getBusStopConfigs().map((busStop) => (
                     <BusCards

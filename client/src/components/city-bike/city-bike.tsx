@@ -41,7 +41,7 @@ const CityBike: React.FC = () => {
         
         var formattedClass = "bike-label";
 
-        if(available == 0)
+        if(available === 0)
             formattedClass += " empty";
 
         return L.divIcon({
@@ -54,7 +54,7 @@ const CityBike: React.FC = () => {
 
     return (
         <div className="city-bikes-container">
-            <div className="city-bikes-container-header">
+            <div className="widget-title">
                 <div>Available city bikes</div>
                 <img className="header-icon" src="./img/city-bike/bicycle-parking.png" alt="bicycle"></img>
             </div>
