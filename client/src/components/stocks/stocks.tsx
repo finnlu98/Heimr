@@ -21,8 +21,6 @@ const Stocks: React.FC = () => {
         if(value >= 0) {
             return  <div className="change pos"> {f} <IoMdArrowDropup fill="rgba(55, 187, 3, 1)" size={20}/></div> ;
         } 
-
-
         return <div className="change"> {f} <MdOutlineArrowDropDown fill="rgb(255, 95, 3)" size={20}/></div> ;
     }
 
@@ -30,7 +28,7 @@ const Stocks: React.FC = () => {
         <div className="stocks">
             {stocks && stocks.stocks.map((stock) => {
                 return (
-                <div className="stock"> 
+                <div key={stock.symbol} className="stock"> 
                     <div className="ticker">{stock.symbol}:</div>
                     {formatPercantage(stock.fiftyDayAverageChangePercent)} 
                 </div>
