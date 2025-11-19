@@ -1,0 +1,23 @@
+.stocks {
+    font-weight: bold;
+    display: flex;
+    gap: 10px;
+}
+
+.stock {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.change {
+    display: flex;
+    gap: 2px;
+    color: rgb(255, 95, 3);
+}
+
+.pos {
+    color: rgb(55, 187, 3);
+}

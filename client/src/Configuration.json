@@ -123,6 +123,11 @@
         "NRK": {
             "Endpoint": "https://www.nrk.no/nyheter/siste.rss"
         }
+    },
+    "Stocks": {
+        "Tickers": ["NVDA", "QBTS", "IONQ", "RGTI"],
+        "StockData": {
+            "Endpoint": ""
+        }
     }
-
 }
