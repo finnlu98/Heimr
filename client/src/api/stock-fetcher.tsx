@@ -8,7 +8,6 @@ const StockFetcher = async () => {
         const config = configuration.getStockConfig()
         const endpoint = process.env.REACT_APP_STOCK_ENDPOINT ?? ""
         const res = await axios.post<StockResponse>(endpoint, { tickers: config.Tickers })
-        console.log(res.data.stocks)
         return res.data;
 
     } catch (error) {
