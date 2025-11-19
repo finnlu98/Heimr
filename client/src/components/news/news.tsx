@@ -12,6 +12,23 @@ const News: React.FC = () => {
         
         fetchAndSetNews()
     }, [])
+
+    useEffect(() => {
+          const updateInterval = setInterval(() => {
+            updateNewsData();
+          }, 10 * 60 * 1000);
+      
+          return () => clearInterval(updateInterval);
+        }, []);
+
+    async function updateNewsData() {
+        try {
+            const updatedNewsData = await NewsFetcher();
+            setNews(updatedNewsData);
+        } catch (error) {
+             console.error("Can't update data:", error);
+        }
+    }
     
     return (
         <div className="news-container">
@@ -27,6 +44,7 @@ const News: React.FC = () => {
                                     <img
                                         className="news-img"
                                         src={newsItem?.media_content?.url ? `${newsItem.media_content.url}` : "./img/news/newspaper.png" }
+                                        alt="news-image"
                                         />
                                 </div>
                         </div>
