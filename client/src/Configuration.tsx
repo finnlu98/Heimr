@@ -56,6 +56,10 @@ class Configuration {
     public getOsloCityBikeConfig(): OsloCityBikeConfig {
         return this.configuration.OsloCityBike;
     }
+
+    public getNewsConfig(): NewsConfig {
+        return this.configuration.News;
+    }
 }
 
 interface AppConfiguration {
@@ -69,6 +73,7 @@ interface AppConfiguration {
     Calender: CalenderConfig;
     Elvia: ElviaConfig;
     OsloCityBike: OsloCityBikeConfig
+    News: NewsConfig
 }
 
 interface ClientData {
@@ -141,6 +146,10 @@ interface TrackStation {
     StationId: number
     Name: string
 
+}
+
+interface NewsConfig {
+    NRK: EndpointConfig
 }
 
 const configuration = new Configuration();

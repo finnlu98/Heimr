@@ -18,6 +18,20 @@ html, body, #root {
     border-radius: 8px;
 }
 
+.widget-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.widget-title-icon {
+  width: 15px;
+  height: 15px;
+}
+
+
 .standard-rows {
     border-top: none;
     border-bottom: 3px solid var(--color-off-gray);

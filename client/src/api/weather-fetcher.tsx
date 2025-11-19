@@ -8,10 +8,6 @@ import { WeatherData } from "../model/data/WeatherData";
 import FetcherHelper from "./fetcher/FetcherHelper";
 
 const FetchWeatherAndSunset = async () => {
-    const geoLocator = navigator.geolocation;
-
-    if(!geoLocator)
-        return;
       
     var weatherEndpoint = formatEndpointWithCoordinates(configuration.getWeatherEndpoint());
     var sunriseEndpoint = formatEndpointWithCoordinates(configuration.getSunriseEndpoint());
@@ -24,12 +20,6 @@ const FetchWeatherAndSunset = async () => {
     const sunriseRes = await sunriseFetcher.getData(SunriseResponse.Identifier, async () => (await axios.get<SunriseResponse>(sunriseEndpoint)).data) 
 
     return new WeatherData(weatherForecast, sunriseRes)
-}
-
-function getCurrentPosition(): Promise<GeolocationPosition> {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
 }
 
 function formatEndpointWithCoordinates(endpoint: string) : string {

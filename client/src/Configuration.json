@@ -118,6 +118,11 @@
         "Status": {
             "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json"
         }
+    },
+    "News": {
+        "NRK": {
+            "Endpoint": "https://www.nrk.no/nyheter/siste.rss"
+        }
     }
 
 }
