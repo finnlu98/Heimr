@@ -3,6 +3,7 @@ import CalenderFetcher from "../../api/calender-fetcher";
 import "./calender.css"
 import { CalenderResponse } from "../../model/Deziarilize/CalenderResponse";
 import CalenderRow from "./calender-row";
+import { v4 as uuidv4 } from "uuid";
 
 const Calender: React.FC = () => {
     
@@ -23,7 +24,7 @@ const Calender: React.FC = () => {
         return (
             <div className="secondary-items-container">
                 {secondaryEvents?.map((item) => {
-                    return <CalenderRow item={item} hiearchy="secondary" />
+                    return <CalenderRow key={uuidv4()} item={item} hiearchy="secondary" />
                 })}
             </div>
         )

@@ -81,7 +81,7 @@
         "Endpoint": "http://homeassistant.local:8123/api/states"  
     },
     "Calender": {
-        "maxResults": 3,
+        "maxResults": 2,
         "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=:MAX_RESULTS&timeMin=:TIME_MIN"
     },
     "Elvia": {

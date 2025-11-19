@@ -4,7 +4,7 @@ import { Station } from "../../model/Deziarilize/CityBike/CityBikeResponse"
 import "./city-bike.css"
 import { MapContainer, TileLayer, Marker } from "react-leaflet"
 import configuration from "../../Configuration"
-import L, { icon } from "leaflet";
+import L from "leaflet";
 
 const homeIcon = L.divIcon({
             className: "home-label-icon",
@@ -60,7 +60,7 @@ const CityBike: React.FC = () => {
             </div>
             <div className="map">
                 <MapContainer className="map-component"
-                    center={[configuration.getHomeConfig().lat, configuration.getHomeConfig().lon]}
+                    center={[59.920751379018874, 10.735538333840061]}
                     zoom={15}
                     scrollWheelZoom={false}
                     zoomControl={false}>

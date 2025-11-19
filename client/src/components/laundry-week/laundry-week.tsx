@@ -58,7 +58,6 @@ const LaundryWeek : React.FC = () => {
           <div className={`week-row expand ${week.week === currentWeek && isHide ? 'highlight' : ''}`} key={weekIndex}>
             <div>{week.week}</div>
             <div>{week.name}</div>
-            
           </div>
         )
       })}
