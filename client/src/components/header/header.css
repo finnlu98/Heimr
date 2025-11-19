@@ -1,4 +1,4 @@
-.header-style {
+.header-container {
   position: relative;
   background-image: url("../../../public/img/header/mohlenpris.jpg");
   background-size: cover;
@@ -12,7 +12,7 @@
 
 }
 
-.header-style::after {
+.header-container::after {
   content: "";
   position: absolute;
   top: 0;
@@ -24,45 +24,43 @@
   z-index: 1;
 }
 
-.header-row {
+.header-content-container {
+  position: relative;
+  z-index: 10;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0 20px 0 20px;
 }
 
-.header-column {
-  margin: 5px;
+.header-texts {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
 .header-text {
-  margin: 0px 20px 0px 20px;
-  position: relative;
-  z-index: 10;
+  flex: 1;                  
+  display: flex;
+  align-items: center;
 }
 
-.header-text-clock {
+.header-text.left {
+  justify-content: flex-start; 
+  text-align: left;
+}
+
+.header-text.right {
+  justify-content: flex-end;  
   text-align: right;
 }
 
+
 .avatars {
   display: flex;
-  justify-content: flex-end; /* aligns items to the left */
+  align-items: center;
+  gap: 15px;
 }
 
-.avatar {
-  margin-left: 10px;
-}
-@media only screen and (max-width: 750px) {
-  .header-text,
-  .header-text-clock {
-    text-align: center;
-  }
-
-  .header-row {
-    display: block;
-  }
-
-  .header-column {
-    flex: none;
-    width: 100%;
-  }
+.header-avatar {
+  display: flex;
 }

@@ -11,6 +11,7 @@ import TravelCard from "./components/bus-cards/travel-card";
 import CityBike from "./components/city-bike/city-bike";
 import 'leaflet/dist/leaflet.css';
 import News from "./components/news/news";
+import KanyeQoute from "./components/kanye-quote/kanye-quote";
 
 function App() {
   const reloadHour = 5;
@@ -93,6 +94,9 @@ function App() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="Footer">
+        <KanyeQoute />
       </div>
     </div>
   );

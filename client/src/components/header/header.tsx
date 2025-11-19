@@ -2,19 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../home-avatar/home-avatar";
-import FetchKanyeQuote from "../../api/kanye-fetcher";
-
-
 
 const Header : React.FC = () => {
-  const [kanyeQoute, setKanyeQoute] = useState<string>()
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
-
-  useEffect(() => {
-    const setAndFetchQoute = async () => setKanyeQoute(await FetchKanyeQuote())
-    setAndFetchQoute()
-  }, [])
-
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       setMinutes(moment().format("HH:mm:ss"));
@@ -24,23 +14,22 @@ const Header : React.FC = () => {
   }, []);
 
   return (
-    <div className="header-style">
-      <div className="row header-row">
-        <div className="header-column col-8">
-          <header className="header-text">
-            <h1><strong>Stensberggata 21</strong></h1>
-            <p><strong>{kanyeQoute}</strong></p>
-          </header>
-        </div>
-        <div className="header-column col header-text header-text-clock">
-          <h1>{minutes}</h1>
-          <div className="avatars">
-            <div className="avatar"><HomeAvatar name={"finn_griggs"}></HomeAvatar></div> 
-            <div className="avatar"><HomeAvatar name={"pernille"}></HomeAvatar></div> 
-            <div className="avatar"><HomeAvatar name={"line"}></HomeAvatar></div> 
+    <div className="header-container">
+          <div className="header-content-container" >
+              <div className="header-texts">
+                <h1 className="header-text left"><strong>Stensberggata 21</strong></h1>
+                <h1 className="header-text right">{minutes}</h1>
+              </div>
+            
+              <div className="avatars">
+                  <div className="header-avatar"> <HomeAvatar name="finn_griggs" /></div>
+                  <div className="header-avatar"><HomeAvatar name="pernille" /></div>
+                  <div className="header-avatar"><HomeAvatar name="line" /></div>
+              </div>
+            
+              
           </div>
-        </div>
-      </div>
+          
     </div>
   );
 }

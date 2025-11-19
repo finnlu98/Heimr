@@ -5,18 +5,28 @@
 html, body, #root { 
     height: 100%; 
     margin: 0; 
-    background-color: var(--color-background)}
+    padding: 0;
+    background-color: var(--color-background)
+}
 
+
+
+   
 .app {
-    height: 100%;
-    width: 100%;
+    min-height: 100dvh;
+    width: 100vw;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
 }
 
 .widget-container {
     border: 3px solid var(--color-off-white);
     padding: 5px;
     border-radius: 8px;
-    background-color: rgb(201, 160, 113);
+    background-color: var(--color-widget-background);
     box-shadow: 1px 2.5px 5px black;
 }
 
@@ -32,7 +42,6 @@ html, body, #root {
   width: 15px;
   height: 15px;
 }
-
 
 .standard-rows {
     border-top: none;
@@ -74,9 +83,16 @@ html, body, #root {
     color: white;
 }
 
+.Footer {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
 /* reusable colors */
 :root {
   --color-background:rgb(250, 229, 209);
+  --color-widget-background: rgb(201, 160, 113);
   --color-off-white: rgb(248, 248, 248);
   --color-off-gray: rgba(248, 248, 248, 0.611);
   --color-standard-green: rgb(57, 187, 115);
