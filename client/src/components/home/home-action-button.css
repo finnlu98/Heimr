@@ -3,6 +3,11 @@
     display: flex;
     cursor: pointer;
     transition: transform 0.1s ease;
+    box-shadow: .5px .5px 5px black;
+    width: 70px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10%;
     
 }
 

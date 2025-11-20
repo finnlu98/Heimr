@@ -9,14 +9,10 @@ interface HomeActionButtonProps  {
 };
 
 const HomeActionButton: React.FC<HomeActionButtonProps> = ({Icon, event}) => {
-    
-    async function RunActionButton(event: string) {
-        await HomePostMan(event);
-    }
-    
+
     return (
-        <div className="circle home-button">
-            <Icon fill="#f3a71aff" onClick={() => HomePostMan(event)}/>
+        <div className="home-button" onClick={async () => await HomePostMan(event)}>
+            <Icon fill="#f3a71aff"/>
         </div>
     )
 }

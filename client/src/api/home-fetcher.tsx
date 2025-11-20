@@ -32,7 +32,6 @@ export const HomePostMan = async (event: string) => {
 
         return response;
 
-
     } catch (error) {
         console.error("Can`t post Home assistant data")
     }
