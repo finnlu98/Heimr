@@ -3,6 +3,7 @@ import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../home-avatar/home-avatar";
 import Stocks from "../stocks/stocks";
+import HomeActionButton from "../home/home-action-button";
 
 const Header : React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
@@ -19,7 +20,8 @@ const Header : React.FC = () => {
           <div className="header-content-container" >
               <div className="header-row">
                 <h1 className="header-row-item left"><strong>Stensberggata 21</strong></h1>
-                <h1 className="header-row-item right">{minutes}</h1>
+                <div className="header-row-item right">
+                  <h1>{minutes}</h1></div>
               </div>
               <div className="header-row">
                 <div className="header-row-item avatars">

@@ -12,6 +12,7 @@ import CityBike from "./components/city-bike/city-bike";
 import 'leaflet/dist/leaflet.css';
 import News from "./components/news/news";
 import KanyeQoute from "./components/kanye-quote/kanye-quote";
+import HomeActionButtons from "./components/home/home-action-buttons";
 
 function App() {
   const reloadHour = 5;
@@ -51,6 +52,11 @@ function App() {
         <div className="row g-2">
           <div className="col-md-7">
             <div className="row g-2">
+              <div className="col-12">
+                <div className="widget-container">
+                  <HomeActionButtons /> 
+                </div>
+              </div>
               <div className="col-12" >
                 <div className="widget-container">
                   <TravelCard />

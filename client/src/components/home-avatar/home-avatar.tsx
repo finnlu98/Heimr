@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./home-avatar.css"
-import HomeFetcher from '../../api/home-fetcher';
+import { HomeFetcher } from '../../api/home-fetcher';
 import { HomeStatus } from '../../model/Deziarilize/HomeStatus';
 import { FaHome } from "react-icons/fa";
 interface HomeAvatarProps  {

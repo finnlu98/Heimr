@@ -1,4 +1,4 @@
-import IFetcher from "../Model/Interface/IFetcher";
+import IFetcher from "../../Model/Interface/IFetcher";
 import Cache from "../../Cache/Cache";
 import moment from "moment";
 
@@ -37,6 +37,4 @@ export default abstract class BaseFetcher implements IFetcher {
         const cachedData = this.cache?.data;
         return cachedData && cachedTime && moment().diff(cachedTime) < this.TTL_MS
     }
-
-    
 }
