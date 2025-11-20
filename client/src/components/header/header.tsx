@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
-import HomeAvatar from "../home-avatar/home-avatar";
-import Stocks from "../stocks/stocks";
-import HomeActionButton from "../home/home-action-button";
+import HomeAvatar from "../standalone/home-avatar/home-avatar";
+import Stocks from "../widgets/stocks/stocks";
 
 const Header : React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));

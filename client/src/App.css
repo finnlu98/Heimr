@@ -61,7 +61,17 @@ html, body, #root {
   align-items: center;
   justify-content: center;
   position: relative;
+}
 
+.small-circle {
+  width: 25;
+  height: 25;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .avatar-img {
