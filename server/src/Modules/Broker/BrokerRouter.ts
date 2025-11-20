@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { HeaderKeys } from "../Model/enum/HeaderKeys";
+import { HeaderKeys } from "../../Model/enum/HeaderKeys";
 import BaseRouter from "../Common/BaseRouter";
 import BrokerFetcher from "./BrokerFetcher";
-import IFethcerEndpoint from "../Model/Interface/IFethcerEndpoint";
+import IFethcerEndpoint from "../../Model/Interface/IFethcerEndpoint";
 
 export default class BrokerRouter extends BaseRouter {
     fetcher: IFethcerEndpoint

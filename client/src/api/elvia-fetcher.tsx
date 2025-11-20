@@ -9,8 +9,9 @@ import moment from "moment";
 const ElviaFetcher = async () => {
     const consumptionEndpoint = configuration.getElviaConfig().Consumption.Endpoint;
     const secretToken = process.env.REACT_APP_ELVIA_SECRET_TOKEN ?? ""
-    const brokerEndpoint = process.env.REACT_APP_ELVIA_BROKER_ENDPOINT ?? ""
-    
+    var brokerEndpoint = process.env.REACT_APP_HEIMR_ENDPOINT ?? ""
+    brokerEndpoint = brokerEndpoint + "broker"
+
     const formattedEndpoint = new URL(consumptionEndpoint)
     formattedEndpoint.searchParams.set("startTime", moment().startOf('month').format())
 

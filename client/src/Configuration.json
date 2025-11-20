@@ -78,7 +78,7 @@
         "Endpoint": "https://api.met.no/weatherapi/sunrise/3.0/sun?lat=:lat&lon=:lon&offset=+01:00"
     },
     "HomeAssistant": {
-        "Endpoint": "http://homeassistant.local:8123/api/states"  
+        "Endpoint": "http://homeassistant.local:8123/api/"  
     },
     "Calender": {
         "maxResults": 2,

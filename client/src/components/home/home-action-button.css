@@ -1,0 +1,11 @@
+.home-button {
+    background-color: var(--color-off-white);
+    display: flex;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    
+}
+
+.home-button:active {
+  transform: scale(.85);
+}
