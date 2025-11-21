@@ -15,7 +15,7 @@ Feel free to contribute.
 
 ## Improvements
 - Weather widget: Change display of umbrella advide
-- popup for disable lock
+- popup for disable lock - and configurable buttons
 - config file fully configurable
 - base class for widget - move div from app.tsx
 
@@ -27,3 +27,6 @@ Feel free to contribute.
 - widget drag and drop
 - App position data for home state, not HAS
 - Home assistant iframe widget
+- Expenses
+- Shopping list with geo tracking
+- Electricity advice
