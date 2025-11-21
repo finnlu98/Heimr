@@ -41,9 +41,14 @@ export class ElviaService {
     }
 
     getHighestHour() : TimeSerie | undefined {
-       var h = this.getTodaysConsumption()?.reduce((highestHour, curr) => highestHour.value < curr.value ? curr : highestHour);
+       var c =  this.getTodaysConsumption() ?? [];
+       if(c.length === 0)
+        return undefined
+       
+       var h = c?.reduce((highestHour, curr) => highestHour.value < curr.value ? curr : highestHour);
        if(h)
         h.value = Number((h.value ?? 0).toFixed(2));
+    
        return  h
     }
 
