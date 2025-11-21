@@ -44,8 +44,7 @@ const News: React.FC = () => {
                                     <img
                                         className="news-img"
                                         src={newsItem?.media_content?.url ? `${newsItem.media_content.url}` : "./img/news/newspaper.png" }
-                                        alt="news-image"
-                                        />
+                                        alt="news-image"/>
                                 </div>
                         </div>
                     )

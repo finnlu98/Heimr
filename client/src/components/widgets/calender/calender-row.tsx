@@ -1,5 +1,6 @@
 import moment from "moment";
 import { CalenderItem } from "./model/CalenderResponse";
+import ImageCircle from "../../shared/imageCirlce/ImageCircle";
 
 interface CalenderRowProps {
     item: CalenderItem
@@ -54,9 +55,9 @@ const CalenderRow: React.FC<CalenderRowProps> = ({item, hiearchy}) => {
             <div className="content-container">
                 <div className="date-row">
                     <div className={`${hiearchy}-item-date`}>🗓️ {item && formatDate(item.start.dateTime)}</div>
-                    <div className="small-circle avatar-calender">
-                        {item?.creator?.email && <img src={`./img/${setAvatarImg(item?.creator?.email)}.jpg`} className="avatar-img" alt="avatar"/>} 
-                     </div>
+                    <div className="avatar-calender">
+                        {item?.creator?.email && <ImageCircle imgPath={`./img/${setAvatarImg(item?.creator?.email)}.jpg`} alt="avatar" circleSize="small" />}
+                    </div>
                 </div>
                  <div className={`summary ${hiearchy}-item-summary`}>{item && formatSummary(item.summary)}</div> 
             </div>

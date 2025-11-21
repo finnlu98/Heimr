@@ -1,0 +1,27 @@
+.standard-rows {
+    border-top: none;
+    border-bottom: 3px solid var(--color-off-gray);
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.circle {
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.circle.small {
+  width: 25px;
+  height: 25px;
+}
+
+.circle.medium {
+  width: 40px;
+  height: 40px;
+}

@@ -8,9 +8,6 @@ html, body, #root {
     padding: 0;
     background-color: var(--color-background)
 }
-
-
-
    
 .app {
     min-height: 100dvh;
@@ -21,66 +18,6 @@ html, body, #root {
   height: 100%;
   width: 100%;
 }
-
-.widget-container {
-    border: 3px solid var(--color-off-white);
-    padding: 5px;
-    border-radius: 8px;
-    background-color: var(--color-widget-background);
-    box-shadow: 1px 2.5px 5px black;
-}
-
-.widget-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-}
-
-.widget-title-icon {
-  width: 15px;
-  height: 15px;
-}
-
-.standard-rows {
-    border-top: none;
-    border-bottom: 3px solid var(--color-off-gray);
-    border-left: none;
-    border-right: none;
-    border-radius: 0px;
-    padding: 5px 0px 5px 0px;
-}
-
-.circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.small-circle {
-  width: 25;
-  height: 25;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.avatar-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
 
 
 .loading-container {
@@ -99,13 +36,3 @@ html, body, #root {
   font-weight: bold;
 }
 
-/* reusable colors */
-:root {
-  --color-background:rgb(250, 229, 209);
-  --color-widget-background: rgb(201, 160, 113);
-  --color-off-white: rgb(248, 248, 248);
-  --color-off-gray: rgba(248, 248, 248, 0.611);
-  --color-standard-green: rgb(57, 187, 115);
-  --color-standard-yellow: rgb(255, 145, 101);
-  --color-standard-red: firebrick;
-}

@@ -1,20 +1,7 @@
-.avatar-container {
-  position: relative;
-  display: inline-block;
-}
 
-.icon-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50% ;
+
+.icon-circle.not_home {
   background-color: var(--color-standard-red);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;           
-  right: 0;            
-  transform: translate(30%, 30%);
 }
 
 .icon-circle.home {

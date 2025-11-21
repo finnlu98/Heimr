@@ -6,9 +6,8 @@ import { TripPatterns } from "../model/TravelResponse";
 import { Mode } from "../model/enum/Mode";
 import { ConfigColor } from "./ConfigColor";
 import FetchBustimes from "../api/bus-time-fetcher";
-import { CiSun } from "react-icons/ci";
-import { SlArrowDown } from "react-icons/sl";
 import { v4 as uuidv4 } from "uuid";
+import ImageCircle from "../../../shared/imageCirlce/ImageCircle";
 
 
 
@@ -49,7 +48,7 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
     }, 1000);
 
     return () => clearInterval(countdownInterval);
-  });
+  }, []);
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -95,15 +94,12 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
 
   return (
     <div className="bus-cards">
-          <div className="bus-card-img circle">
-            <img className="avatar-img" src={`./img/bus-card/${imgPath}`}/>
-          </div>
+          <ImageCircle imgPath={`./img/bus-card/${imgPath}`} alt="Bus stop arrival" />
           {tripPatterns && tripPatterns.slice(0, numRows).map((tripPattern) => {
             return (
               <BusCard
                 key={tripPattern.legs[0].expectedStartTime}
                 name={tripPattern.legs[0].line.name.split(" ")[0]}
-                publicCode={tripPattern.legs[0].line.publicCode}
                 startTime={tripPattern.legs[0].expectedStartTime}
                 minutesUntil={calculateMinutesUntil(
                   tripPattern.legs[0].expectedStartTime
@@ -113,7 +109,6 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
               />
             );
           })}
-          {/* <div className="bus-card-arrow-down"><SlArrowDown size={12} /></div> */}
     </div>
   );
 }

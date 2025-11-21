@@ -3,6 +3,7 @@ import "./home-avatar.css"
 import HomeFetcher from './api/home-fetcher';
 import { HomeStatus } from './model/HomeStatus';
 import { FaHome } from "react-icons/fa";
+import ImageCircle from '../../shared/imageCirlce/ImageCircle';
 interface HomeAvatarProps  {
     name : string
 } 
@@ -44,16 +45,8 @@ const HomeAvatar: React.FC<HomeAvatarProps> = ({name}) =>  {
         return `./img/${name.toLowerCase()}.jpg` 
     }
 
-    return (
-        <div className='avatar-container'>
-            <div className="circle">
-                {avatarImg && <img src={avatarImg} alt="Avatar" className="avatar-img"/>} 
-            </div>
-            <div className={`icon-circle ${homeStatus?.state}`}>
-                <FaHome/>
-            </div>
-        </div>
-    )
+    return <ImageCircle imgPath={avatarImg} alt="Avatar" Icon={FaHome} conditionalColor={`${homeStatus?.state}`}/>    
+    
 }
 
 export default HomeAvatar;

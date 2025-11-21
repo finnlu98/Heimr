@@ -13,6 +13,9 @@ import KanyeQoute from "./components/standalone/kanye-quote/kanye-quote";
 import HomeActionButtons from "./components/widgets/home/home-action-buttons";
 
 import "./App.css";
+import "./styles/global.css"
+import "./styles/colors.css"
+import "./styles/widgets.css"
 import 'leaflet/dist/leaflet.css';
 
 
