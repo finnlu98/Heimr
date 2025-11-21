@@ -1,0 +1,14 @@
+.home-buttons-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 5px 0 5px 0;
+}
+
+
+.home-icon-container {
+    border-right: 2px solid var(--color-off-white);
+    padding-right: 15px;
+    justify-content: center;
+    align-items: center;
+}

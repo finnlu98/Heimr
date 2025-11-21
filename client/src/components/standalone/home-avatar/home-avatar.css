@@ -1,0 +1,11 @@
+
+
+.icon-circle.not_home {
+  background-color: var(--color-standard-red);
+}
+
+.icon-circle.home {
+  background-color: var(--color-standard-green);
+
+}
+

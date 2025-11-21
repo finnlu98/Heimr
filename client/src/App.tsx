@@ -1,18 +1,23 @@
 import { useEffect } from "react";
 import moment from "moment";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/header/header";
-import Dailyweather from "./components/weather/daily-weather";
-import LaundryWeek from "./components/laundry-week/laundry-week";
-import Calender from "./components/calender/calender";
-import ElectricyConsumption from "./components/electricity/electricity-consumption/electricity-consumption";
-import TravelCard from "./components/bus-cards/travel-card";
-import CityBike from "./components/city-bike/city-bike";
+import Dailyweather from "./components/widgets/weather/daily-weather";
+import LaundryWeek from "./components/widgets/laundry-week/laundry-week";
+import Calender from "./components/widgets/calender/calender";
+import ElectricyConsumption from "./components/widgets/electricity/components/electricity-consumption/electricity-consumption";
+import TravelCard from "./components/widgets/bus-cards/components/travel-card";
+import CityBike from "./components/widgets/city-bike/city-bike";
+import News from "./components/widgets/news/news";
+import KanyeQoute from "./components/standalone/kanye-quote/kanye-quote";
+import HomeActionButtons from "./components/widgets/home/home-action-buttons";
+
+import "./App.css";
+import "./styles/global.css"
+import "./styles/colors.css"
+import "./styles/widgets.css"
 import 'leaflet/dist/leaflet.css';
-import News from "./components/news/news";
-import KanyeQoute from "./components/kanye-quote/kanye-quote";
-import HomeActionButtons from "./components/home/home-action-buttons";
+
 
 function App() {
   const reloadHour = 5;
