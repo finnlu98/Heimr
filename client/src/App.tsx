@@ -10,7 +10,7 @@ import TravelCard from "./components/widgets/bus-cards/components/travel-card";
 import CityBike from "./components/widgets/city-bike/city-bike";
 import News from "./components/widgets/news/news";
 import KanyeQoute from "./components/standalone/kanye-quote/kanye-quote";
-import HomeActionButtons from "./components/widgets/home/home-action-buttons";
+import HomeActionButtons from "./components/widgets/home/components/home-action-buttons";
 
 import "./App.css";
 import "./styles/global.css"

@@ -7,4 +7,11 @@
   --color-standard-green: rgb(57, 187, 115);
   --color-standard-yellow: rgb(255, 145, 101);
   --color-standard-red: firebrick;
+
+  --color-icon-orange: #f3a71aff;
+  --color-icon-green: rgb(57, 187, 115);
+  --color-icon-gray: rgb(#7c7a7aff);
+  --color-icon-gray: rgb(#e6c93aff);
+
+  
 }

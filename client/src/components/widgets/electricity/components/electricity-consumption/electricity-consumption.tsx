@@ -46,22 +46,22 @@ const ElectricyConsumption: React.FC = () => {
         <div className="consumption-container">
             <div className="consumption-cards">
                 <div className="consumption-card">
-                    <ImPower fill="#f3a71aff" />
+                    <ImPower className="react-icon-orange" />
                     <div>
                     {elecService?.getConsumptionMonth()} kwh
                     </div>
                 </div>
                 <div className="consumption-card">
-                    <MdPriceChange fill="rgb(57, 187, 115)" />
+                    <MdPriceChange className="react-icon-green" />
                     <div>{elecService?.getEstimatedPriceMonth()} NOK</div>
 
                 </div>
                 <div className="consumption-card">
-                    <div className="level-header"><GiLevelTwo fill="#f3a71aff"/> {ElectricityLevelFormatter.formatLevel(elecService?.getCapacityLevel())}</div>
+                    <div className="level-header"><GiLevelTwo className="react-icon-orange"/> {ElectricityLevelFormatter.formatLevel(elecService?.getCapacityLevel())}</div>
                     <div className="card-sub-text">{ElectricityLevelFormatter.formatInterval(elecService?.getCapacityLevel())} kwh</div>
                 </div>
                 <div className="consumption-card">
-                    <div className="level-header"><IoIosTimer fill="#7c7a7aff" /> {moment(elecService?.getHighestHour()?.startTime).format("h a")}</div> 
+                    <div className="level-header"><IoIosTimer className="react-icon-gray" /> {moment(elecService?.getHighestHour()?.startTime).format("h a")}</div> 
                     <div className="card-sub-text">
                     {elecService?.getHighestHour()?.value} kwh 
                     </div>

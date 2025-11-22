@@ -1,0 +1,10 @@
+.lock-opts {
+    display: flex;
+    gap: 10px;
+}
+
+
+.lock-opt {
+    color: black;
+    font-weight: bold;
+}

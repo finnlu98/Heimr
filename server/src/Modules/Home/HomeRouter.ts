@@ -13,10 +13,9 @@ export class HomeRouter extends BaseRouter {
     setRoute(): void {
         this.route.post(this.subRoute, async (req: Request, res: Response) => {
             const headers = req.headers
-            const {endpoint, event} = req.body
-
+            const {endpoint, selectedOption} = req.body
             this.fetcher.setEndpoint(endpoint)
-            this.fetcher.setBody(event)
+            this.fetcher.setBody(selectedOption)
 
             const authorization = headers["homeauthorization"]
             if(authorization)

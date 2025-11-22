@@ -4,13 +4,24 @@
     cursor: pointer;
     transition: transform 0.1s ease;
     box-shadow: .5px .5px 2px black;
+    height: 100%;
     width: 70px;
     justify-content: center;
     align-items: center;
     border-radius: 10%;
+    padding: 2px;
     
 }
 
 .home-button:active {
   transform: scale(.85);
 }
+
+.home-button:hover {
+  filter: brightness(1.15);
+}
+
+.home-button-icon {
+  fill: var(--color-icon-orange);
+}
+
