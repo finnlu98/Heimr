@@ -25,3 +25,20 @@
   width: 40px;
   height: 40px;
 }
+
+.react-icon-orange {
+    fill: var(--color-icon-orange);
+}
+
+.react-icon-yellow {
+    fill: var(--color-icon-yellow);
+}
+
+.react-icon-green {
+    fill: var(--color-icon-green);
+}
+
+.react-icon-gray {
+    fill: var(--color-icon-gray);
+}
+

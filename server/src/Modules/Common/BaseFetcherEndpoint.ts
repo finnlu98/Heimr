@@ -20,8 +20,7 @@ export default class BaseFetcherEndpoint extends BaseFetcher implements IFethcer
     async PostData(): Promise<any> {
         if(this.endpoint && this.header && this.body && this.params)
             return await axios.post(this.endpoint, this.body, { headers: this.header, params: this.params });
-       
-        if(this.endpoint && this.header && this.body)
+        if(this.endpoint && this.header && this.body) 
             return await axios.post(this.endpoint, this.body, { headers: this.header });
         
         if(this.endpoint && this.header)
@@ -41,7 +40,11 @@ export default class BaseFetcherEndpoint extends BaseFetcher implements IFethcer
     }
 
     setBody(body: object) {
-        this.body = body
+        if (typeof body === "object" && body !== null && !Array.isArray(body)) {
+            this.body = body;             
+        } else {
+            this.body = { value: body }; 
+        }
     }
 
     setParams(params: object) {

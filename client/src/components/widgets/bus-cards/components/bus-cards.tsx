@@ -51,15 +51,6 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
   }, []);
 
   useEffect(() => {
-    const updateTravelData = async () => {
-      try {
-        const updatedTravelData = await FetchBustimes(idRef.current, startPlace, stopPlace);
-        settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
-      } catch (error) {
-       console.error("Can't update data:", error);
-     }
-    }
-    
     const updateInterval = setInterval(() => {
       updateTravelData();
     }, 7 * 60 * 1000);
@@ -67,6 +58,14 @@ const BusCards: React.FC<BusCardsProps> = ({ title, imgPath, startPlace, stopPla
     return () => clearInterval(updateInterval);
   }, []);
 
+  async function updateTravelData() {
+    try {
+        const updatedTravelData = await FetchBustimes(idRef.current, startPlace, stopPlace);
+        settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
+      } catch (error) {
+       console.error("Can't update data:", error);
+     }
+  }
 
   function filterBusRides(tripPatterns: TripPatterns[] | undefined): TripPatterns[] {
     if (tripPatterns === undefined || !tripPatterns) 

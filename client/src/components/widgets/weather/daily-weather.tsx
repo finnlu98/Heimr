@@ -86,7 +86,7 @@ const Dailyweather : React.FC = () => {
         </div>
         <div className='sunset-column'>
           <div>{moment(weatherData?.sunriseData.properties.sunset.time).format("HH:mm")}</div>
-          <GiSunset fill='#f3a71aff'  size="25px"/>
+          <GiSunset className='react-icon-orange'  size="25px"/>
         </div>
       </div>
     </div>
