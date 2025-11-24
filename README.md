@@ -15,7 +15,7 @@ Feel free to contribute.
 
 ## Improvements
 - Weather widget: Change display of umbrella advide
-- popup for disable lock - and configurable buttons
+- popup: click outside, await result and configurable buttons
 - config file fully configurable
 - base class for widget - move div from app.tsx
 

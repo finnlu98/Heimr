@@ -36,3 +36,8 @@ html, body, #root {
   font-weight: bold;
 }
 
+.grid-container {
+  height: calc(100vh - 250px);
+  width: 100%;
+  background-color: var(--color-off-white);
+}

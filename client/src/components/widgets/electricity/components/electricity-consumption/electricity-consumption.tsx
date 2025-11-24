@@ -34,11 +34,11 @@ const ElectricyConsumption: React.FC = () => {
 
     async function updateElectricityData() {
         try {
-        const updatedElecData = await ElviaFetcher();
-        setElecService(updatedElecData);
-        setData(updatedElecData.getChartFormattedData())
+            const updatedElecData = await ElviaFetcher();
+            setElecService(updatedElecData);
+            setData(updatedElecData.getChartFormattedData())
         } catch (error) {
-        console.error("Can't update data:", error);
+            console.error("Can't update data:", error);
         }
     }
 
