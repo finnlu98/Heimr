@@ -5,8 +5,8 @@ import {
   DragMoveEvent,
 } from "@dnd-kit/core";
 
-import { GridMetaData, PreviewState } from "./model/grid-models";
-import DraggableBox from "./dropable-box";
+import { PreviewState } from "./model/grid-models";
+import WidgetContainer from "./widget/widget-container";
 import GridService from "./service/grid-service";
 import { MoveType } from "./model/move-type";
 import { widgetMap } from "../widgets/model/wigets";
@@ -15,10 +15,9 @@ import { useDashboard } from "../dashboard/dashboard-context";
 
 export const Grid: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [gridMetaData, setGridMetaData] = useState<GridMetaData>({width: 0, height: 0, columns: 0, cellSize: 0, gap: 0});
   const [preview, setPreview] = React.useState<PreviewState | null>(null);
   const { widgets, updateWidget } = useDashboard();
-  const {editMode, onGridResize} = useDashboard()  
+  const {editMode, gridMetaData, onGridResize} = useDashboard()  
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -31,7 +30,6 @@ export const Grid: React.FC = () => {
       const cellSize = Math.ceil(width / columns);
       const gap = 5
 
-      setGridMetaData({width, height, cellSize, columns, gap})
       onGridResize({ width, height, cellSize, columns, gap});
     });
 
@@ -49,7 +47,7 @@ export const Grid: React.FC = () => {
     const baseId = isResize ? id.replace(/-resize$/, "") : id; // has to be a better way to do this
 
     const current = widgets.find((b) => b.id === baseId);
-    if (!current) {
+    if (!current || !gridMetaData) {
       setPreview(null);
       return;
     }
@@ -70,14 +68,16 @@ export const Grid: React.FC = () => {
     
     const box = widgets.find((b) => b.id === baseId);
 
-    if(box && id.toString().includes("resize")) {
-      var updateItem = GridService.computeResize(box, gridMetaData, delta)
-      setPreview(null)
-      updateWidget(updateItem);
-    } else if(box) {
-      var updateItem = GridService.computeMove(id.toString(), widgets, box, gridMetaData, delta, true)
-      setPreview(null)
-      updateWidget(updateItem);
+    if(box && gridMetaData) {
+      if(id.toString().includes("resize")) {
+        var updateItem = GridService.computeResize(box, gridMetaData, delta)
+        setPreview(null)
+        updateWidget(updateItem);
+      } else {
+        var updateItem = GridService.computeMove(id.toString(), widgets, box, gridMetaData, delta, true)
+        setPreview(null)
+        updateWidget(updateItem);
+      }
     }
   };
 
@@ -85,7 +85,7 @@ export const Grid: React.FC = () => {
       position: "relative",
       width: "100%",
       height: "100%",
-      backgroundSize: `${gridMetaData.cellSize}px ${gridMetaData.cellSize}px`,
+      backgroundSize: gridMetaData ? `${gridMetaData.cellSize}px ${gridMetaData.cellSize}px` : undefined,
       border: editMode ? "1px solid #ddd" : undefined,
       backgroundImage: editMode ?
           ("linear-gradient(to right, #eee 1px, transparent 1px)," +
@@ -93,16 +93,14 @@ export const Grid: React.FC = () => {
       backgroundColor: editMode ?  "#d3d3d33f" : undefined 
   }
 
-
-
   return (
     <div
       ref={containerRef}
       style={gridStyle}
     >
       <DndContext onDragMove={handleDragMove} onDragEnd={handleDragEnd}>
-        {widgets.map((item) => (
-          <DraggableBox
+        {gridMetaData && widgets.map((item) => (
+          <WidgetContainer
             key={item.id}
             id={item.id}
             position={item.position}

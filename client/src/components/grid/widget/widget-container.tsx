@@ -2,10 +2,11 @@ import {
   useDraggable,
 } from "@dnd-kit/core";
 
-import { Position, Box, Rect, GridMetaData } from "./model/grid-models";
-import { useDashboard } from "../dashboard/dashboard-context";
+import { Position, Box, GridMetaData } from "../model/grid-models";
+import { useDashboard } from "../../dashboard/dashboard-context";
+import { MdDelete } from "react-icons/md";
 
-interface DraggableBoxProps {
+interface WidgetContainerProps {
   id: string;
   position: Position;
   box: Box
@@ -14,7 +15,7 @@ interface DraggableBoxProps {
 
 }
 
-const DraggableBox: React.FC<DraggableBoxProps> = ({ id, position, box, widget, gridData }) => {
+const WidgetContainer: React.FC<WidgetContainerProps> = ({ id, position, box, widget, gridData }) => {
    const {
     attributes,
     listeners,
@@ -28,7 +29,7 @@ const DraggableBox: React.FC<DraggableBoxProps> = ({ id, position, box, widget, 
     setNodeRef: setResizeRef,
   } = useDraggable({ id: `${id}-resize` });
 
-  const {editMode} = useDashboard();
+  const {editMode, removeWidget} = useDashboard();
 
   const finalX = position.x + (moveTransform?.x ?? 0);
   const finalY = position.y + (moveTransform?.y ?? 0);
@@ -55,9 +56,33 @@ const DraggableBox: React.FC<DraggableBoxProps> = ({ id, position, box, widget, 
     borderTopLeftRadius: 8,
   };
 
+  const topRightHandleStyle: React.CSSProperties = {
+    position: "absolute",
+    width: 16,
+    height: 16,
+    right: 0,
+    top: 0,
+    cursor: "pointer",       
+    background: "rgba(0,0,0,0.3)",
+    borderBottomLeftRadius: 8,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
 
   return (
     <div ref={setNodeRef} {...(editMode ? listeners : {})} {...(editMode ? attributes : {})} style={style} className="widget-container">
+      {editMode && 
+        <div style={topRightHandleStyle} onPointerDown={(e) => e.stopPropagation()}
+           onClick={(e) => {
+            e.stopPropagation();        
+            removeWidget(id)
+        }}>
+        <MdDelete />
+      </div>
+      }
+      
       {editMode && <div
         ref={setResizeRef}
         {...resizeListeners}
@@ -69,4 +94,4 @@ const DraggableBox: React.FC<DraggableBoxProps> = ({ id, position, box, widget, 
   );
 };
 
-export default DraggableBox
+export default WidgetContainer
