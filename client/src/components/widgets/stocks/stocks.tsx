@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import { StockResponse } from "./model/StockResponse";
 import StockFetcher from "./api/stock-fetcher";
 
-// Add percentage today
 const Stocks: React.FC = () => {
     const [stocks, setStocks] = useState<StockResponse>()
     useEffect(() => {
         const setAndFetchStocks = async () => setStocks(await StockFetcher()) 
-        // setAndFetchStocks()
+        setAndFetchStocks()
     }, [])
 
     function formatPercantage(perc: string) {
@@ -26,14 +25,14 @@ const Stocks: React.FC = () => {
 
     return (
         <div className="stocks">
-            {/* {stocks && stocks.stocks.map((stock) => {
+            {stocks && stocks.stocks.map((stock) => {
                 return (
                 <div key={stock.symbol} className="stock"> 
                     <div className="ticker">{stock.symbol}:</div>
                     {formatPercantage(stock.fiftyDayAverageChangePercent)} 
                 </div>
                 )
-            })} */}
+            })}
         </div>
     )
 }
