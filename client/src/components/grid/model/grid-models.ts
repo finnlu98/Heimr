@@ -2,8 +2,10 @@ import { Widget } from "../../widgets/model/wigets";
 
 export type GridItem = {
   id: string;
-  position: Position;
-  box: Box
+  col: number;
+  colSpan: number
+  row: number
+  rowSpan: number
   widget: Widget
 };
 
@@ -14,29 +16,19 @@ export type Rect = {
   bottom: number;
 };
 
-export interface Position {
-  x: number;
-  y: number;
-}
-
-export interface Box {
-  cols: number;
-  rows: number
-}
-
 export interface GridMetaData {
-  width: number,
-  height: number
-  cellSize: number
-  columns: number
+  width: number;
+  height: number;
+  colWidth: number;
+  colHeight: number
+  columns: number;
   gap: number
 }
 
-
 export interface PreviewState  {
   id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  col: number;
+  colSpan: number
+  row: number
+  rowSpan: number
 }

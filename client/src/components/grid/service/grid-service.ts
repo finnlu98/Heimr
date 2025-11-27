@@ -4,63 +4,48 @@ import { MoveType } from "../model/move-type";
 
 export default class GridService {
 
+    // is this needed?
     static computePositions(boxes: GridItem[], gridData: GridMetaData, prevGridData: GridMetaData): GridItem[] {
-        const reflowdBoxes = boxes.map((box) => {
-            const { x, y } = box.position;
-            
-            const oldCellSize = prevGridData.cellSize;
-            const newCellSize = gridData.cellSize;
+        // const reflowdBoxes = boxes.map((box) => {
+        //     const oldCellSize = prevGridData.cellSize;
+        //     const newCellSize = gridData.cellSize;
 
-            const newX = Math.round((x * oldCellSize) / newCellSize);
-            const newY = Math.round((y * oldCellSize) / newCellSize);
-        
+        //     const newX = Math.round((box.col * oldCellSize) / newCellSize);
+        //     const newY = Math.round((box.row * oldCellSize) / newCellSize);
 
-            return {
-                ...box,
-                position: {x: newX, y: newY}
-            }
+        //     return {
+        //         ...box,
+        //         position: {x: newX, y: newY}
+        //     }
 
-        })
+        // })
 
-        return reflowdBoxes
+        return boxes
     }    
     
     static computeMove(id: string, boxes: GridItem[], moveBox: GridItem, gridData: GridMetaData, delta: Coordinates, addGap: boolean) : GridItem {
-        const nextX = moveBox.position.x + delta.x;
-        const nextY = moveBox.position.y + delta.y;
+        const dxCells = Math.round(delta.x / gridData.colWidth);
+        const dyCells = Math.round(delta.y / gridData.colHeight);
 
-        const snappedX = Math.round(nextX / gridData.cellSize) * gridData.cellSize;
-        const snappedY = Math.round(nextY / gridData.cellSize) * gridData.cellSize;
+        let targetCol = moveBox.col + dxCells;
+        let targetRow = moveBox.row + dyCells;
 
-        const maxX = gridData.width - moveBox.box.cols * gridData.cellSize;
-        const maxY = gridData.height - moveBox.box.rows * gridData.cellSize;
-
-        var targetX = Math.min(Math.max(0, snappedX), maxX);
-        var targetY = Math.min(Math.max(0, snappedY), maxY);
-
-        const widthPx = (moveBox.box.cols * gridData.cellSize);
-        const heightPx = (moveBox.box.rows * gridData.cellSize);
-
-        const candidate: Rect = {
-            left: targetX,
-            top: targetY,
-            right: targetX + widthPx,
-            bottom: targetY + heightPx,
-        };
-        
-        const hasCollision = this.hasCollison(id, candidate, boxes, gridData)
-        
-        if (hasCollision) {
-            return moveBox;
+        // This is fishy!
+        const maxCol = gridData.columns - moveBox.colSpan;
+        if (maxCol >= 0) {
+            targetCol = Math.max(0, Math.min(maxCol, targetCol));
+        } else {
+            targetCol = 0;
         }
-        
-        if(addGap) {
-            targetX = targetX + gridData.gap
-            targetY = targetY + gridData.gap
-        }
-        
 
-        return {...moveBox, position: { x: targetX, y: targetY }};
+        const maxRow = gridData.height / gridData.colHeight - moveBox.rowSpan;
+        if (maxRow >= 0) {
+            targetRow = Math.max(0, Math.min(maxRow, targetRow));
+        } else {
+            targetRow = 0;
+        }
+
+        return {...moveBox, col: targetCol, row: targetRow };
     }
 
     static hasCollison(moveId: string, candidate: Rect, boxes: GridItem[], gridData: GridMetaData): boolean {
@@ -69,10 +54,10 @@ export default class GridService {
                 return true;
         
             const other: Rect = {
-                left: item.position.x,
-                top: item.position.y,
-                right: item.position.x + item.box.cols * gridData.cellSize,
-                bottom: item.position.y + item.box.rows * gridData.cellSize,
+                left: item.col * gridData.colWidth,
+                top: item.row * gridData.colHeight,
+                right: item.col * gridData.colWidth + item.colSpan * gridData.colWidth,
+                bottom: item.row * gridData.colHeight + item.rowSpan * gridData.colHeight,
             };
         
             return this.rectanglesOverlap(candidate, other);
@@ -90,14 +75,12 @@ export default class GridService {
         );
     }
 
-    static computeResize(moveBox: GridItem, gridData: GridMetaData, delta: Coordinates) {
-        const deltaCols = Math.round(delta.x / gridData.cellSize);
-        const deltaRows = Math.round(delta.y / gridData.cellSize);
-
-        const newCols = Math.max(1, moveBox.box.cols + deltaCols);
-        const newRows = Math.max(1, moveBox.box.rows + deltaRows);
-
-        return { ...moveBox, box: { cols: newCols, rows: newRows }};
+    static computeResize(moveBox: GridItem, gridData: GridMetaData, delta: Coordinates): GridItem {
+        const deltaCols = Math.round(delta.x / gridData.colWidth);
+        const deltaRows = Math.round(delta.y / gridData.colHeight);
+        const newCols = Math.max(1, moveBox.colSpan + deltaCols);
+        const newRows = Math.max(1, moveBox.rowSpan + deltaRows);
+        return { ...moveBox, colSpan: newCols, rowSpan: newRows };
     }
 
     static computeShadow(id: string, boxes: GridItem[], moveBox: GridItem, gridData: GridMetaData, delta: Coordinates, moveType: MoveType): PreviewState | undefined {
@@ -110,9 +93,7 @@ export default class GridService {
             shadowBox = this.computeResize(moveBox, gridData, delta)
 
         if(shadowBox) {
-            var width = shadowBox.box.cols * gridData.cellSize
-            var height = shadowBox.box.rows * gridData.cellSize
-            return {id: id, x: shadowBox.position.x, y: shadowBox.position.y, width: width, height: height}
+            return {id: id, col: shadowBox.col, row: shadowBox.row, colSpan: shadowBox.colSpan, rowSpan: shadowBox.rowSpan}
         }
 
         return undefined;

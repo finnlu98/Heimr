@@ -4,6 +4,9 @@
     border-radius: 8px;
     background-color: var(--color-widget-background);
     box-shadow: 1px 2.5px 5px black;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
 }
 
 .widget-title {

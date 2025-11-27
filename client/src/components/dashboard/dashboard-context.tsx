@@ -22,9 +22,9 @@ type DashboardState = {
 
 const initialState: DashboardState = {
   widgets: [
-            { id: "box-1", position: { x: 0, y: 0 }, box: { cols: 3, rows: 3 }, widget: Widget.laundryWeek },
-            { id: "box-2", position: { x: 0, y: 0 }, box: { cols: 6, rows: 4 }, widget: Widget.weather },
-            { id: "box-3", position: { x: 0, y: 0 }, box: { cols: 3, rows: 1 }, widget: Widget.home },
+            { id: "box-1", col: 0, row: 0, colSpan: 3, rowSpan: 3 , widget: Widget.laundryWeek },
+            { id: "box-2", col: 0, row: 0, colSpan: 6, rowSpan: 4, widget: Widget.weather },
+            { id: "box-3", col: 0, row: 0, colSpan: 3, rowSpan: 1, widget: Widget.home },
         ],
   editMode: false,
 };
@@ -69,7 +69,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({children}) =>{
 
 
     const addWidget = (item: Widget) => {
-        const newItem: GridItem = { id: uuidv4(), position: {x: 0, y: 0}, box: {cols: 6, rows: 4}, widget: item}
+        const newItem: GridItem = { id: uuidv4(), col: 0, row: 0, colSpan: 6, rowSpan: 4, widget: item}
         
         setState(prev => ({
         ...prev,

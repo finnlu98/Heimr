@@ -2,21 +2,21 @@ import {
   useDraggable,
 } from "@dnd-kit/core";
 
-import { Position, Box, GridMetaData } from "../model/grid-models";
+import { GridItem, GridMetaData } from "../model/grid-models";
 import { useDashboard } from "../../dashboard/dashboard-context";
 import { MdDelete } from "react-icons/md";
+import { widgetMap } from "../../widgets/model/wigets";
 
 interface WidgetContainerProps {
-  id: string;
-  position: Position;
-  box: Box
-  widget: React.ReactNode
+  gridItem: GridItem
   gridData: GridMetaData
 
 }
 
-const WidgetContainer: React.FC<WidgetContainerProps> = ({ id, position, box, widget, gridData }) => {
-   const {
+const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData }) => {
+  const {id} = gridItem 
+
+  const {
     attributes,
     listeners,
     setNodeRef,
@@ -31,11 +31,17 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ id, position, box, wi
 
   const {editMode, removeWidget} = useDashboard();
 
-  const finalX = position.x + (moveTransform?.x ?? 0);
-  const finalY = position.y + (moveTransform?.y ?? 0);
+  // const step = gridData.cellSize;
+  const transform = moveTransform ?? { x: 0, y: 0 };
 
-  const widthPx = box.cols * gridData.cellSize;
-  const heightPx = box.rows * gridData.cellSize;
+  const baseX = gridItem.col * gridData.colWidth;
+  const baseY = gridItem.row * gridData.colHeight;
+
+  const finalX = baseX + transform.x + gridData.gap;
+  const finalY = baseY + transform.y + gridData.gap
+
+  const widthPx  = gridItem.colSpan * gridData.colWidth;
+  const heightPx = gridItem.rowSpan * gridData.colHeight;
 
   const style: React.CSSProperties = {
     position: "absolute",
@@ -89,7 +95,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ id, position, box, wi
         {...resizeAttributes}
         style={resizeHandleStyle}
       />}
-      {widget}
+      { widgetMap[gridItem.widget]}
     </div>
   );
 };

@@ -9,9 +9,11 @@ import { PreviewState } from "./model/grid-models";
 import WidgetContainer from "./widget/widget-container";
 import GridService from "./service/grid-service";
 import { MoveType } from "./model/move-type";
-import { widgetMap } from "../widgets/model/wigets";
 import { useDashboard } from "../dashboard/dashboard-context";
 
+const COLUMNS = 24;
+const GAP = 5
+const ROW_ASPECT = 1
 
 export const Grid: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -26,11 +28,17 @@ export const Grid: React.FC = () => {
       const entry = entries[0];
       const { width, height } = entry.contentRect;
 
-      const columns = 12
-      const cellSize = Math.ceil(width / columns);
-      const gap = 5
+      const columns = COLUMNS
+      const colWidth = width / columns;
 
-      onGridResize({ width, height, cellSize, columns, gap});
+      const idealColHeight = colWidth / ROW_ASPECT;
+      const maxRows = Math.floor(height / idealColHeight);
+      const colHeight = height / maxRows;
+
+      const gap = GAP
+      
+
+      onGridResize({ width, height, colWidth, colHeight, columns, gap});
     });
 
     observer.observe(containerRef.current);
@@ -44,7 +52,7 @@ export const Grid: React.FC = () => {
     const id = active.id as string;
 
     const isResize = id.endsWith("-resize");
-    const baseId = isResize ? id.replace(/-resize$/, "") : id; // has to be a better way to do this
+    const baseId = isResize ? id.replace(/-resize$/, "") : id; 
 
     const current = widgets.find((b) => b.id === baseId);
     if (!current || !gridMetaData) {
@@ -70,13 +78,14 @@ export const Grid: React.FC = () => {
 
     if(box && gridMetaData) {
       if(id.toString().includes("resize")) {
-        var updateItem = GridService.computeResize(box, gridMetaData, delta)
+        
+        var updateItemResize = GridService.computeResize(box, gridMetaData, delta)
         setPreview(null)
-        updateWidget(updateItem);
+        updateWidget(updateItemResize);
       } else {
-        var updateItem = GridService.computeMove(id.toString(), widgets, box, gridMetaData, delta, true)
+        var updateItemMove = GridService.computeMove(id.toString(), widgets, box, gridMetaData, delta, true)
         setPreview(null)
-        updateWidget(updateItem);
+        updateWidget(updateItemMove);
       }
     }
   };
@@ -85,7 +94,7 @@ export const Grid: React.FC = () => {
       position: "relative",
       width: "100%",
       height: "100%",
-      backgroundSize: gridMetaData ? `${gridMetaData.cellSize}px ${gridMetaData.cellSize}px` : undefined,
+      backgroundSize: gridMetaData ? `${gridMetaData.colWidth}px ${gridMetaData.colHeight}px` : undefined,
       border: editMode ? "1px solid #ddd" : undefined,
       backgroundImage: editMode ?
           ("linear-gradient(to right, #eee 1px, transparent 1px)," +
@@ -102,22 +111,19 @@ export const Grid: React.FC = () => {
         {gridMetaData && widgets.map((item) => (
           <WidgetContainer
             key={item.id}
-            id={item.id}
-            position={item.position}
-            box={item.box}
-            widget={widgetMap[item.widget] }
+            gridItem={item}
             gridData={gridMetaData}
           />
         ))}
 
-        {preview && (
+        {preview && gridMetaData && (
           <div
             style={{
               position: "absolute",
-              left: preview.x,
-              top: preview.y,
-              width: preview.width,
-              height: preview.height,
+              left: preview.col * gridMetaData?.colWidth,
+              top: preview.row * gridMetaData?.colHeight,
+              width: preview.colSpan * gridMetaData?.colWidth,
+              height: preview.rowSpan * gridMetaData?.colHeight,
               borderRadius: 8,
               border: "2px dashed rgba(0,0,0,0.4)",
               background: "rgba(0,0,0,0.05)",
