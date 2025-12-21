@@ -5,9 +5,12 @@ import { ElviaService } from "../services/ElviaService";
 import moment from "moment";
 
 const ElviaFetcher = async (secretToken: string) => {
+  if (!secretToken || secretToken.trim() === "") {
+    return;
+  }
+
   const consumptionEndpoint =
     configuration.getElviaConfig().Consumption.Endpoint;
-  // const secretToken = process.env.REACT_APP_ELVIA_SECRET_TOKEN ?? ""
   var brokerEndpoint = process.env.REACT_APP_HEIMR_ENDPOINT ?? "";
   brokerEndpoint = brokerEndpoint + "broker";
 

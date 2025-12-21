@@ -8,15 +8,15 @@
 }
 
 .map {
-  height: 150px;
-  width: 70%;
+  min-height: 150px;
+  width: 100%;
   border-radius: 10%;
   border: 2px solid var(--color-off-white);
   margin: 5px;
 }
 
 .map-component {
-  overflow: visible;
+  overflow: hidden;
   border-radius: 10%;
   height: 150px;
   width: 100%;

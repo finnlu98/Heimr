@@ -18,9 +18,9 @@ const ElectricyConsumption: React.FC = () => {
   const [elecService, setElecService] = useState<ElviaService>();
   const [dynamicData, setData] = useState<ComponentData>();
   const { widgetConfigs } = useDashboard();
-  const electricityConfig = widgetConfigs[
+  const electricityConfig = (widgetConfigs[
     WidgetEnum.electricity
-  ] as ElectricityConfig;
+  ] as ElectricityConfig) ?? { electricityKey: "" };
 
   useEffect(() => {
     const setAndFetcConsumption = async () => {
@@ -48,7 +48,9 @@ const ElectricyConsumption: React.FC = () => {
         electricityConfig.electricityKey,
       );
       setElecService(updatedElecData);
-      setData(updatedElecData.getChartFormattedData());
+      if (updatedElecData) {
+        setData(updatedElecData.getChartFormattedData());
+      }
     } catch (error) {
       console.error("Can't update data:", error);
     }

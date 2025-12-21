@@ -15,7 +15,12 @@ import { WeatherConfig } from "../../WeatherWidget";
 const Dailyweather: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData>();
   const { widgetConfigs } = useDashboard();
-  const weatherConfig = widgetConfigs[WidgetEnum.weather] as WeatherConfig;
+  const weatherConfig = (widgetConfigs[
+    WidgetEnum.weather
+  ] as WeatherConfig) ?? {
+    lat: "",
+    lon: "",
+  };
 
   useEffect(() => {
     const CallFetchWeather = async () => {

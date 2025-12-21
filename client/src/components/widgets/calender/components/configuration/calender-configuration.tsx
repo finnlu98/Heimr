@@ -2,7 +2,6 @@ import React from "react";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { CalenderConfig } from "../../CalenderWidget";
 import { WidgetEnum } from "../../../model/widget-type";
-import "./calender-configuration.css";
 
 interface CalenderConfigurationProps {}
 
@@ -21,7 +20,7 @@ const CalenderConfiguration: React.FC<CalenderConfigurationProps> = () => {
   };
 
   return (
-    <div className="calender-configuration column">
+    <div className="h-row">
       <div className="h-column">
         <label htmlFor="caledenderId">Calender ID:</label>
         <input

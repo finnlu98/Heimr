@@ -8,6 +8,10 @@ import { WeatherData } from "../model/data/WeatherData";
 import FetcherHelper from "../../../../api/FetcherHelper";
 
 const FetchWeatherAndSunset = async (lat: string, lon: string) => {
+  if (!lat || !lon || lat.trim() === "" || lon.trim() === "") {
+    return;
+  }
+
   var weatherEndpoint = formatEndpointWithCoordinates(
     configuration.getWeatherEndpoint(),
     lat,
