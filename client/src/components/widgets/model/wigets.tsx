@@ -1,38 +1,32 @@
-import React from "react"
-import LaundryWeek from "../laundry-week/laundry-week"
-import Stocks from "../stocks/stocks"
-import News from "../news/news"
-import Dailyweather from "../weather/daily-weather"
-import HomeActionButtons from "../home/components/home-action-buttons"
-import ElectricyConsumption from "../electricity/components/electricity-consumption/electricity-consumption"
-import CityBike from "../city-bike/city-bike"
-import Calender from "../calender/calender"
-import TravelCard from "../bus-cards/components/travel-card"
+import { WidgetDefinition, WidgetEnum } from "./widget-type";
+import { TravelCardWidget } from "../bus-cards/TravelCardWidget";
+import { CalenderWidget } from "../calender/CalenderWidget";
+import { NewsWidget } from "../news/NewsWidget";
+import { CityBikeWidget } from "../city-bike/CityBikeWidget";
+import { ElectricityWidget } from "../electricity/ElectricityWidget";
+import { HomeWidget } from "../home/HomeWidget";
+import { LaundryWeekWidget } from "../laundry-week/LaundryWeekWidget";
+import { StocksWidget } from "../stocks/StocksWidget";
+import { WeatherWidget } from "../weather/WeatherWidget";
 
+export const Widgets: Record<WidgetEnum, WidgetDefinition<any>> = {
+  [WidgetEnum.weather]: WeatherWidget,
+  [WidgetEnum.stocks]: StocksWidget,
+  [WidgetEnum.news]: NewsWidget,
+  [WidgetEnum.laundryWeek]: LaundryWeekWidget,
+  [WidgetEnum.home]: HomeWidget,
+  [WidgetEnum.electricity]: ElectricityWidget,
+  [WidgetEnum.cityBike]: CityBikeWidget,
+  [WidgetEnum.calender]: CalenderWidget,
+  [WidgetEnum.busCards]: TravelCardWidget,
+};
 
-export enum Widget {
-    weather = "Weather",
-    stocks = "Stocks",
-    news = "News",
-    laundryWeek = "Laundry Week",
-    home = "Home",
-    electricity = "Electricity",
-    cityBike = "City Bike",
-    calender = "Calender",
-    busCards = "Bus Cards"
-}
-
-
-export const widgetMap: Record<Widget, React.ReactNode> = {
-    [Widget.weather]: <Dailyweather />,
-    [Widget.stocks]: <Stocks />,
-    [Widget.news]: <News />,
-    [Widget.laundryWeek]: <LaundryWeek />,
-    [Widget.home]: <HomeActionButtons />,
-    [Widget.electricity]: <ElectricyConsumption />,
-    [Widget.cityBike]: <CityBike />,
-    [Widget.calender]: <Calender />,
-    [Widget.busCards]: <TravelCard />
-}
-
-
+export const WidgetConfigs: Record<WidgetEnum, object> = (
+  Object.keys(Widgets) as WidgetEnum[]
+).reduce(
+  (acc, key) => {
+    acc[key] = Widgets[key].widgetConfig?.config ?? undefined;
+    return acc;
+  },
+  {} as Record<WidgetEnum, object>,
+);

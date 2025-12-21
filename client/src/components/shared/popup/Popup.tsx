@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "./Popup.css"
 import React from "react";
 
@@ -12,7 +12,6 @@ interface PopupProps {
 const PopupButton: React.FC<PopupProps> = ({children, closePopupSeconds}) => {
   const [showPopup, setShowPopup] = useState(false);
   const [cords, setCords] = useState({top: 0, left: 0})
-  const popupRef = useRef<HTMLDivElement>(null);
   
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();

@@ -1,12 +1,10 @@
-* {
-    color: var(--color-off-white);
-}
 
 html, body, #root { 
     height: 100%; 
     margin: 0; 
     padding: 0;
-    background-color: var(--color-background)
+    background-color: var(--color-background);
+    color: var(--color-off-white);
 }
    
 .app {

@@ -5,8 +5,14 @@
     background-color: var(--color-widget-background);
     box-shadow: 1px 2.5px 5px black;
     overflow: hidden;
+    color: var(--color-off-white) !important;
+}
+.widget-content {
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
+    width: 100%;
+    height: 100%;
 }
 
 .widget-title {
@@ -21,3 +27,4 @@
   width: 15px;
   height: 15px;
 }
+

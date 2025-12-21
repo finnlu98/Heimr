@@ -1,10 +1,10 @@
 .standard-rows {
-    border-top: none;
-    border-bottom: 3px solid var(--color-off-gray);
-    border-left: none;
-    border-right: none;
-    border-radius: 0px;
-    padding: 5px 0px 5px 0px;
+  border-top: none;
+  border-bottom: 3px solid var(--color-off-gray);
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
+  padding: 5px 0px 5px 0px;
 }
 
 .circle {
@@ -27,18 +27,58 @@
 }
 
 .react-icon-orange {
-    fill: var(--color-icon-orange);
+  fill: var(--color-icon-orange);
 }
 
 .react-icon-yellow {
-    fill: var(--color-icon-yellow);
+  fill: var(--color-icon-yellow);
 }
 
 .react-icon-green {
-    fill: var(--color-icon-green);
+  fill: var(--color-icon-green);
 }
 
 .react-icon-gray {
-    fill: var(--color-icon-gray);
+  fill: var(--color-icon-gray);
 }
 
+.h-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.h-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right-align {
+  margin-left: auto;
+}
+
+input {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+  background-color: #fff;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}

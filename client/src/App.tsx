@@ -9,9 +9,9 @@ import "./styles/global.css"
 import "./styles/colors.css"
 import "./styles/widgets.css"
 import 'leaflet/dist/leaflet.css';
-import { Grid } from "./components/grid/grid";
-import EditModeToggleButton from "./components/shared/editMode/edit-mode-button";
-import Sidebar from "./components/sidebar/sidebar";
+import { Grid } from "./components/dashboard/grid/grid";
+import EditModeToggleButton from "./components/dashboard/editMode/edit-mode-button";
+import Sidebar from "./components/dashboard/sidebar/sidebar";
 import DashboardProvider from "./components/dashboard/dashboard-context";
 
 

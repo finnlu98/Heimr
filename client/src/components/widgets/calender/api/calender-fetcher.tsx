@@ -2,17 +2,15 @@ import axios from "axios";
 import moment from "moment";
 import configuration from "../../../../Configuration";
 import { CalenderResponse } from "../model/CalenderResponse";
-const CalenderFetcher = async () => {
+const CalenderFetcher = async (calenderKey: string, calenderId: string) => {
     try {
-        const API_KEY = process.env.REACT_APP_GOOGLE_CALENDER_KEY ?? "";
-        const CAL_ID = process.env.REACT_APP_GOOGLE_CALID ?? "";
         const TIME_MIN = `${moment().format('YYYY-MM-DD')}T00:00:00Z`;
         
         const config = configuration.getCalenderConfig()
 
         var endoint = config.Endpoint
-                        .replace(":CAL_ID", CAL_ID)
-                        .replace(":API_KEY", API_KEY)
+                        .replace(":CAL_ID", calenderId)
+                        .replace(":API_KEY", calenderKey)
                         .replace(":TIME_MIN", TIME_MIN)
                         .replace(":MAX_RESULTS", config.maxResults.toString())
 

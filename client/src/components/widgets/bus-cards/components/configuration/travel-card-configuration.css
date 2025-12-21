@@ -1,0 +1,39 @@
+.travel-config {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto 1fr 1fr auto; 
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+
+.travel-header {
+    font-weight: bold;
+}
+
+.travel-action-button:hover {
+    cursor: pointer;
+    filter: brightness(1.15);
+    transform: scale(1.15);
+}
+
+.travel-input {
+    width: 100%;
+}
+
+
+.circle-upload {
+  background: #eaeaea;
+  border: 2px dashed #bbb;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.circle-upload:hover {
+  background: #f5f5f5;
+  border-color: #888;
+}
+
+.circle-upload input[type="file"] {
+  display: none;
+}
