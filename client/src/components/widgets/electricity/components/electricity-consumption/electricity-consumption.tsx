@@ -57,42 +57,42 @@ const ElectricyConsumption: React.FC = () => {
   }
 
   return (
-    <div className="consumption-container">
-      <div className="consumption-cards">
+    <div className="h-column gap">
+      <div className="consumption-cards h-row gap center">
         <div className="consumption-card">
           <ImPower className="react-icon-orange" />
           <div>{elecService?.getConsumptionMonth()} kwh</div>
         </div>
-        <div className="consumption-card">
+        <div className="consumption-card gap-tiny">
           <MdPriceChange className="react-icon-green" />
           <div>{elecService?.getEstimatedPriceMonth()} NOK</div>
         </div>
-        <div className="consumption-card">
+        <div className="consumption-card gap-tiny">
           <div className="level-header">
             <GiLevelTwo className="react-icon-orange" />{" "}
             {ElectricityLevelFormatter.formatLevel(
               elecService?.getCapacityLevel(),
             )}
           </div>
-          <div className="card-sub-text">
+          <div className="font-small">
             {ElectricityLevelFormatter.formatInterval(
               elecService?.getCapacityLevel(),
             )}{" "}
             kwh
           </div>
         </div>
-        <div className="consumption-card">
+        <div className="consumption-card gap-tiny">
           <div className="level-header">
             <IoIosTimer className="react-icon-gray" />{" "}
             {moment(elecService?.getHighestHour()?.startTime).format("h a")}
           </div>
-          <div className="card-sub-text">
+          <div className="font-small">
             {elecService?.getHighestHour()?.value} kwh
           </div>
         </div>
       </div>
 
-      <div className="consumption-chart-container">
+      <div className="text-align-center font-small">
         Peak kwh per day in {moment().format("MMMM")}
         {dynamicData && (
           <BarChart

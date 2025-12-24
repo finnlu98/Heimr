@@ -1,20 +1,8 @@
-.stocks {
-    font-weight: bold;
-    font-size: small;
-    display: flex;
-    gap: 10px;
-}
-
 .stock {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 1px;
 }
 
 .change {
-    display: flex;
     gap: 2px;
     color: rgb(255, 95, 3);
 }

@@ -1,13 +1,6 @@
-.news-item {
-    display: flex;
-    gap: 10px;
-}
-
 .news-text {
-    flex: 1;
-    font-size: small;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    text-overflow: hidden;
+    width: 100%;
 }
 
 .news-img-container {
