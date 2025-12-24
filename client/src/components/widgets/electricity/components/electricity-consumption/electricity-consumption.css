@@ -1,15 +1,5 @@
-.consumption-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
 .consumption-cards {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
     align-items: stretch;
-    
 }
 
 .consumption-card {
@@ -20,7 +10,6 @@
     padding: 3px;
     justify-content: center;
     align-items: center;
-    gap: 2px;
 }
 
 .level-header {
@@ -28,13 +17,4 @@
     align-items: center;
     gap: 2px;
     font-weight: bold;
-}
-
-.card-sub-text {
-    font-size: small;
-}
-
-.consumption-chart-container {
-    text-align: center;
-    font-size: small;
 }

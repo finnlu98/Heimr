@@ -31,16 +31,16 @@ const News: React.FC = () => {
     }
     
     return (
-        <div className="news-container">
+        <div className="h-column fill-width">
             <div className="widget-title">
                 <div>Current news 📰</div>
             </div>
             <div>
                 {news && news.rss.channel.item.slice(0, 2).map((newsItem) => {
                     return (
-                        <div key={newsItem.title} className="standard-rows news-item">
-                            <div className="news-text">{newsItem.title}</div>
-                                <div className="news-img-container">
+                        <div key={newsItem.title} className="standard-rows h-row gap">
+                            <div className="news-text font-small">{newsItem.title}</div>
+                                <div className="news-img-container right-align">
                                     <img
                                         className="news-img"
                                         src={newsItem?.media_content?.url ? `${newsItem.media_content.url}` : "./img/news/newspaper.png" }

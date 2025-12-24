@@ -27,27 +27,27 @@ const Stocks: React.FC = () => {
     const f = `${(value * 100).toFixed(2)}%`;
     if (value >= 0) {
       return (
-        <div className="change pos">
+        <div className="change h-row pos">
           {" "}
-          {f} <IoMdArrowDropup fill="rgba(55, 187, 3, 1)" size={20} />
+          {f} <IoMdArrowDropup size={20} />
         </div>
       );
     }
     return (
-      <div className="change">
+      <div className="change h-row">
         {" "}
-        {f} <MdOutlineArrowDropDown fill="rgb(255, 95, 3)" size={20} />
+        {f} <MdOutlineArrowDropDown size={20} />
       </div>
     );
   }
 
   return (
-    <div className="stocks">
+    <div className="h-row font-small font-bold">
       {stocks &&
         stocks.stocks.map((stock) => {
           return (
-            <div key={stock.symbol} className="stock">
-              <div className="ticker">{stock.symbol}:</div>
+            <div key={stock.symbol} className="stock h-column">
+              <div>{stock.symbol}:</div>
               {formatPercantage(stock.fiftyDayAverageChangePercent)}
             </div>
           );
