@@ -6,6 +6,8 @@ export class UserService {
       const user = await prisma.user.create({
         data: {
           email,
+          created_at: new Date(),
+          status: "inactive", // this needs to be fixed
         },
       });
       return user;

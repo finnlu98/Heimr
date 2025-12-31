@@ -16,4 +16,27 @@ datasource db {
 model User {
   id           String @id @default(uuid())
   email        String @unique
+  status       String
+  created_at   DateTime
+  login_tokens LoginTokens[]
+}
+
+model LoginTokens {
+  id           String @id @default(uuid())
+  user_id      String  
+  user         User @relation(fields: [user_id], references: [id]) 
+  token_hash   String @unique 
+  purpose      String 
+  expires_at   DateTime
+  used_at      DateTime?
+  created_at   DateTime 
+}
+
+model Session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire], name: "IDX_session_expire")
+  @@map("sessions")
 }

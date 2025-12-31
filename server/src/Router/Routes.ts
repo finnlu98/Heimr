@@ -3,6 +3,7 @@ import BrokerRouter from "../Modules/Broker/BrokerRouter";
 import StockRouter from "../Modules/Stock/StockRouter";
 import { HomeRouter } from "../Modules/Home/HomeRouter";
 import { UserRouter } from "../Modules/User/UserRouter";
+import AuthorizationRouter from "../Modules/Authorization/AuthorizationRouter";
 
 export class Routes {
   app: Application;
@@ -26,11 +27,13 @@ export class Routes {
     const stock = new StockRouter();
     const home = new HomeRouter();
     const user = new UserRouter();
+    const auth = new AuthorizationRouter();
 
     this.app.use("/", this.router);
     this.app.use("/api", broker.route);
     this.app.use("/api", stock.route);
     this.app.use("/api", home.route);
     this.app.use("/api", user.route);
+    this.app.use("/api", auth.route);
   }
 }
