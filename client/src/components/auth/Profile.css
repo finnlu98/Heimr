@@ -1,0 +1,9 @@
+.profile-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  background-color: var(--color-widget-background);
+  cursor: pointer;
+}

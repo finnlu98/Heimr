@@ -11,7 +11,7 @@ const ElviaFetcher = async (secretToken: string) => {
 
   const consumptionEndpoint =
     configuration.getElviaConfig().Consumption.Endpoint;
-  var brokerEndpoint = process.env.REACT_APP_HEIMR_ENDPOINT ?? "";
+  var brokerEndpoint = process.env.REACT_APP_HEIMR_BACKEND_ENDPOINT ?? "";
   brokerEndpoint = brokerEndpoint + "broker";
 
   const formattedEndpoint = new URL(consumptionEndpoint);

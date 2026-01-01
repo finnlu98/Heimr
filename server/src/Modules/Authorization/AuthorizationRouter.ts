@@ -68,5 +68,18 @@ export default class AuthorizationRouter extends BaseRouter {
         return res.status(200).json({ message: "Logged out" });
       });
     });
+
+    this.route.get(`${this.subRoute}/me`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      return res.json({ user: { email: user.email } });
+    });
   }
 }
