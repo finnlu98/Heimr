@@ -1,0 +1,12 @@
+.login-container {
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  position: relative;
+}
+
+.sign-out {
+  position: absolute;
+  bottom: 0px;
+  right: 20px;
+}

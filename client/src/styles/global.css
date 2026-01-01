@@ -125,3 +125,23 @@ label {
   font-weight: 500;
   color: #333;
 }
+
+button {
+  appearance: none;
+  border: 1px solid var(--color-off-gray);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--color-off-white);
+}
+
+button:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+  transform: scale(0.98);
+}
