@@ -1,0 +1,18 @@
+.circle-upload {
+  background: #eaeaea;
+}
+
+.circle-upload-active {
+  border: 2px dashed #bbb;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.circle-upload-active:hover {
+  background: #f5f5f5;
+  border-color: #888;
+}
+
+.circle-upload input[type="file"] {
+  display: none;
+}

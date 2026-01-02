@@ -5,8 +5,8 @@
   position: relative;
 }
 
-.sign-out {
+.action-buttons {
   position: absolute;
-  bottom: 0px;
+  bottom: 20px;
   right: 20px;
 }
