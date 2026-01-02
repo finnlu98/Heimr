@@ -1,13 +1,17 @@
 import prisma from "../../Lib/prisma";
+import { StorageService } from "../../Shared/Storage/StorageService";
 import BaseRouter from "../Common/BaseRouter";
 import AuthorizationService from "./AuthorizationService";
-import { generateToken, hashToken } from "./AuthTokens";
+import path from "path";
+import { upload } from "../../Shared/Storage/Upload";
 
 export default class AuthorizationRouter extends BaseRouter {
   private authorizationService: AuthorizationService;
+  private storageService: StorageService;
   constructor() {
     super("/auth");
     this.authorizationService = new AuthorizationService();
+    this.storageService = new StorageService(path.join(process.cwd(), "data"), "/media");
     this.setRoute();
   }
 
@@ -19,8 +23,7 @@ export default class AuthorizationRouter extends BaseRouter {
 
       const emailRaw = String(req.body?.email ?? "");
       const email = emailRaw.trim().toLowerCase();
-      if (!email.includes("@"))
-        return res.status(400).json({ error: "Invalid email" });
+      if (!email.includes("@")) return res.status(400).json({ error: "Invalid email" });
 
       var invite = await this.authorizationService.generateInvite(email);
       console.log("MAGIC LINK:", invite);
@@ -79,7 +82,26 @@ export default class AuthorizationRouter extends BaseRouter {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      return res.json({ user: { email: user.email } });
+      return res.json({
+        user: {
+          name: user.name,
+          email: user.email,
+          avatarUrl: user.avatar_img_key ? this.storageService.getPublicUrl(user.avatar_img_key) : null,
+        },
+      });
+    });
+
+    this.route.put(`${this.subRoute}/me/personalia`, upload.single("avatar"), async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const { name } = req.body;
+      const file = req.file;
+      await this.authorizationService.updatePersonalia(userId, name, file);
+
+      return res.status(200).json({ message: "Profile updated" });
     });
   }
 }

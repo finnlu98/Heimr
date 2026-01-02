@@ -13,23 +13,35 @@ datasource db {
   provider = "postgresql"
 }
 
+model Home {
+  id            String @id @default(uuid())
+  name          String?
+  home_img_key  String?
+  location      Json?
+  users         User[]
+}
+
 model User {
-  id           String @id @default(uuid())
-  email        String @unique
-  status       String
-  created_at   DateTime
-  login_tokens LoginTokens[]
+  id             String @id @default(uuid())
+  name           String?
+  email          String @unique
+  avatar_img_key String?
+  status         String
+  created_at     DateTime
+  login_tokens   LoginTokens[]
+  home_id        String?
+  home           Home? @relation(fields: [home_id], references: [id])
 }
 
 model LoginTokens {
-  id           String @id @default(uuid())
-  user_id      String  
-  user         User @relation(fields: [user_id], references: [id]) 
-  token_hash   String @unique 
-  purpose      String 
-  expires_at   DateTime
-  used_at      DateTime?
-  created_at   DateTime 
+  id             String @id @default(uuid())
+  user_id        String  
+  user           User @relation(fields: [user_id], references: [id]) 
+  token_hash     String @unique 
+  purpose        String 
+  expires_at     DateTime
+  used_at        DateTime?
+  created_at     DateTime 
 }
 
 model Session {
@@ -40,3 +52,4 @@ model Session {
   @@index([expire], name: "IDX_session_expire")
   @@map("sessions")
 }
+

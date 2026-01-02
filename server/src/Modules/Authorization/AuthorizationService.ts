@@ -1,7 +1,19 @@
 import prisma from "../../Lib/prisma";
+import { StorageService } from "../../Shared/Storage/StorageService";
 import { generateToken, hashToken } from "./AuthTokens";
+import path from "path";
+import { StoragePath } from "../../Shared/Storage/StoragePath";
+import { User } from "../../generated/prisma";
 
 export default class AuthorizationService {
+  private storageService: StorageService;
+  constructor() {
+    this.storageService = new StorageService(
+      path.join(process.cwd(), StoragePath.StorageRoot),
+      `/${StoragePath.MediaEndpoint}`,
+    );
+  }
+
   async generateInvite(email: string): Promise<string> {
     const user = await prisma.user.upsert({
       where: { email },
@@ -70,5 +82,45 @@ export default class AuthorizationService {
     }
 
     return { success: true, userId: user.id, email: user.email };
+  }
+
+  async uploadImage(file: Express.Multer.File, storePath: string): Promise<string> {
+    const ext = this.storageService.getMimeTypeExtension(file.mimetype);
+    const key = this.storageService.imageKey(storePath, ext);
+    const stored = await this.storageService.uploadImage(key, {
+      data: file.buffer,
+      contentType: file.mimetype,
+      filename: file.originalname,
+    });
+    return stored.key;
+  }
+
+  async updatePersonalia(userId: string, name?: string, file?: Express.Multer.File): Promise<Partial<User>> {
+    const updateData: { name?: string; avatar_img_key?: string } = {};
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    if (file) {
+      updateData.avatar_img_key = await this.uploadImage(file, StoragePath.UserPath);
+      if (user.avatar_img_key) {
+        await this.storageService.removeImage(user.avatar_img_key);
+      }
+    }
+
+    if (name) {
+      updateData.name = name;
+    }
+
+    if (Object.keys(updateData).length > 0) {
+      const res = await prisma.user.update({
+        where: { id: userId },
+        data: updateData,
+      });
+
+      return res;
+    }
+
+    return user;
   }
 }

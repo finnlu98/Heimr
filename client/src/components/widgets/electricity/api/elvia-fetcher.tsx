@@ -9,16 +9,12 @@ const ElviaFetcher = async (secretToken: string) => {
     return;
   }
 
-  const consumptionEndpoint =
-    configuration.getElviaConfig().Consumption.Endpoint;
+  const consumptionEndpoint = configuration.getElviaConfig().Consumption.Endpoint;
   var brokerEndpoint = process.env.REACT_APP_HEIMR_BACKEND_ENDPOINT ?? "";
-  brokerEndpoint = brokerEndpoint + "broker";
+  brokerEndpoint = brokerEndpoint + "/broker";
 
   const formattedEndpoint = new URL(consumptionEndpoint);
-  formattedEndpoint.searchParams.set(
-    "startTime",
-    moment().startOf("month").format(),
-  );
+  formattedEndpoint.searchParams.set("startTime", moment().startOf("month").format());
 
   const response = await axios.post<ElviaConsumptionResponse>(
     brokerEndpoint,
