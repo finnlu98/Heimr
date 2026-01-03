@@ -103,5 +103,15 @@ export default class AuthorizationRouter extends BaseRouter {
 
       return res.status(200).json({ message: "Profile updated" });
     });
+
+    this.route.get(`${this.subRoute}/me/home`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const home = await this.authorizationService.getUserHome(userId);
+      return res.status(200).json({ home });
+    });
   }
 }

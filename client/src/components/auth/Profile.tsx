@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./Profile.css";
 import { Modal } from "../shared/modal/modal";
-import Login from "./Login";
 import { useAuth } from "../../context/AuthContext";
 import ImageCircle from "../shared/imageCirlce/ImageCircle";
+import ProfileOverview from "./ProfileOverview";
 
 const Profile: React.FC = () => {
   const [editProfile, setEditProfile] = useState(false);
@@ -16,7 +16,7 @@ const Profile: React.FC = () => {
       </div>
       {editProfile && (
         <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">
-          <Login />
+          <ProfileOverview />
         </Modal>
       )}
     </div>

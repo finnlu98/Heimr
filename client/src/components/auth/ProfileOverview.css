@@ -1,0 +1,12 @@
+.login-container {
+  margin-top: 40px;
+  align-items: center;
+  height: 80%;
+  position: relative;
+}
+
+.action-buttons {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

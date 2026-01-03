@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext, useMemo } from "react";
 import apiClient from "../api/ApiClient";
 import { User } from "../model/User";
+import { Home } from "../model/Home";
 
 interface AuthContextProps {
   children: React.ReactNode;
@@ -8,17 +9,20 @@ interface AuthContextProps {
 
 type AuthState = {
   user: User | null;
+  home: Home | null;
   loading: boolean;
   refresh: () => Promise<void>;
   login: (email: string) => Promise<void>;
   logout: () => Promise<void>;
   updatePersonalia: (user: Partial<User>, file: File | null) => Promise<void>;
+  getHome: () => Promise<void>;
 };
 const AuthContext = createContext<AuthState | undefined>(undefined);
 const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [home, setHome] = useState<Home | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log(user);
+
   const refresh = async () => {
     try {
       const res = await apiClient.get<{ user: User }>("/auth/me");
@@ -30,8 +34,18 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     }
   };
 
+  const getHome = async () => {
+    try {
+      const res = await apiClient.get<{ home: Home }>("/auth/me/home");
+      setHome(res.data.home);
+    } catch (error) {
+      console.error("Failed to fetch home data", error);
+    }
+  };
+
   useEffect(() => {
     refresh();
+    getHome();
   }, []);
 
   const logout = async () => {
@@ -65,7 +79,10 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     }
   };
 
-  const value = useMemo(() => ({ user, loading, refresh, logout, login, updatePersonalia }), [user, loading]);
+  const value = useMemo(
+    () => ({ user, home, loading, refresh, logout, login, updatePersonalia, getHome }),
+    [user, home, loading],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

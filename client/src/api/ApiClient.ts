@@ -11,7 +11,6 @@ const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log("API Response:", response.data);
     if (response.data?.user?.avatarUrl && !response.data.user.avatarUrl.startsWith("http")) {
       response.data.user.avatarUrl = getFullImageUrl(response.data.user.avatarUrl);
     }

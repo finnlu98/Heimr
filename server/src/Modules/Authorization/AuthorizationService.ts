@@ -3,7 +3,7 @@ import { StorageService } from "../../Shared/Storage/StorageService";
 import { generateToken, hashToken } from "./AuthTokens";
 import path from "path";
 import { StoragePath } from "../../Shared/Storage/StoragePath";
-import { User } from "../../generated/prisma";
+import { Home, User } from "../../generated/prisma";
 
 export default class AuthorizationService {
   private storageService: StorageService;
@@ -122,5 +122,18 @@ export default class AuthorizationService {
     }
 
     return user;
+  }
+
+  async getUserHome(userId: any): Promise<Home | null> {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    if (!user?.home_id) {
+      return null;
+    }
+
+    return prisma.home.findFirst({
+      where: { id: user.home_id },
+    });
   }
 }
