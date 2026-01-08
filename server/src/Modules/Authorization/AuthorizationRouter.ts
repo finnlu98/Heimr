@@ -103,5 +103,87 @@ export default class AuthorizationRouter extends BaseRouter {
 
       return res.status(200).json({ message: "Profile updated" });
     });
+
+    this.route.get(`${this.subRoute}/me/home`, async (req, res) => {
+      let userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      if (!userId) {
+        ({ userId } = req.body);
+      }
+
+      const home = await this.authorizationService.getUserHome(userId);
+
+      return res.status(200).json({ home });
+    });
+
+    this.route.post(`${this.subRoute}/me/home`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const home = await this.authorizationService.createUserHome(userId);
+      return res.status(200).json({ home });
+    });
+
+    this.route.put(`${this.subRoute}/me/home`, upload.single("banner"), async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const { name, location } = req.body;
+      const file = req.file;
+
+      const home = await this.authorizationService.updateHome(userId, { name, location }, file);
+
+      return res.status(200).json({ home });
+    });
+
+    this.route.post(`${this.subRoute}/me/home/members`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+      const { email } = req.body;
+
+      const result = await this.authorizationService.addHomeMember(userId, email);
+      if (!result) {
+        return res.status(400).json({ error: "Failed to add member" });
+      }
+      return res.status(200).json({ result });
+    });
+
+    this.route.put(`${this.subRoute}/me/home/member`, upload.single("avatar"), async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+      const { email, name } = req.body;
+      const file = req.file;
+
+      const result = await this.authorizationService.updateHomeMember(userId, email, name, file);
+      if (!result) {
+        return res.status(400).json({ error: "Failed to update member" });
+      }
+      return res.status(200).json(result);
+    });
+
+    this.route.delete(`${this.subRoute}/me/home/members`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+      const { email } = req.body;
+
+      const result = await this.authorizationService.removeHomeMember(userId, email);
+      if (!result.success) {
+        return res.status(400).json({ error: result?.message });
+      }
+      return res.status(200).json({ message: "Member removed" });
+    });
   }
 }

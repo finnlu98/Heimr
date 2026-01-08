@@ -22,7 +22,7 @@ export class StorageService implements IStorageService {
 
   getPublicUrl(key: string) {
     const safeKey = key.replace(/\\/g, "/").replace(/^\/+/, "");
-    return `${this.publicBaseUrl.replace(/\/$/, "")}/${safeKey}`;
+    return `${process.env.BACKEND_ORIGIN}${this.publicBaseUrl.replace(/\/$/, "")}/${safeKey}`;
   }
 
   async uploadImage(key: string, file: UploadInput): Promise<StoredImage> {

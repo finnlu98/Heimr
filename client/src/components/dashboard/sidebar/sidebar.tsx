@@ -8,6 +8,7 @@ import { Modal } from "../../shared/modal/modal";
 import { useState } from "react";
 import WidgetConfiguration from "../grid/widget/widget-configuration";
 import { Widgets } from "../../widgets/model/wigets";
+import Profile from "../../auth/Profile";
 
 const Sidebar: React.FC = () => {
   const { editMode, addWidget } = useDashboard();
@@ -38,29 +39,28 @@ const Sidebar: React.FC = () => {
     <>
       <div className={`sidebar ${editMode ? "edit-mode" : ""}`}>
         {editMode && (
-          <div className="widget-menu-title">
-            <div>
-              <IoMdArrowDropright /> Widget menu
+          <>
+            <div className="widget-menu-row">
+              <Profile />
             </div>
-          </div>
+            <div className="sidebar-title">
+              <div>
+                <IoMdArrowDropright /> Widget menu
+              </div>
+            </div>
+          </>
         )}
         {Widgets &&
           editMode &&
           Object.entries(Widgets).map(([key, entries]) => (
             <div key={key} className="widget-menu-row">
               <div className="item friendly-display">
-                <div className="friendly-display-item">
-                  {entries.widgetIcon}{" "}
-                </div>
-                <div className="friendly-display-item">
-                  {entries.friendlyName}{" "}
-                </div>
+                <div className="friendly-display-item">{entries.widgetIcon} </div>
+                <div className="friendly-display-item">{entries.friendlyName} </div>
               </div>
               <div className="item widget-action-buttons">
                 <div className="icon">
-                  <CiEdit
-                    onClick={() => setWidgetKeyAndToggleEdit(key as WidgetEnum)}
-                  />
+                  <CiEdit onClick={() => setWidgetKeyAndToggleEdit(key as WidgetEnum)} />
                 </div>
                 <div className="icon" onClick={() => addWidget(entries.id)}>
                   <IoAddCircle />
@@ -69,14 +69,8 @@ const Sidebar: React.FC = () => {
             </div>
           ))}
         {editWidget && (
-          <Modal
-            open={editWidget.edit}
-            onClose={toggleEditWidget}
-            title={`Configure ${editWidget.widgetKey}`}
-          >
-            {editWidget.widgetKey && (
-              <WidgetConfiguration widget={editWidget.widgetKey} />
-            )}
+          <Modal open={editWidget.edit} onClose={toggleEditWidget} title={`Configure ${editWidget.widgetKey}`}>
+            {editWidget.widgetKey && <WidgetConfiguration widget={editWidget.widgetKey} />}
           </Modal>
         )}
       </div>

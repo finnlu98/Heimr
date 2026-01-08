@@ -54,6 +54,25 @@
   gap: 10px;
 }
 
+.grid {
+  display: grid;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
 .fill-width {
   width: 100%;
   flex: 1;
@@ -144,4 +163,13 @@ button:hover {
 
 button:active {
   transform: scale(0.98);
+}
+
+.button-tertiary {
+  background: transparent;
+  border: 2px solid var(--color-off-gray);
+}
+
+.button-tertiary:hover {
+  background: rgba(0, 0, 0, 0.02);
 }
