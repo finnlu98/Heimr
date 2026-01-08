@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import "./header.css";
 import moment from "moment";
 import HomeAvatar from "../standalone/home-avatar/home-avatar";
-// import Stocks from "../widgets/stocks/components/card/stocks";
+import { useAuth } from "../../context/AuthContext";
 
 const Header: React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
+  const { home } = useAuth();
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       setMinutes(moment().format("HH:mm:ss"));
@@ -15,11 +16,11 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <div className="header-container">
+    <div className="header-container" style={{ backgroundImage: `url(${home?.bannerUrl})` }}>
       <div className="header-content-container">
         <div className="header-row">
           <h1 className="header-row-item left">
-            <strong>Stensberggata 21</strong>
+            <strong>{home?.name ? home.name : "Heimr"}</strong>
           </h1>
           <div className="header-row-item right">
             <h1>{minutes}</h1>
@@ -27,20 +28,14 @@ const Header: React.FC = () => {
         </div>
         <div className="header-row">
           <div className="header-row-item avatars">
-            <div className="header-avatar">
-              {" "}
-              <HomeAvatar name="finn_griggs" />
-            </div>
-            <div className="header-avatar">
-              <HomeAvatar name="pernille" />
-            </div>
-            <div className="header-avatar">
-              <HomeAvatar name="line" />
-            </div>
+            {home &&
+              home?.users?.map((user, index) => (
+                <div key={index} className="header-avatar">
+                  <HomeAvatar imgPath={user?.avatarUrl || ""} />
+                </div>
+              ))}
           </div>
-          <div className="header-row-item right stock-container">
-            {/* <Stocks /> */}
-          </div>
+          <div className="header-row-item right stock-container">{/* <Stocks /> */}</div>
         </div>
       </div>
     </div>

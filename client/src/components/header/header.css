@@ -1,6 +1,5 @@
 .header-container {
   position: relative;
-  background-image: url("../../../public/img/header/mohlenpris.jpg");
   background-size: cover;
   background-position: center;
   color: var(--color-off-white);
@@ -9,7 +8,6 @@
   margin-bottom: 10px;
   border: 3px solid var(--color-off-white);
   box-shadow: 1px 2.5px 5px black;
-
 }
 
 .header-container::after {
@@ -39,21 +37,20 @@
 }
 
 .header-row-item {
-  flex: 1;                  
+  flex: 1;
   display: flex;
   align-items: center;
 }
 
 .header-row-item.left {
-  justify-content: flex-start; 
+  justify-content: flex-start;
   text-align: left;
 }
 
 .header-row-item.right {
-  justify-content: flex-end;  
+  justify-content: flex-end;
   text-align: right;
 }
-
 
 .avatars {
   display: flex;
