@@ -9,6 +9,7 @@ import { useState } from "react";
 import WidgetConfiguration from "../grid/widget/widget-configuration";
 import { Widgets } from "../../widgets/model/wigets";
 import Profile from "../../auth/Profile";
+import ProfileOverview from "../../auth/ProfileOverview";
 
 const Sidebar: React.FC = () => {
   const { editMode, addWidget } = useDashboard();
@@ -19,6 +20,7 @@ const Sidebar: React.FC = () => {
     edit: false,
     widgetKey: null,
   });
+  const [editProfile, setEditProfile] = useState(false);
 
   const toggleEditWidget = () => {
     setEditWidget((prev) => {
@@ -42,6 +44,17 @@ const Sidebar: React.FC = () => {
           <>
             <div className="widget-menu-row">
               <Profile />
+            </div>
+            <div className="sidebar-title">
+              <div>
+                <IoMdArrowDropright /> Home
+              </div>
+            </div>
+            <div className="widget-menu-row">
+              <div className="item friendly-display-item">Home settings</div>
+              <div className="item widget-action-buttons">
+                <CiEdit className="icon" onClick={() => setEditProfile(!editProfile)} />
+              </div>
             </div>
             <div className="sidebar-title">
               <div>
@@ -71,6 +84,11 @@ const Sidebar: React.FC = () => {
         {editWidget && (
           <Modal open={editWidget.edit} onClose={toggleEditWidget} title={`Configure ${editWidget.widgetKey}`}>
             {editWidget.widgetKey && <WidgetConfiguration widget={editWidget.widgetKey} />}
+          </Modal>
+        )}
+        {editProfile && (
+          <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">
+            <ProfileOverview />
           </Modal>
         )}
       </div>
