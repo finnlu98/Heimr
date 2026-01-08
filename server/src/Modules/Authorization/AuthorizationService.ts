@@ -230,13 +230,56 @@ export default class AuthorizationService {
         },
       });
 
-      return newUser;
+      return this.transformUser(newUser);
     }
 
-    return await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: addUser.id },
       data: { home_id: user.home_id },
     });
+
+    return this.transformUser(updatedUser);
+  }
+
+  async updateHomeMember(
+    userId: string,
+    updateUserEmail: string,
+    name: string,
+    file?: Express.Multer.File,
+  ): Promise<User | null> {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+    if (!user.home_id) {
+      return null;
+    }
+    const updateUser = await prisma.user.findUnique({ where: { email: updateUserEmail } });
+    if (!updateUser) {
+      return null;
+    }
+
+    if (updateUser.home_id !== user.home_id) {
+      return null;
+    }
+
+    const updateData: { name?: string; avatar_img_key?: string } = {};
+
+    if (file) {
+      updateData.avatar_img_key = await this.uploadImage(file, StoragePath.UserPath);
+
+      if (user.avatar_img_key) {
+        await this.storageService.removeImage(user.avatar_img_key);
+      }
+    }
+
+    if (name) {
+      updateData.name = name;
+    }
+    const res = await prisma.user.update({
+      where: { id: updateUser.id },
+      data: updateData,
+    });
+
+    return this.transformUser(res);
   }
 
   async removeHomeMember(userId: string, email: string): Promise<{ success: boolean; message?: string }> {

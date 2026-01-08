@@ -6,7 +6,6 @@ import { CiEdit } from "react-icons/ci";
 import HomeProfile from "./HomeProfile";
 import UserProfile from "./UserProfile";
 import Login from "./Login";
-import Tab from "../shared/tab/Tab";
 import HomeUsers from "./HomeUsers";
 
 const ProfileOverview: React.FC = () => {
@@ -17,7 +16,7 @@ const ProfileOverview: React.FC = () => {
 
   const userProfileSaveRef = useRef<(() => Promise<void>) | null>(null);
   const homeProfileSaveRef = useRef<(() => Promise<void>) | null>(null);
-
+  const homeUsersSaveRef = useRef<(() => Promise<void>) | null>(null);
   function handleSubmit() {
     if (email === "") return;
     login(email);
@@ -31,6 +30,11 @@ const ProfileOverview: React.FC = () => {
       if (homeProfileSaveRef.current) {
         await homeProfileSaveRef.current();
       }
+
+      if (homeUsersSaveRef.current) {
+        await homeUsersSaveRef.current();
+      }
+
       setEditMode(false);
     } catch (error) {
       console.error("Failed to save profiles", error);
@@ -56,13 +60,14 @@ const ProfileOverview: React.FC = () => {
             </div>
             <div className="h-row profile-overview">
               <div className="h-column gap-large">
+                <label className="section-label">👥 Household</label>
                 <UserProfile
                   user={user}
+                  me={true}
                   editMode={editMode}
                   onSave={(saveFn) => (userProfileSaveRef.current = saveFn)}
-                  showHeader={true}
                 />
-                <HomeUsers editMode={editMode} />
+                <HomeUsers editMode={editMode} onSave={(saveFn) => (homeUsersSaveRef.current = saveFn)} />
               </div>
               <HomeProfile editMode={editMode} onSave={(saveFn) => (homeProfileSaveRef.current = saveFn)} />
             </div>

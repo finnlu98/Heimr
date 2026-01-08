@@ -11,8 +11,9 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div className="profile-container" onClick={() => setEditProfile(true)}>
+      <div className="profile-container h-row" onClick={() => setEditProfile(true)}>
         <ImageCircle imgPath={user?.avatarUrl} text={user ? user.email.charAt(0).toUpperCase() : "?"} />
+        <div>{user?.name}</div>
       </div>
       {editProfile && (
         <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">

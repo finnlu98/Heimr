@@ -22,11 +22,7 @@ function App() {
   useEffect(() => {
     const shouldReload = () => {
       const now = moment();
-      return (
-        now.hour() === reloadHour &&
-        now.minute() === reloadMinute &&
-        now.second() === 0
-      );
+      return now.hour() === reloadHour && now.minute() === reloadMinute && now.second() === 0;
     };
 
     const reloadAtTargetHour = () => {
@@ -48,9 +44,6 @@ function App() {
         <div className="app">
           <div>
             <Sidebar />
-          </div>
-          <div>
-            <Profile />
           </div>
           <div className="container mt-2 mb-2">
             <div className="col-12 mt-2">

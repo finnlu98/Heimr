@@ -2,34 +2,54 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { useAuth } from "../../context/AuthContext";
 import UserProfile from "./UserProfile";
 import PopupButton from "../shared/popup/Popup";
+import { IoMdSend } from "react-icons/io";
+import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 
 interface HomeUsersProps {
   editMode: boolean;
+  onSave: (saveFn: () => Promise<void>) => void;
 }
 
-const HomeUsers: React.FC<HomeUsersProps> = ({ editMode }) => {
-  const { home } = useAuth();
+const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
+  const { home, user, addHomeMember } = useAuth();
+  const [addEmail, setAddEmail] = useState("");
+
+  async function addEmailToHome(email: string, closePopup: () => void) {
+    await addHomeMember(email);
+    closePopup();
+  }
+
   return (
     <>
       <div className="h-column">
-        <label className="section-label">👥 Household</label>
         {home?.users ? (
-          home.users.map((user, index) => (
-            <UserProfile key={index} user={user} editMode={false} onSave={async () => {}} />
-          ))
+          home.users
+            .filter((u) => u?.email !== user?.email)
+            .map((user, index) => <UserProfile key={index} user={user} editMode={editMode} onSave={onSave} />)
         ) : (
           <div>You should add users to this home </div>
         )}
         {editMode && (
           <div className="h-row center">
-            <PopupButton closePopupSeconds={10}>
-              <button className="center" disabled={!editMode}>
-                Add Member <IoAddCircleOutline />
-              </button>
-              <div className="h-row">
-                <input type="text" placeholder="Enter email to invite" className="popup-input" />
-                <button className="popup-button">Send Invite</button>
-              </div>
+            <PopupButton>
+              {(closePopup) => [
+                <button className="center" disabled={!editMode}>
+                  Add Member <IoAddCircleOutline />
+                </button>,
+                <div className="h-row">
+                  <input
+                    type="text"
+                    placeholder="Enter email to invite"
+                    className="popup-input"
+                    value={addEmail}
+                    onChange={(e) => setAddEmail(e.target.value)}
+                  />
+                  <button className="popup-button" onClick={async () => addEmailToHome(addEmail, closePopup)}>
+                    <IoMdSend />
+                  </button>
+                </div>,
+              ]}
             </PopupButton>
           </div>
         )}

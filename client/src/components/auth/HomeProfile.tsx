@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { IoAddCircleOutline } from "react-icons/io5";
 import "./HomeProfile.css";
-import UserProfile from "./UserProfile";
 
 interface HomeProfileProps {
   editMode: boolean;
@@ -80,7 +79,6 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
           </div>
           <div className="h-row">
             <p>🖼️</p>
-
             <div>
               {home?.bannerUrl ? (
                 <div className="banner-preview" style={{ backgroundImage: `url(${previewUrl})` }}>

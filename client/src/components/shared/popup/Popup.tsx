@@ -3,7 +3,7 @@ import "./Popup.css";
 import React from "react";
 
 interface PopupProps {
-  children: React.ReactNode[];
+  children: (closePopup: () => void) => React.ReactNode[] | React.ReactNode[];
   closePopupSeconds?: number;
 }
 
@@ -11,6 +11,9 @@ const PopupButton: React.FC<PopupProps> = ({ children, closePopupSeconds }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [cords, setCords] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const closePopup = () => setShowPopup(false);
+  const [trigger, content] = typeof children === "function" ? children(closePopup) : children;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -50,10 +53,10 @@ const PopupButton: React.FC<PopupProps> = ({ children, closePopupSeconds }) => {
 
   return (
     <div className="popup-container" ref={containerRef}>
-      <div onClick={(e) => handleClick(e)}>{children[0]}</div>
+      <div onClick={(e) => handleClick(e)}>{trigger}</div>
       {showPopup && (
         <div className="popup" style={{ top: cords.top, left: cords.left }}>
-          {children[1]}
+          {content}
         </div>
       )}
     </div>

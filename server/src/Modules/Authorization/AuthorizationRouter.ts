@@ -143,18 +143,33 @@ export default class AuthorizationRouter extends BaseRouter {
       return res.status(200).json({ home });
     });
 
-    this.route.post(`${this.subRoute}/me/home/member`, async (req, res) => {
+    this.route.post(`${this.subRoute}/me/home/members`, async (req, res) => {
       const userId = (req.session as any).userId;
       if (!userId) {
         return res.status(401).json({ error: "Not authenticated" });
       }
-      const { memberEmail } = req.body;
+      const { email } = req.body;
 
-      const result = await this.authorizationService.addHomeMember(userId, memberEmail);
+      const result = await this.authorizationService.addHomeMember(userId, email);
       if (!result) {
         return res.status(400).json({ error: "Failed to add member" });
       }
       return res.status(200).json({ result });
+    });
+
+    this.route.put(`${this.subRoute}/me/home/member`, upload.single("avatar"), async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+      const { email, name } = req.body;
+      const file = req.file;
+
+      const result = await this.authorizationService.updateHomeMember(userId, email, name, file);
+      if (!result) {
+        return res.status(400).json({ error: "Failed to update member" });
+      }
+      return res.status(200).json(result);
     });
 
     this.route.delete(`${this.subRoute}/me/home/members`, async (req, res) => {

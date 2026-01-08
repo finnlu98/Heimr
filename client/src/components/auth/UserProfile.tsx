@@ -3,20 +3,23 @@ import { User } from "../../model/User";
 import ImageCircle from "../shared/imageCirlce/ImageCircle";
 import UploadImageCircle from "../shared/imageCirlce/UploadImageCircle";
 import { useAuth } from "../../context/AuthContext";
+import "./UserProfile.css";
+import { MdDelete } from "react-icons/md";
 
 interface UserProfileProps {
   user: User;
+  me?: boolean;
   editMode: boolean;
   onSave: (saveFn: () => Promise<void>) => void;
-  showHeader?: boolean;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ user, editMode, onSave, showHeader }) => {
-  const { updatePersonalia } = useAuth();
+const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave }) => {
+  const { updatePersonalia, updateHomeMember, deleteHomeMember } = useAuth();
   const [name, setName] = useState(user?.name || "");
   const [imgPath, setImgPath] = useState<string | undefined>(user?.avatarUrl || undefined);
   const [file, setFile] = useState<File | null>(null);
 
+  console.log(user);
   function handleImageChange(dataUrl: string | null, file: File | null) {
     if (!dataUrl) return;
     setImgPath(dataUrl);
@@ -28,7 +31,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, editMode, onSave, showH
       if (!user) return;
       if (name === "" && file === null) return;
 
-      await updatePersonalia({ name }, file);
+      if (me) {
+        await updatePersonalia({ name }, file);
+      } else {
+        await updateHomeMember(user.email, { name }, file);
+      }
     };
 
     onSave(saveProfile);
@@ -42,11 +49,25 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, editMode, onSave, showH
     }
   }, [editMode, user]);
 
+  function renderFirstColumn() {
+    if (me) {
+      return <label className="section-label">👤 Me</label>;
+    } else if (editMode) {
+      return (
+        <button className="button-tertiary" onClick={async () => await deleteHomeMember(user.email)}>
+          <MdDelete />
+        </button>
+      );
+    } else {
+      return <div></div>;
+    }
+  }
+
   return (
     <div className="h-column gap-large">
       <div className="h-column">
-        {showHeader && <label className="section-label">👤 Me</label>}
-        <div className="h-row gap-large">
+        <div className="household-grid gap-large">
+          {renderFirstColumn()}
           {user && !imgPath && !editMode ? (
             <ImageCircle text={user.email.charAt(0).toUpperCase()} />
           ) : (

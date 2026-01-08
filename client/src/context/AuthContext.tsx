@@ -19,6 +19,7 @@ type AuthState = {
   createHome: () => Promise<void>;
   updateHome: (homeData: Partial<Home>, file: File | null) => Promise<void>;
   addHomeMember: (email: string) => Promise<User | null>;
+  updateHomeMember: (email: string, data: Partial<User>, file: File | null) => Promise<User | null>;
   deleteHomeMember: (email: string) => Promise<void>;
 };
 
@@ -89,6 +90,28 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     }
   };
 
+  const updateHomeMember = async (email: string, data: Partial<User>, file: File | null): Promise<User | null> => {
+    if (!home) return null;
+
+    const formData = new FormData();
+    formData.append("email", email);
+    if (data.name) formData.append("name", data.name);
+    if (file) formData.append("avatar", file);
+
+    try {
+      const res = await apiClient.put<{ user: User }>(`/auth/me/home/member`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setHome({ ...home, users: home.users?.map((user) => (user.email === email ? res.data.user : user)) });
+      return res.data.user;
+    } catch (error) {
+      console.error("Failed to update home member", error);
+      return null;
+    }
+  };
+
   const deleteHomeMember = async (email: string): Promise<void> => {
     if (!home) return;
     try {
@@ -118,6 +141,7 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     if (!user) return;
 
     const formData = new FormData();
+    if (user.email) formData.append("email", user.email);
     if (user.name) formData.append("name", user.name);
     if (file) formData.append("avatar", file);
 
@@ -146,6 +170,7 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
       createHome,
       updateHome,
       addHomeMember,
+      updateHomeMember,
       deleteHomeMember,
     }),
     [user, home, loading],
