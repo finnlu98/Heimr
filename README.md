@@ -12,6 +12,12 @@ Feel free to contribute.
 
 - Broker endpoint have same cache for different posted endpoints
 
+## MVP launch
+
+- Needs confirmation config is OK
+- See bug! this is essential
+- Need to store keys per config
+
 ## Improvements
 
 - Weather widget: Change display of umbrella advide
@@ -34,7 +40,8 @@ Refactor widget data fetching architecture
 
 ## Later
 
-- widget drag and drop
+### Widgets
+
 - App position data for home state, not HAS
 - Home assistant iframe widget
 - Expenses
