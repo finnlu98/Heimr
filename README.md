@@ -17,6 +17,7 @@ Feel free to contribute.
 - Needs confirmation config is OK
 - See bug! this is essential
 - Need to store keys per config
+- migrating config strategy
 
 ## Improvements
 
