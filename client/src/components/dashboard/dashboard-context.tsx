@@ -1,21 +1,17 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, createContext, useContext, useCallback } from "react";
 import { GridItem } from "./grid/model/grid-models";
 import { WidgetEnum } from "../widgets/model/widget-type";
 import { v4 as uuidv4 } from "uuid";
 import { GridMetaData } from "./grid/model/grid-models";
 import { WidgetConfigs } from "../widgets/model/wigets";
+import apiClient from "../../api/ApiClient";
+import { HomeConfig } from "../../model/HomeConfigState";
+import { useAuth } from "../../context/AuthContext";
 
 type DashboardActions = {
   addWidget: (type: WidgetEnum) => void;
   removeWidget: (id: string) => void;
   updateWidget: (item: GridItem) => void;
-  setEditMode: (on: boolean) => void;
   onGridResize: (meta: GridMetaData) => void;
   toggleEditMode: () => void;
   setWidgetConfig: (id: WidgetEnum, cfg: any) => void;
@@ -24,39 +20,16 @@ type DashboardActions = {
 type DashboardState = {
   widgets: GridItem[];
   editMode: boolean;
+  isDirty: boolean;
   widgetConfigs: Record<WidgetEnum, object>;
   gridMetaData?: GridMetaData;
 };
 
 const initialState: DashboardState = {
-  widgets: [
-    {
-      id: "box-1",
-      col: 0,
-      row: 0,
-      colSpan: 3,
-      rowSpan: 3,
-      widget: WidgetEnum.busCards,
-    },
-    {
-      id: "box-2",
-      col: 0,
-      row: 0,
-      colSpan: 6,
-      rowSpan: 4,
-      widget: WidgetEnum.home,
-    },
-    {
-      id: "box-3",
-      col: 0,
-      row: 0,
-      colSpan: 3,
-      rowSpan: 1,
-      widget: WidgetEnum.weather,
-    },
-  ],
+  widgets: [],
   widgetConfigs: WidgetConfigs,
   editMode: false,
+  isDirty: false,
 };
 
 interface DashboardContextProps {
@@ -68,30 +41,67 @@ type DashboardContextValue = DashboardState & DashboardActions;
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
+  const { user } = useAuth();
   const [state, setState] = useState<DashboardState>(() => {
     try {
       const cachedLayout = localStorage.getItem("heimr-grid-layout");
       const cachedConfig = localStorage.getItem("heimr-widget-config");
 
       const parsedLayout = cachedLayout ? JSON.parse(cachedLayout) : null;
-      const parsedConfig: Record<WidgetEnum, object> | null = cachedConfig
-        ? JSON.parse(cachedConfig)
-        : null;
+      const parsedConfig = cachedConfig ? JSON.parse(cachedConfig) : null;
 
       return {
-        widgets: Array.isArray(parsedLayout)
-          ? (parsedLayout as GridItem[])
-          : [],
+        widgets: parsedLayout ?? initialState.widgets,
         widgetConfigs: parsedConfig ?? WidgetConfigs,
         editMode: false,
+        isDirty: false,
         gridMetaData: undefined,
       };
     } catch (e) {
-      console.warn("Failed to load Heimr config/layout:", e);
-
+      console.warn("Failed to load from localStorage:", e);
       return initialState;
     }
   });
+
+  useEffect(() => {
+    if (!user) return;
+
+    const loadFromBackend = async () => {
+      const hasLayout = state.widgets && state.widgets.length > 0;
+      const hasConfig = state.widgetConfigs && Object.keys(state.widgetConfigs).length > 0;
+
+      if (hasLayout && hasConfig) {
+        return;
+      }
+
+      try {
+        const response = await apiClient.get<HomeConfig>("me/home/config");
+        const serverConfig = response.data;
+
+        setState((prev) => ({
+          ...prev,
+          widgets: serverConfig?.widgetPositions ?? prev.widgets,
+          widgetConfigs: serverConfig?.widgetConfig ?? prev.widgetConfigs,
+        }));
+      } catch (error) {
+        console.warn("Failed to fetch from backend:", error);
+      }
+    };
+
+    loadFromBackend();
+  }, [user]);
+
+  function updateConfig() {
+    apiClient
+      .post("/me/home/config", {
+        widgetPositions: state.widgets,
+        widgetConfig: state.widgetConfigs,
+      })
+      .catch((error) => {
+        console.error("Failed to save config to backend:", error);
+      });
+  }
+
   useEffect(() => {
     try {
       localStorage.setItem("heimr-grid-layout", JSON.stringify(state.widgets));
@@ -102,10 +112,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem(
-        "heimr-widget-config",
-        JSON.stringify(state.widgetConfigs),
-      );
+      localStorage.setItem("heimr-widget-config", JSON.stringify(state.widgetConfigs));
     } catch (e) {
       console.warn("Failed to write heimr-widget-config to localStorage", e);
     }
@@ -134,6 +141,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     setState((prev) => ({
       ...prev,
       widgets: [...prev.widgets, newItem],
+      isDirty: true,
     }));
   };
 
@@ -141,29 +149,28 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     setState((prev) => ({
       ...prev,
       widgets: prev.widgets.filter((w) => w.id !== id),
+      isDirty: true,
     }));
-  };
-
-  const setEditMode = (on: boolean) => {
-    setState((prev) => ({
-      ...prev,
-      editMode: on,
-    }));
-  };
-
-  const toggleEditMode = () => {
-    setState((prev) => {
-      return {
-        ...prev,
-        editMode: !prev.editMode,
-      };
-    });
   };
 
   const updateWidget = (updated: GridItem) => {
     setState((prev) => ({
       ...prev,
       widgets: prev.widgets.map((w) => (w.id === updated.id ? updated : w)),
+      isDirty: true,
+    }));
+  };
+
+  const toggleEditMode = () => {
+    const shouldSave = state.isDirty && state.editMode && user;
+    if (shouldSave) {
+      updateConfig();
+    }
+
+    setState((prev) => ({
+      ...prev,
+      editMode: !prev.editMode,
+      isDirty: false,
     }));
   };
 
@@ -199,7 +206,6 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         updateWidget,
         removeWidget,
         toggleEditMode,
-        setEditMode,
         onGridResize,
       }}
     >

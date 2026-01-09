@@ -14,11 +14,13 @@ datasource db {
 }
 
 model Home {
-  id            String @id @default(uuid())
-  name          String?
-  home_img_key  String?
-  location      Json?
-  users         User[]
+  id                String @id @default(uuid())
+  name              String?
+  home_img_key      String?
+  location          Json?
+  widget_positions  Json?  
+  widget_config     Json?
+  users             User[]
 }
 
 model User {

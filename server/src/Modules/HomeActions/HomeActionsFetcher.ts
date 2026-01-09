@@ -1,3 +1,3 @@
 import BaseFetcherEndpoint from "../Common/BaseFetcherEndpoint";
 
-export class HomeFetcher extends BaseFetcherEndpoint { }
+export class HomeActionsFetcher extends BaseFetcherEndpoint {}

@@ -2,8 +2,8 @@ import { WidgetDefinition, WidgetEnum } from "../model/widget-type";
 import { TbHome } from "react-icons/tb";
 import HomeActionButtons from "./components/home-action-buttons";
 
-export const HomeWidget: WidgetDefinition<HomeConfig> = {
-  id: WidgetEnum.home,
+export const HomeActionsWidget: WidgetDefinition<HomeActionsConfig> = {
+  id: WidgetEnum.homeActions,
   friendlyName: "Home actions",
   widgetIcon: <TbHome />,
   widgetComponent: <HomeActionButtons />,
@@ -11,4 +11,4 @@ export const HomeWidget: WidgetDefinition<HomeConfig> = {
   defaultRowSpan: 4,
 };
 
-export interface HomeConfig {}
+export interface HomeActionsConfig {}

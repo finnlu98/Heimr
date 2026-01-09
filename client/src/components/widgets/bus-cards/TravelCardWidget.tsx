@@ -10,9 +10,6 @@ export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
   widgetComponent: <TravelCard />,
   widgetConfig: {
     component: <TravelCardConfiguration />,
-    config: {
-      travelRoutes: []
-    }
   },
   defaultColSpan: 6,
   defaultRowSpan: 6,
@@ -27,18 +24,16 @@ export interface TravelRoute {
   startPlace: string;
   stopPlace: string;
   configCard: ConfigCard;
-  configColor: ConfigColor
+  configColor: ConfigColor;
 }
 
-
-
 interface ConfigColor {
-    general: number;
-    green: number;
-    yellow: number;
+  general: number;
+  green: number;
+  yellow: number;
 }
 
 interface ConfigCard {
-    numRows: number;
-    minFilter: number;
+  numRows: number;
+  minFilter: number;
 }

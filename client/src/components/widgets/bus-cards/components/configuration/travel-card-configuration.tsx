@@ -4,7 +4,6 @@ import { TravelCardConfig, TravelRoute } from "../../TravelCardWidget";
 import { WidgetEnum } from "../../../model/widget-type";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { IoMdAdd } from "react-icons/io";
 import { useState } from "react";
 import ImageCircle from "../../../../shared/imageCirlce/ImageCircle";
 import UploadImageCircle from "../../../../shared/imageCirlce/UploadImageCircle";
@@ -26,9 +25,7 @@ const TravelCardConfiguration: React.FC = () => {
   });
 
   function removeTravelRoute(startPlace: string, stopPlace: string) {
-    var updatedRoutes = config.travelRoutes.filter(
-      (t) => t.startPlace !== startPlace && t.stopPlace !== stopPlace,
-    );
+    var updatedRoutes = config.travelRoutes.filter((t) => t.startPlace !== startPlace && t.stopPlace !== stopPlace);
     var updatedConfig = {
       ...config,
       travelRoutes: updatedRoutes,
@@ -38,9 +35,12 @@ const TravelCardConfiguration: React.FC = () => {
   }
 
   function addTravelRoute(travelRoute: TravelRoute) {
-    config.travelRoutes.push(travelRoute);
+    const updatedConfig = {
+      ...config,
+      travelRoutes: [...config.travelRoutes, travelRoute],
+    };
 
-    setWidgetConfig(WidgetEnum.busCards, config);
+    setWidgetConfig(WidgetEnum.busCards, updatedConfig);
     setTravelRoute({
       imgIdentifier: "",
       startPlace: "",
@@ -72,48 +72,33 @@ const TravelCardConfiguration: React.FC = () => {
           return (
             <>
               <div>
-                <ImageCircle
-                  imgPath={route.imgIdentifier}
-                  alt="prev-img"
-                />{" "}
+                <ImageCircle imgPath={route.imgIdentifier} alt="prev-img" />{" "}
               </div>
               <div>{route.startPlace}</div>
               <div> {route.stopPlace}</div>
               <div
                 className="travel-action-button"
-                onClick={() =>
-                  removeTravelRoute(route.startPlace, route.stopPlace)
-                }
+                onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}
               >
                 <MdDelete size={20} />
               </div>
             </>
           );
         })}
-      <UploadImageCircle
-        onImageChange={onImageChange}
-        imgPath={travelRoute.imgIdentifier}
-      />
+      <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
       <input
         className="travel-input"
         placeholder="Start stop ID"
         value={travelRoute.startPlace ?? ""}
-        onChange={(e) =>
-          setTravelRoute((prev) => ({ ...prev, startPlace: e.target.value }))
-        }
+        onChange={(e) => setTravelRoute((prev) => ({ ...prev, startPlace: e.target.value }))}
       />
       <input
         className="travel-input"
         placeholder="End stop ID"
         value={travelRoute.stopPlace ?? ""}
-        onChange={(e) =>
-          setTravelRoute((prev) => ({ ...prev, stopPlace: e.target.value }))
-        }
+        onChange={(e) => setTravelRoute((prev) => ({ ...prev, stopPlace: e.target.value }))}
       />
-      <div
-        className="travel-action-button"
-        onClick={() => addTravelRoute(travelRoute)}
-      >
+      <div className="travel-action-button" onClick={() => addTravelRoute(travelRoute)}>
         <IoAddCircle size={20} />
       </div>
     </div>

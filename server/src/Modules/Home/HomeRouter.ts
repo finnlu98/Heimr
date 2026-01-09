@@ -1,28 +1,39 @@
 import BaseRouter from "../Common/BaseRouter";
-import { Request, Response } from "express";
-import { HomeFetcher } from "./HomeFetcher";
+import HomeService from "./HomeService";
 
-export class HomeRouter extends BaseRouter {
-  fetcher: HomeFetcher;
+export default class HomeRouter extends BaseRouter {
+  private homeService: HomeService;
   constructor() {
-    super("/home");
-    this.fetcher = new HomeFetcher(0); // No caching
+    super("/me/home");
+    this.homeService = new HomeService();
     this.setRoute();
   }
-
   setRoute(): void {
-    this.route.post(this.subRoute, async (req: Request, res: Response) => {
-      const headers = req.headers;
-      const { endpoint, selectedOption } = req.body;
-      this.fetcher.setEndpoint(endpoint);
-      this.fetcher.setBody(selectedOption);
+    this.route.get(`${this.subRoute}/config`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
 
-      const authorization = headers["homeauthorization"];
-      if (authorization) this.fetcher.setHeader({ authorization });
+      const homeConfig = await this.homeService.getHomeConfig(userId);
+      return res.json(homeConfig);
+    });
 
-      const postRes = await this.fetcher.PostData();
+    this.route.post(`${this.subRoute}/config`, async (req, res) => {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
 
-      res.send(postRes.data);
+      const { widgetPositions, widgetConfig } = req.body;
+
+      const updatedData = await this.homeService.updateHomeConfig(userId, widgetPositions, widgetConfig);
+
+      if (!updatedData) {
+        return res.status(400).json({ error: "Failed to update home config" });
+      }
+
+      return res.json({ updatedData });
     });
   }
 }

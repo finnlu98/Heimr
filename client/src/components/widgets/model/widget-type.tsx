@@ -1,14 +1,13 @@
-
 export enum WidgetEnum {
-    weather = "Weather",
-    stocks = "Stocks",
-    news = "News",
-    laundryWeek = "Laundry Week",
-    home = "Home",
-    electricity = "Electricity",
-    cityBike = "City Bike",
-    calender = "Calender",
-    busCards = "Bus Cards"
+  weather = "Weather",
+  stocks = "Stocks",
+  news = "News",
+  laundryWeek = "Laundry Week",
+  homeActions = "Home Actions",
+  electricity = "Electricity",
+  cityBike = "City Bike",
+  calender = "Calender",
+  busCards = "Bus Cards",
 }
 
 export interface WidgetDefinition<T> {
@@ -25,4 +24,3 @@ export interface WidgetConfig<T> {
   component: React.ReactNode;
   config?: T;
 }
-
