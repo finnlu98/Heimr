@@ -17,7 +17,6 @@ Feel free to contribute.
 - NICE TO HAVE: Needs confirmation config is OK
 - Config with keys needs to be updated right away
 - Calender move to public url
-- See bug! this is essential
 - Need to store keys per config
 - migrating config strategy
 - Rate limiting
