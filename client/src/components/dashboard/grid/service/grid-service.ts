@@ -16,15 +16,16 @@ export default class GridService {
 
     const leftGap = gridItem.col !== 0 ? gridData.gap : 0;
     let finalX = baseX + transform.x + leftGap;
-    const rightGap = gridItem.col !== gridData.columns - gridItem.colSpan ? gridData.gap : 0;
-    let widthPx = gridItem.colSpan * gridData.colWidth - rightGap * 2;
+    let rightGap = gridItem.col !== gridData.columns - gridItem.colSpan ? gridData.gap * 2 : gridData.gap;
+    rightGap = gridItem.col === 0 ? rightGap - gridData.gap : rightGap;
 
+    let widthPx = gridItem.colSpan * gridData.colWidth - rightGap;
     let finalY = baseY + transform.y + gridData.gap;
     let heightPx = gridItem.rowSpan * gridData.colHeight - gridData.gap * 2;
 
     return {
       position: "absolute",
-      width: widthPx + 100,
+      width: widthPx,
       height: heightPx,
       cursor: editMode ? "grab" : "",
       transform: `translate(${finalX}px, ${finalY}px)`,
