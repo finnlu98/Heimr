@@ -1,9 +1,7 @@
-import Cache from "../../Cache/Cache"
+import { Caches } from "../../Cache/Cache";
 
 export default interface IFetcher {
-    cache: Cache | undefined
-    fetchData(): Promise<any>
-    getData(): Promise<any>
-    returnCache(endpoint: string): void
-    
+  caches: Caches | undefined;
+  fetchData(): Promise<any>;
+  getData(key: string): Promise<any>;
 }

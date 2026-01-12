@@ -1,40 +1,32 @@
+import { Caches } from "../../Cache/Cache";
 import IFetcher from "../../Model/Interface/IFetcher";
-import Cache from "../../Cache/Cache";
-import moment from "moment";
 
 export default abstract class BaseFetcher implements IFetcher {
-    
-    cache: Cache 
-    TTL_MS: number
+  caches: Caches;
+  TTL_MS: number;
 
-    constructor(cacheLength: number) {
-        this.TTL_MS = cacheLength;
-        this.cache = new Cache()
+  constructor(cacheLength: number) {
+    this.TTL_MS = cacheLength;
+    this.caches = new Caches();
+  }
+
+  abstract fetchData(): Promise<any>;
+
+  async getData(key: string = ""): Promise<any> {
+    const cache = this.caches.returnCache(key, this.TTL_MS);
+    if (cache) {
+      console.log(`Returning cached request`);
+      return cache.data;
     }
 
-    abstract fetchData(): Promise<any>
-
-    async getData(): Promise<any> {
-        if (this.returnCache()) {
-            console.log(`Returning cached request`)
-            return this.cache.data;
-
-        }
-
-        console.log(`Sending request to get data`)
-        var res = await this.fetchData()
-        if (res && "data" in res) {
-            this.cache.setCache(moment(), res.data);
-            return res.data;
-        }
-
-        this.cache.setCache(moment(), res);
-        return res;
+    console.log(`Sending request to get data`);
+    var res = await this.fetchData();
+    if (res && "data" in res) {
+      this.caches.addCache(key, res.data);
+      return res.data;
     }
 
-    returnCache(): boolean {
-        const cachedTime = this.cache?.ts;
-        const cachedData = this.cache?.data;
-        return cachedData && cachedTime && moment().diff(cachedTime) < this.TTL_MS
-    }
+    this.caches.addCache(key, res);
+    return res;
+  }
 }

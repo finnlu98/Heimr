@@ -1,5 +1,5 @@
 import configuration from "../../../../Configuration";
-import axios from "axios";
+import apiClient from "../../../../api/ApiClient";
 import { ElviaConsumptionResponse } from "../model/ElviaConsumptionResponse";
 import { ElviaService } from "../services/ElviaService";
 import moment from "moment";
@@ -10,13 +10,12 @@ const ElviaFetcher = async (secretToken: string) => {
   }
 
   const consumptionEndpoint = configuration.getElviaConfig().Consumption.Endpoint;
-  var brokerEndpoint = process.env.REACT_APP_HEIMR_BACKEND_ENDPOINT ?? "";
-  brokerEndpoint = brokerEndpoint + "/broker";
+  const brokerEndpoint = "/broker";
 
   const formattedEndpoint = new URL(consumptionEndpoint);
   formattedEndpoint.searchParams.set("startTime", moment().startOf("month").format());
 
-  const response = await axios.post<ElviaConsumptionResponse>(
+  const response = await apiClient.post<ElviaConsumptionResponse>(
     brokerEndpoint,
     { endpoint: formattedEndpoint.toString() },
     { headers: { "broker-authorization": `Bearer ${secretToken}` } },

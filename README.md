@@ -10,14 +10,17 @@ Feel free to contribute.
 
 ## Bugs
 
-- Broker endpoint have same cache for different posted endpoints
+- widgets sometime renders with to wide width
 
 ## MVP launch
 
-- Needs confirmation config is OK
+- NICE TO HAVE: Needs confirmation config is OK
+- Config with keys needs to be updated right away
+- Calender move to public url
 - See bug! this is essential
 - Need to store keys per config
 - migrating config strategy
+- Rate limiting
 
 ## Improvements
 
