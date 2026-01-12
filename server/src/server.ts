@@ -18,6 +18,10 @@ class Server {
     app.use(express.json());
     registerMediaRoute(app);
     app.use(sessionMiddleware);
+    app.use(async (req, res, next) => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      next();
+    });
     const router = new Routes(app);
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

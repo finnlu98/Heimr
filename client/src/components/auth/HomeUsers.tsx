@@ -5,6 +5,7 @@ import PopupButton from "../shared/popup/Popup";
 import { IoMdSend } from "react-icons/io";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
+import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 
 interface HomeUsersProps {
   editMode: boolean;
@@ -45,9 +46,14 @@ const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
                     value={addEmail}
                     onChange={(e) => setAddEmail(e.target.value)}
                   />
-                  <button className="popup-button" onClick={async () => addEmailToHome(addEmail, closePopup)}>
+
+                  <LoadingButton
+                    className="popup-button"
+                    loadingKey={`add-user-${addEmail}`}
+                    onClick={async () => addEmailToHome(addEmail, closePopup)}
+                  >
                     <IoMdSend />
-                  </button>
+                  </LoadingButton>
                 </div>,
               ]}
             </PopupButton>

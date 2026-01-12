@@ -5,12 +5,17 @@
   position: relative;
 }
 
-.action-buttons {
+.action-buttons-right {
   position: absolute;
   bottom: 20px;
   right: 20px;
 }
 
+.action-buttons-left {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
 .profile-overview {
   gap: 50px;
   align-items: flex-start;

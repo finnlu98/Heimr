@@ -1,5 +1,6 @@
 import { IoMdSend } from "react-icons/io";
 import "./Login.css";
+import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 
 interface LoginProps {
   email: string;
@@ -14,9 +15,9 @@ const Login: React.FC<LoginProps> = ({ email, setEmail, handleSubmit }) => {
         <p>Enter your email to login 🚀</p>
         <div className="h-row">
           <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <button className="btn-primary" onClick={handleSubmit}>
+          <LoadingButton onClick={handleSubmit} loadingKey="login">
             <IoMdSend />
-          </button>
+          </LoadingButton>
         </div>
       </div>
     </>
