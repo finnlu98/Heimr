@@ -5,6 +5,7 @@ import UploadImageCircle from "../shared/imageCirlce/UploadImageCircle";
 import { useAuth } from "../../context/AuthContext";
 import "./UserProfile.css";
 import { MdDelete } from "react-icons/md";
+import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 
 interface UserProfileProps {
   user: User;
@@ -19,7 +20,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
   const [imgPath, setImgPath] = useState<string | undefined>(user?.avatarUrl || undefined);
   const [file, setFile] = useState<File | null>(null);
 
-  console.log(user);
   function handleImageChange(dataUrl: string | null, file: File | null) {
     if (!dataUrl) return;
     setImgPath(dataUrl);
@@ -54,9 +54,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
       return <label className="section-label">👤 Me</label>;
     } else if (editMode) {
       return (
-        <button className="button-tertiary" onClick={async () => await deleteHomeMember(user.email)}>
+        <LoadingButton
+          loadingKey={`delete-user-${user.email}`}
+          onClick={() => deleteHomeMember(user.email)}
+          className="button-tertiary"
+        >
           <MdDelete />
-        </button>
+        </LoadingButton>
       );
     } else {
       return <div></div>;

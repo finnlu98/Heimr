@@ -65,7 +65,6 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     if (homeData.name) formData.append("name", homeData.name);
     if (homeData.location) formData.append("location", JSON.stringify(homeData.location));
     if (file) formData.append("banner", file);
-    console.log("Updating home with data:", homeData.location);
     try {
       const updatedHome = await apiClient.put<{ home: Home }>("/auth/me/home", formData, {
         headers: {
@@ -81,7 +80,17 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const addHomeMember = async (email: string): Promise<User | null> => {
     if (!home) return null;
     try {
-      const res = await apiClient.post<{ user: User }>(`/auth/me/home/members`, { email });
+      const res = await apiClient.post<{ user: User }>(
+        `/auth/me/home/members`,
+        { email },
+        {
+          meta: {
+            loadingKey: `add-user-${email}`,
+            successMessage: "Member added successfully",
+            errorMessage: "Failed to add member",
+          },
+        },
+      );
       setHome({ ...home, users: [...(home.users || []), res.data.user] });
       return res.data.user;
     } catch (error) {
@@ -115,7 +124,15 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const deleteHomeMember = async (email: string): Promise<void> => {
     if (!home) return;
     try {
-      await apiClient.delete(`/auth/me/home/members`, { data: { email } });
+      await apiClient.delete(`/auth/me/home/members`, {
+        data: { email },
+        meta: {
+          loadingKey: `delete-user-${email}`,
+          successMessage: "Member removed successfully",
+          errorMessage: "Failed to remove member",
+        },
+      });
+
       setHome({ ...home, users: home.users?.filter((user) => user.email !== email) });
     } catch (error) {
       console.error("Failed to delete home member", error);
@@ -128,12 +145,32 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   }, []);
 
   const logout = async () => {
-    await apiClient.post("/auth/logout");
+    await apiClient.post(
+      "/auth/logout",
+      {},
+      {
+        meta: {
+          loadingKey: "logout",
+          successMessage: "Logged out successfully",
+          errorMessage: "Logout failed",
+        },
+      },
+    );
     setUser(null);
   };
 
   const login = async (email: string) => {
-    await apiClient.post("/auth/login", { email });
+    await apiClient.post(
+      "/auth/login",
+      { email },
+      {
+        meta: {
+          loadingKey: "login",
+          successMessage: "Logged in successfully",
+          errorMessage: "Login failed",
+        },
+      },
+    );
     await refresh();
   };
 

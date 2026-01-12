@@ -7,16 +7,23 @@ import HomeProfile from "./HomeProfile";
 import UserProfile from "./UserProfile";
 import Login from "./Login";
 import HomeUsers from "./HomeUsers";
+import LoadingButton from "../../feedback/components/Loading/LoadingButton";
+import { FaSignOutAlt } from "react-icons/fa";
+import { useLoading } from "../../feedback/hooks/useLoading";
 
 const ProfileOverview: React.FC = () => {
   const [email, setEmail] = useState("");
   const { user, login, logout } = useAuth();
 
   const [editMode, setEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const userProfileSaveRef = useRef<(() => Promise<void>) | null>(null);
   const homeProfileSaveRef = useRef<(() => Promise<void>) | null>(null);
   const homeUsersSaveRef = useRef<(() => Promise<void>) | null>(null);
+
+  const { anyLoading } = useLoading();
+
   function handleSubmit() {
     if (email === "") return;
     login(email);
@@ -24,6 +31,7 @@ const ProfileOverview: React.FC = () => {
 
   async function saveAllProfiles() {
     try {
+      setIsSaving(true);
       if (userProfileSaveRef.current) {
         await userProfileSaveRef.current();
       }
@@ -38,6 +46,8 @@ const ProfileOverview: React.FC = () => {
       setEditMode(false);
     } catch (error) {
       console.error("Failed to save profiles", error);
+    } finally {
+      setIsSaving(false);
     }
   }
 
@@ -75,20 +85,27 @@ const ProfileOverview: React.FC = () => {
         )}
       </div>
       {user && (
-        <div className="h-row action-buttons">
-          {editMode ? (
-            <>
-              <button onClick={saveAllProfiles}>
-                Save <IoMdSend />
+        <div>
+          <div className="h-row action-buttons-right">
+            {editMode ? (
+              <>
+                <LoadingButton onClick={saveAllProfiles} isLoading={isSaving}>
+                  Save <IoMdSend />
+                </LoadingButton>
+
+                <button onClick={cancelEdit}>Cancel</button>
+              </>
+            ) : (
+              <button onClick={() => setEditMode(true)}>
+                Edit <CiEdit />
               </button>
-              <button onClick={cancelEdit}>Cancel</button>
-            </>
-          ) : (
-            <button onClick={() => setEditMode(true)}>
-              Edit <CiEdit />
-            </button>
-          )}
-          <button onClick={() => logout()}>Sign out</button>
+            )}
+          </div>
+          <div className="action-buttons-left">
+            <LoadingButton onClick={() => logout()} loadingKey="logout">
+              Sign out <FaSignOutAlt />
+            </LoadingButton>
+          </div>
         </div>
       )}
     </>

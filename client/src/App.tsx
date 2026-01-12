@@ -14,6 +14,9 @@ import Sidebar from "./components/dashboard/sidebar/sidebar";
 import DashboardProvider from "./components/dashboard/dashboard-context";
 import Profile from "./components/auth/Profile";
 import AuthProvider from "./context/AuthContext";
+import { LoadingProvider } from "./feedback/providers/LoadingProvider";
+import { ApiBridge } from "./feedback/components/ApiBridge";
+import apiClient from "./api/ApiClient";
 
 function App() {
   const reloadHour = 5;
@@ -39,24 +42,27 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <DashboardProvider>
-        <div className="app">
-          <div>
-            <Sidebar />
-          </div>
-          <div className="container mt-2 mb-2">
-            <div className="col-12 mt-2">
-              <Header />
+    <LoadingProvider>
+      <ApiBridge apiClient={apiClient} />
+      <AuthProvider>
+        <DashboardProvider>
+          <div className="app">
+            <div>
+              <Sidebar />
             </div>
-            <div className="grid-container">
-              <Grid />
+            <div className="container mt-2 mb-2">
+              <div className="col-12 mt-2">
+                <Header />
+              </div>
+              <div className="grid-container">
+                <Grid />
+              </div>
             </div>
+            <EditModeToggleButton />
           </div>
-          <EditModeToggleButton />
-        </div>
-      </DashboardProvider>
-    </AuthProvider>
+        </DashboardProvider>
+      </AuthProvider>
+    </LoadingProvider>
   );
 }
 
