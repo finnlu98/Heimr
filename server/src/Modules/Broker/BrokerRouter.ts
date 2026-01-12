@@ -5,28 +5,30 @@ import BrokerFetcher from "./BrokerFetcher";
 import IFethcerEndpoint from "../../Model/Interface/IFethcerEndpoint";
 
 export default class BrokerRouter extends BaseRouter {
-    fetcher: IFethcerEndpoint
-    
-    constructor() {
-        super("/broker")
-        this.fetcher = new BrokerFetcher(60 * 60_000)
-        this.setRoute();
-    }
+  fetcher: IFethcerEndpoint;
 
-    setRoute(): void {
-        this.route.post(this.subRoute, async (req: Request, res: Response) => {
-            const { endpoint } = req.body;
-            const headers = req.headers
+  constructor() {
+    super("/broker");
+    this.fetcher = new BrokerFetcher(60 * 60_000);
+    this.setRoute();
+  }
 
-            if (typeof endpoint === "string") {
-                this.fetcher.setEndpoint(endpoint);
-            }
+  setRoute(): void {
+    this.route.post(this.subRoute, async (req: Request, res: Response) => {
+      const sessionId = req.session.id;
+      const { endpoint } = req.body;
+      const headers = req.headers;
 
-            const authorization = headers[HeaderKeys.BrokerAuthorization.toString()]
-            if(authorization)
-                this.fetcher.setHeader({authorization})
+      if (typeof endpoint !== "string") {
+        return res.status(400).send({ error: "Endpoint is required" });
+      }
 
-            res.send(await this.fetcher.getData())
-        })
-    }
+      this.fetcher.setEndpoint(endpoint);
+
+      const authorization = headers[HeaderKeys.BrokerAuthorization.toString()];
+      if (authorization) this.fetcher.setHeader({ authorization });
+
+      res.send(await this.fetcher.getData(`${sessionId}_${endpoint}`));
+    });
+  }
 }
