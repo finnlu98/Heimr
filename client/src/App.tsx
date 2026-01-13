@@ -17,6 +17,7 @@ import AuthProvider from "./context/AuthContext";
 import { LoadingProvider } from "./feedback/providers/LoadingProvider";
 import { ApiBridge } from "./feedback/components/ApiBridge";
 import apiClient from "./api/ApiClient";
+import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
 
 function App() {
   const reloadHour = 5;
@@ -46,20 +47,22 @@ function App() {
       <ApiBridge apiClient={apiClient} />
       <AuthProvider>
         <DashboardProvider>
-          <div className="app">
-            <div>
-              <Sidebar />
-            </div>
-            <div className="container mt-2 mb-2">
-              <div className="col-12 mt-2">
-                <Header />
+          <WidgetProviders>
+            <div className="app">
+              <div>
+                <Sidebar />
               </div>
-              <div className="grid-container">
-                <Grid />
+              <div className="container mt-2 mb-2">
+                <div className="col-12 mt-2">
+                  <Header />
+                </div>
+                <div className="grid-container">
+                  <Grid />
+                </div>
               </div>
+              <EditModeToggleButton />
             </div>
-            <EditModeToggleButton />
-          </div>
+          </WidgetProviders>
         </DashboardProvider>
       </AuthProvider>
     </LoadingProvider>

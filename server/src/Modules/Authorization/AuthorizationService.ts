@@ -1,11 +1,11 @@
 import prisma from "../../Lib/prisma";
 import { StorageService } from "../../Shared/Storage/StorageService";
-import { generateToken, hashToken } from "./AuthTokens";
 import path from "path";
 import { StoragePath } from "../../Shared/Storage/StoragePath";
 import { Home, User } from "../../generated/prisma";
 import { Location } from "../../Model/data/Location";
 import moment from "moment";
+import { generateToken, hashToken } from "../../Lib/encryption";
 
 export default class AuthorizationService {
   private storageService: StorageService;

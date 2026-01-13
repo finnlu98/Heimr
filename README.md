@@ -19,7 +19,6 @@ Feel free to contribute.
 - Calender move to public url
 - Need to store keys per config
 - migrating config strategy
-- Rate limiting
 
 ## Improvements
 
