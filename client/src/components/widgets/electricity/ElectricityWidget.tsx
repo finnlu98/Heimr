@@ -2,6 +2,7 @@ import { WidgetDefinition, WidgetEnum } from "../model/widget-type";
 import { ImPower } from "react-icons/im";
 import ElectricyConsumption from "./components/electricity-consumption/electricity-consumption";
 import ElectricityConfiguration from "./components/configuration/electricity-configuration";
+import ElectricityProvider from "./context/ElectricityContext";
 
 export const ElectricityWidget: WidgetDefinition<ElectricityConfig> = {
   id: WidgetEnum.electricity,

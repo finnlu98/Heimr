@@ -1,3 +1,4 @@
+import { Session, SessionData } from "express-session";
 import IFethcerEndpoint from "../../Model/Interface/IFethcerEndpoint";
 import BaseFetcher from "./BaseFetcher";
 import axios from "axios";

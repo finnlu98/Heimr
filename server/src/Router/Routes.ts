@@ -5,6 +5,7 @@ import { HomeActionsRouter } from "../Modules/HomeActions/HomeActionsRouter";
 import { UserRouter } from "../Modules/User/UserRouter";
 import AuthorizationRouter from "../Modules/Authorization/AuthorizationRouter";
 import HomeRouter from "../Modules/Home/HomeRouter";
+import IntegrationRouter from "../Modules/Integration/IntegrationRouter";
 
 export class Routes {
   app: Application;
@@ -30,6 +31,7 @@ export class Routes {
     const user = new UserRouter();
     const auth = new AuthorizationRouter();
     const home = new HomeRouter();
+    const integration = new IntegrationRouter();
 
     this.app.use("/", this.router);
     this.app.use("/api", broker.route);
@@ -38,5 +40,6 @@ export class Routes {
     this.app.use("/api", user.route);
     this.app.use("/api", auth.route);
     this.app.use("/api", home.route);
+    this.app.use("/api", integration.route);
   }
 }
