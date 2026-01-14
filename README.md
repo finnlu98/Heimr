@@ -11,21 +11,19 @@ Feel free to contribute.
 ## Bugs
 
 - widgets sometime renders with to wide width
+- electricity service trowing when getting to new month
 
 ## MVP launch
 
-- NICE TO HAVE: Needs confirmation config is OK
-- Config with keys needs to be updated right away
-- Calender move to public url
-- Need to store keys per config
+- Config with keys needs to be updated right away && Need to store keys per config
 - migrating config strategy
+- when config is missing. Display config is missing
+- set editing px view
 
 ## Improvements
 
-- Weather widget: Change display of umbrella advide
-- popup: click outside, await result and configurable buttons
+- Needs confirmation config is OK
 - config file fully configurable
-- base class for widget - move div from app.tsx
 
 ## Refactors
 
@@ -38,7 +36,6 @@ Refactor widget data fetching architecture
 - Move data fetching from individual widget components to contexts
 - Options: Individual widget contexts OR centralized dashboard context
 - Benefits: Eliminate circular dependencies, enable data sharing (e.g., Header), better caching
-- Affects: Stocks, Calender, Weather, Bus, and future widgets
 
 ## Later
 
