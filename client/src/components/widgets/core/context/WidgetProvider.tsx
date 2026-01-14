@@ -1,5 +1,6 @@
 import CalenderProvider from "../../calender/context/CalenderContext";
 import ElectricityProvider from "../../electricity/context/ElectricityContext";
+import WeatherProvider from "../../weather/context/WeatherContext";
 
 interface WidgetProvidersProps {
   children: React.ReactNode;
@@ -8,7 +9,9 @@ interface WidgetProvidersProps {
 const WidgetProviders: React.FC<WidgetProvidersProps> = ({ children }) => {
   return (
     <ElectricityProvider>
-      <CalenderProvider>{children}</CalenderProvider>
+      <CalenderProvider>
+        <WeatherProvider>{children}</WeatherProvider>
+      </CalenderProvider>
     </ElectricityProvider>
   );
 };

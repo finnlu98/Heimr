@@ -7,44 +7,20 @@ import { SlArrowUp } from "react-icons/sl";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
 import { WidgetEnum } from "../../model/widget-type";
 import { useDashboard } from "../../../dashboard/dashboard-context";
+import EditWidget from "../../core/components/EditWidget";
 
-const washingEmojis = [
-  "✨",
-  "💧",
-  "🛁",
-  "🧴",
-  "🧼",
-  "🧽",
-  "🚿",
-  "🧹",
-  "🧤",
-  "🫧",
-];
+const washingEmojis = ["✨", "💧", "🛁", "🧴", "🧼", "🧽", "🚿", "🧹", "🧤", "🫧"];
 
 const LaundryWeek: React.FC = () => {
   const currentWeek = moment().isoWeekday(1).isoWeek();
-  const currentEmoji = getEmoji();
-  const [isHide, setHide] = useState(false);
+  const currentEmoji = washingEmojis[currentWeek % washingEmojis.length];
+  const [isExpanded, setIsExpanded] = useState(false);
   const { widgetConfigs } = useDashboard();
-  const laundryConfig = (widgetConfigs[
-    WidgetEnum.laundryWeek
-  ] as LaundryWeekConfig) ?? [{ responsibles: [] }];
-
-  let data = {
-    nodes: createLaundryList(42, 51, laundryConfig.responsibles ?? []),
+  const laundryConfig = (widgetConfigs[WidgetEnum.laundryWeek] as LaundryWeekConfig) ?? {
+    responsibles: [],
   };
 
-  data = {
-    nodes: !isHide
-      ? data.nodes.filter((week) => week.week === currentWeek)
-      : data.nodes,
-  };
-
-  function createLaundryList(
-    startWeek: number,
-    endWeek: number,
-    names: string[],
-  ) {
+  const createLaundryList = (startWeek: number, endWeek: number, names: string[]) => {
     const records = [];
     const totalNames = names.length;
 
@@ -57,80 +33,47 @@ const LaundryWeek: React.FC = () => {
     }
 
     return records;
-  }
+  };
 
-  function getEmoji() {
-    return washingEmojis[currentWeek % washingEmojis.length];
-  }
-
-  if (isHide) {
-    return (
-      <div className="laundry-week">
-        <div className="laundry-week-header">
-          <h5>Washing in week {currentWeek}</h5>
-        </div>
-        <div className="week-table-header"></div>
-        {data.nodes.map((week, weekIndex) => {
-          return (
-            <div
-              className={`week-row expand ${week.week === currentWeek && isHide ? "highlight" : ""}`}
-              key={weekIndex}
-            >
-              <div>{week.week}</div>
-              <div>{week.name}</div>
-            </div>
-          );
-        })}
-
-        <div className="expand-icon" onClick={() => setHide(!isHide)}>
-          {!isHide ? <SlArrowDown /> : <SlArrowUp />}
-        </div>
-
-        <div className="rodt-slogan">
-          <img
-            src={"./img/laundry-week/rodt_logo.png"}
-            width={40}
-            height={40}
-            alt="Fordi felleskap fungerer"
-          />
-          <p>Fordi felleskap fungerer</p>
-        </div>
-      </div>
-    );
-  }
+  const allWeeks = createLaundryList(1, 52, laundryConfig.responsibles ?? []);
+  const displayedWeeks = isExpanded ? allWeeks : allWeeks.filter((week) => week.week === currentWeek);
 
   return (
     <div className="laundry-week">
       <div className="laundry-week-header">
         <h5>Washing in week {currentWeek}</h5>
       </div>
-      <div className="week-table-header"></div>
-      {data.nodes.map((week, weekIndex) => {
-        return (
-          <div
-            className={`week-row ${week.week === currentWeek && isHide ? "highlight" : ""}`}
-            key={weekIndex}
-          >
-            <div>
-              {week.name} {currentEmoji}
+      {laundryConfig.responsibles.length !== 0 ? (
+        <>
+          {displayedWeeks.map((week, weekIndex) => (
+            <div
+              className={`week-row ${isExpanded ? "expand" : ""} ${week.week === currentWeek ? "highlight" : ""}`}
+              key={weekIndex}
+            >
+              {isExpanded ? (
+                <>
+                  <div>{week.week}</div>
+                  <div>{week.name}</div>
+                </>
+              ) : (
+                <div>
+                  {week.name} {currentEmoji}
+                </div>
+              )}
             </div>
+          ))}
+
+          <div className="expand-icon" onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? <SlArrowUp /> : <SlArrowDown />}
           </div>
-        );
-      })}
-
-      <div className="expand-icon" onClick={() => setHide(!isHide)}>
-        {!isHide ? <SlArrowDown /> : <SlArrowUp />}
-      </div>
-
-      <div className="rodt-slogan">
-        <img
-          src={"./img/laundry-week/rodt_logo.png"}
-          width={40}
-          height={40}
-          alt="Fordi felleskap fungerer"
-        ></img>
-        <p>Fordi felleskap fungerer</p>
-      </div>
+          <div className="rodt-slogan">
+            <img src={"./img/laundry-week/rodt_logo.png"} width={40} height={40} alt="Fordi felleskap fungerer" />
+            <p>Fordi felleskap fungerer</p>
+          </div>
+        </>
+      ) : (
+        <EditWidget widgetKey={WidgetEnum.laundryWeek} />
+      )}
     </div>
   );
 };

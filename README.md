@@ -15,9 +15,7 @@ Feel free to contribute.
 
 ## MVP launch
 
-- Config with keys needs to be updated right away && Need to store keys per config
 - migrating config strategy
-- when config is missing. Display config is missing
 - set editing px view
 
 ## Improvements

@@ -7,6 +7,7 @@ import L from "leaflet";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
+import EditWidget from "../../../core/components/EditWidget";
 
 const homeIcon = L.divIcon({
   className: "home-label-icon",
@@ -60,12 +61,13 @@ const CityBike: React.FC = () => {
 
   return (
     <div className="city-bikes-container">
-      {cityBikeConfig && (
+      {cityBikeConfig ? (
         <>
           <div className="widget-title">
             <div>Available city bikes</div>
             <img className="header-icon" src="./img/city-bike/bicycle-parking.png" alt="bicycle"></img>
           </div>
+
           <div className="map">
             <MapContainer
               className="map-component"
@@ -91,6 +93,8 @@ const CityBike: React.FC = () => {
             </MapContainer>
           </div>
         </>
+      ) : (
+        <EditWidget widgetKey={WidgetEnum.cityBike} />
       )}
     </div>
   );
