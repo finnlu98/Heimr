@@ -7,6 +7,8 @@ import { IoIosTimer } from "react-icons/io";
 import BarChart from "../charts/bar-chart";
 import { ElectricityLevelFormatter } from "../../model/enum/ElectricityLevel";
 import { useElectricityConsumption } from "../../context/ElectricityContext";
+import EditWidget from "../../../core/components/EditWidget";
+import { WidgetEnum } from "../../../model/widget-type";
 
 const ElectricyConsumption: React.FC = () => {
   const { elviaService, chartFormattedData, hasElviaKey } = useElectricityConsumption();
@@ -14,7 +16,7 @@ const ElectricyConsumption: React.FC = () => {
     <>
       {!hasElviaKey ? (
         <div className="h-column gap center">
-          <p>API key from Elvia is missing.</p>
+          <EditWidget widgetKey={WidgetEnum.electricity} />
         </div>
       ) : (
         <div className="h-column gap">

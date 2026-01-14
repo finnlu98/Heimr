@@ -9,13 +9,13 @@ interface CalenderContextProps {
 }
 
 type CalenderContextState = {
-  calenderEvents: CalendarEvent[];
+  calenderEvents: CalendarEvent[] | null;
 };
 
 const CalenderContext = createContext<CalenderContextState | undefined>(undefined);
 
 const CalenderProvider: React.FC<CalenderContextProps> = ({ children }) => {
-  const [calenderEvents, setCalenderEvents] = useState<CalendarEvent[]>([]);
+  const [calenderEvents, setCalenderEvents] = useState<CalendarEvent[] | null>(null);
   const { widgetConfigs } = useDashboard();
   const calenderConfig = widgetConfigs[WidgetEnum.calender] as CalenderConfig;
 
