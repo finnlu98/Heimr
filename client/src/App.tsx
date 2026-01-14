@@ -52,16 +52,14 @@ function App() {
               <div>
                 <Sidebar />
               </div>
-              <div className="container mt-2 mb-2">
-                <div className="col-12 mt-2">
-                  <Header />
-                </div>
+              <div className="container">
+                <Header />
                 <div className="grid-container">
                   <Grid />
                 </div>
               </div>
-              <EditModeToggleButton />
             </div>
+            <EditModeToggleButton />
           </WidgetProviders>
         </DashboardProvider>
       </AuthProvider>

@@ -15,9 +15,6 @@ Feel free to contribute.
 
 ## MVP launch
 
-- migrating config strategy
-- set editing px view
-
 ## Improvements
 
 - Needs confirmation config is OK
