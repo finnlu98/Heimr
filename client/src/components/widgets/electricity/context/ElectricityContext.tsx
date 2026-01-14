@@ -3,7 +3,6 @@ import { ElviaService } from "../services/ElviaService";
 import ElviaFetcher from "../api/elvia-fetcher";
 import { ComponentData } from "../model/ElectricityPrices";
 import apiClient from "../../../../api/ApiClient";
-import { get } from "http";
 
 interface ElectricityContextProps {
   children: React.ReactNode;
