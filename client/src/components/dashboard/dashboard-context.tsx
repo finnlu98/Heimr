@@ -8,6 +8,7 @@ import apiClient from "../../api/ApiClient";
 import { HomeConfig } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
 import { ConfigMigration } from "../../lib/version";
+import GridService from "./grid/service/grid-service";
 
 type DashboardActions = {
   addWidget: (type: WidgetEnum) => void;
@@ -196,9 +197,13 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         return prev;
       }
 
+      const compactedWidgets = GridService.compactLayout(prev.widgets, meta);
+
       return {
         ...prev,
+        widgets: compactedWidgets,
         gridMetaData: meta,
+        isDirty: prev.isDirty || prev.widgets.some((w, i) => w.row !== compactedWidgets[i].row),
       };
     });
   }, []);

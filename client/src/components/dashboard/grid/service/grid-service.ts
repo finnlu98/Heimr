@@ -3,6 +3,17 @@ import { GridItem, GridMetaData, PreviewState, Rect } from "../model/grid-models
 import { MoveType } from "../model/move-type";
 
 export default class GridService {
+  static compactLayout(widgets: GridItem[], gridData: GridMetaData): GridItem[] {
+    const maxRows = Math.floor(gridData.height / gridData.colHeight);
+
+    return widgets.map((widget) => {
+      const maxAllowedRow = Math.max(0, maxRows - widget.rowSpan);
+      const clampedRow = Math.min(widget.row, maxAllowedRow);
+
+      return widget.row > maxAllowedRow ? { ...widget, row: clampedRow } : widget;
+    });
+  }
+
   static computeWidthAndHeight(
     gridItem: GridItem,
     moveTransform: Transform | null,
