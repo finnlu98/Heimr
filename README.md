@@ -15,7 +15,6 @@ Feel free to contribute.
 
 ## MVP launch
 
-- when config is missing. Display config is missing
 - migrating config strategy
 - set editing px view
 
