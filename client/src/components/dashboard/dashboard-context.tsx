@@ -7,6 +7,7 @@ import { WidgetConfigs } from "../widgets/model/wigets";
 import apiClient from "../../api/ApiClient";
 import { HomeConfig } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
+import { ConfigMigration } from "../../lib/version";
 
 type DashboardActions = {
   addWidget: (type: WidgetEnum) => void;
@@ -50,9 +51,12 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
       const parsedLayout = cachedLayout ? JSON.parse(cachedLayout) : null;
       const parsedConfig = cachedConfig ? JSON.parse(cachedConfig) : null;
 
+      const widgetLayout = ConfigMigration.migrateLayout(parsedLayout ?? initialState.widgets);
+      const widgetConfig = ConfigMigration.migrateConfig(parsedConfig ?? initialState.widgetConfigs);
+
       return {
-        widgets: parsedLayout ?? initialState.widgets,
-        widgetConfigs: parsedConfig ?? WidgetConfigs,
+        widgets: widgetLayout,
+        widgetConfigs: widgetConfig,
         editMode: false,
         isDirty: false,
         gridMetaData: undefined,
@@ -80,8 +84,8 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
         setState((prev) => ({
           ...prev,
-          widgets: serverConfig?.widgetPositions ?? prev.widgets,
-          widgetConfigs: serverConfig?.widgetConfig ?? prev.widgetConfigs,
+          widgets: ConfigMigration.migrateLayout(serverConfig?.widgetPositions ?? prev.widgets),
+          widgetConfigs: ConfigMigration.migrateConfig(serverConfig?.widgetConfig ?? prev.widgetConfigs),
         }));
       } catch (error) {
         console.warn("Failed to fetch from backend:", error);
@@ -94,8 +98,8 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   function updateConfig() {
     apiClient
       .post("/me/home/config", {
-        widgetPositions: state.widgets,
-        widgetConfig: state.widgetConfigs,
+        widgetPositions: ConfigMigration.wrapLayout(state.widgets),
+        widgetConfig: ConfigMigration.wrapConfig(state.widgetConfigs),
       })
       .catch((error) => {
         console.error("Failed to save config to backend:", error);
@@ -104,7 +108,8 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem("heimr-grid-layout", JSON.stringify(state.widgets));
+      const verisonedLayout = ConfigMigration.wrapLayout(state.widgets);
+      localStorage.setItem("heimr-grid-layout", JSON.stringify(verisonedLayout));
     } catch (e) {
       console.warn("Failed to write heimr-grid-layout to localStorage", e);
     }
@@ -112,7 +117,8 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem("heimr-widget-config", JSON.stringify(state.widgetConfigs));
+      const versionedConfig = ConfigMigration.wrapConfig(state.widgetConfigs);
+      localStorage.setItem("heimr-widget-config", JSON.stringify(versionedConfig));
     } catch (e) {
       console.warn("Failed to write heimr-widget-config to localStorage", e);
     }
