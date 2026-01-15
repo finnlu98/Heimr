@@ -64,9 +64,7 @@ const ProfileOverview: React.FC = () => {
           <div className="h-column gap-large">
             <div>
               <p>Hi there! 👋</p>
-              <p>
-                You are logged in with <strong>{user.email}</strong>
-              </p>
+              <p>You are logged in with {user.email}</p>
             </div>
             <div className="h-row profile-overview">
               <div className="h-column gap-large">

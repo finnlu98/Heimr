@@ -1,6 +1,8 @@
+import { FaRegSave } from "react-icons/fa";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { WeatherConfig } from "../../WeatherWidget";
+import { useState } from "react";
 
 const WeatherConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
@@ -8,11 +10,13 @@ const WeatherConfiguration: React.FC = () => {
     lat: "",
     lon: "",
   };
+  const [lat, setLat] = useState(config.lat || "");
+  const [lon, setLon] = useState(config.lon || "");
 
-  const handleChange = (newConfig: Partial<WeatherConfig>) => {
+  const saveConfig = () => {
     setWidgetConfig(WidgetEnum.weather, {
-      ...config,
-      ...newConfig,
+      lat,
+      lon,
     });
   };
 
@@ -20,19 +24,16 @@ const WeatherConfiguration: React.FC = () => {
     <div className="h-row">
       <div className="h-column">
         <label htmlFor="lat">Latitude:</label>
-        <input
-          type="text"
-          value={config.lat || ""}
-          onChange={(e) => handleChange({ lat: e.target.value })}
-        />
+        <input type="text" value={lat} onChange={(e) => setLat(e.target.value)} />
       </div>
       <div className="h-column">
         <label htmlFor="lon">Longitude:</label>
-        <input
-          type="text"
-          value={config.lon || ""}
-          onChange={(e) => handleChange({ lon: e.target.value })}
-        />
+        <div className="h-row">
+          <input type="text" value={lon} onChange={(e) => setLon(e.target.value)} />
+          <button onClick={saveConfig}>
+            Save <FaRegSave />
+          </button>
+        </div>
       </div>
     </div>
   );

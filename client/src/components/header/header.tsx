@@ -1,8 +1,8 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import "./header.css";
 import moment from "moment";
-import HomeAvatar from "../standalone/home-avatar/home-avatar";
 import { useAuth } from "../../context/AuthContext";
+import ImageCircle from "../shared/imageCirlce/ImageCircle";
 
 const Header: React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
@@ -14,9 +14,11 @@ const Header: React.FC = () => {
 
     return () => clearInterval(countdownInterval);
   }, []);
-
   return (
-    <div className="header-container" style={{ backgroundImage: `url(${home?.bannerUrl})` }}>
+    <div
+      className="header-container"
+      style={{ backgroundImage: `url(${home?.bannerUrl || "./img/header/oslogate.jpg"})` }}
+    >
       <div className="header-content-container">
         <div className="header-row">
           <h1 className="header-row-item left">
@@ -31,7 +33,11 @@ const Header: React.FC = () => {
             {home &&
               home?.users?.map((user, index) => (
                 <div key={index} className="header-avatar">
-                  <HomeAvatar imgPath={user?.avatarUrl || ""} />
+                  {user?.avatarUrl ? (
+                    <ImageCircle imgPath={user?.avatarUrl || ""} />
+                  ) : (
+                    <ImageCircle text={user?.email?.[0].toLocaleUpperCase() || ""} />
+                  )}
                 </div>
               ))}
           </div>

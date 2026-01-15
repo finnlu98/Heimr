@@ -31,7 +31,7 @@ export default class AuthorizationRouter extends BaseRouter {
     });
 
     this.route.post(`${this.subRoute}/magic/consume`, async (req, res) => {
-      const token = String(req.body?.token ?? "");
+      const { token } = req.body;
       if (!token) return res.status(400).json({ error: "Missing token" });
 
       const result = await this.authorizationService.consumeMagicToken(token);

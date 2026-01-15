@@ -1,5 +1,12 @@
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow: hidden;
+  transition: width 0.25s ease;
 }
 
 .sidebar.edit-mode {
