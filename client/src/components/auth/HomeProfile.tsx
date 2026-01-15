@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { IoAddCircleOutline } from "react-icons/io5";
 import "./HomeProfile.css";
+import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 
 interface HomeProfileProps {
   editMode: boolean;
@@ -80,30 +81,24 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
           <div className="h-row">
             <p>🖼️</p>
             <div>
-              {home?.bannerUrl ? (
-                <div className="banner-preview" style={{ backgroundImage: `url(${previewUrl})` }}>
-                  {(editMode || !home?.bannerUrl) && (
-                    <input
-                      className="banner-upload"
-                      type="file"
-                      accept="image/*"
-                      disabled={!editMode}
-                      onChange={handleFileChange}
-                    />
-                  )}
-                </div>
-              ) : (
-                <></>
-              )}
+              <div className="banner-preview" style={{ backgroundImage: `url(${previewUrl})` }}>
+                {(editMode || !home?.bannerUrl) && (
+                  <input
+                    className="banner-upload"
+                    type="file"
+                    accept="image/*"
+                    disabled={!editMode}
+                    onChange={handleFileChange}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </>
       ) : (
-        <>
-          <button onClick={createHome}>
-            Create Home <IoAddCircleOutline />
-          </button>
-        </>
+        <LoadingButton onClick={createHome} loadingKey="create-home">
+          Create Home <IoAddCircleOutline />
+        </LoadingButton>
       )}
     </div>
   );

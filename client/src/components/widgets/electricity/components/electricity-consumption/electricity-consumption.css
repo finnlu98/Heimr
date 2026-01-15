@@ -1,20 +1,20 @@
 .consumption-cards {
-    align-items: stretch;
+  align-items: stretch;
 }
 
 .consumption-card {
-    display: flex;
-    flex-direction: column;
-    flex: 1;               
-    border-bottom: 2px solid;
-    padding: 3px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-bottom: 2px solid;
+  padding: 1px;
+  justify-content: center;
+  align-items: center;
 }
 
 .level-header {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: bold;
 }

@@ -1,7 +1,8 @@
-import { useState, useEffect, createContext, useContext, useMemo } from "react";
+import { useState, useEffect, createContext, useContext, useMemo, useCallback } from "react";
 import apiClient from "../api/ApiClient";
 import { User } from "../model/User";
 import { Home } from "../model/Home";
+import { useSearchParams } from "react-router-dom";
 
 interface AuthContextProps {
   children: React.ReactNode;
@@ -28,6 +29,8 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [home, setHome] = useState<Home | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
 
   const refresh = async () => {
     try {
@@ -52,7 +55,15 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
 
   const createHome = async () => {
     try {
-      const res = await apiClient.post<{ home: Home }>("/auth/me/home");
+      const res = await apiClient.post<{ home: Home }>(
+        "/auth/me/home",
+        {},
+        {
+          meta: {
+            loadingKey: "create-home",
+          },
+        },
+      );
       setHome(res.data.home);
     } catch (error) {
       console.error("Failed to create home", error);
@@ -173,6 +184,31 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     );
     await refresh();
   };
+
+  const consumeMagicLink = useCallback(async (magicLink: string) => {
+    try {
+      await apiClient.post(
+        "/auth/magic/consume",
+        { token: magicLink },
+        {
+          meta: {
+            loadingKey: "consume-magic-link",
+            successMessage: "Magic link consumed successfully",
+            errorMessage: "Failed to consume magic link",
+          },
+        },
+      );
+      await refresh();
+    } catch (error) {
+      console.error("Failed to consume magic link", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      consumeMagicLink(token);
+    }
+  }, [token, consumeMagicLink]);
 
   const updatePersonalia = async (user: Partial<User>, file: File | null) => {
     if (!user) return;

@@ -1,4 +1,4 @@
-import { createContext, use, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { WeatherData } from "../model/data/WeatherData";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../model/widget-type";
@@ -20,7 +20,7 @@ const WeatherProvider: React.FC<WeatherContextProps> = ({ children }) => {
   const { widgetConfigs } = useDashboard();
   const weatherConfig = widgetConfigs[WidgetEnum.weather] as WeatherConfig;
 
-  const getWeatherData = async (): Promise<void> => {
+  const getWeatherData = useCallback(async (): Promise<void> => {
     if (!weatherConfig || !weatherConfig?.lat || !weatherConfig?.lon) return;
     try {
       const weatherResponse = await FetchWeatherAndSunset(weatherConfig.lat, weatherConfig.lon);
@@ -28,11 +28,11 @@ const WeatherProvider: React.FC<WeatherContextProps> = ({ children }) => {
     } catch (error) {
       console.error("Failed to fetch weather data", error);
     }
-  };
+  }, [weatherConfig]);
 
   useEffect(() => {
     getWeatherData();
-  }, [weatherConfig?.lat, weatherConfig?.lon]);
+  }, [getWeatherData]);
 
   useEffect(() => {
     const updateInterval = setInterval(getWeatherData, 60 * 60 * 1000);

@@ -1,6 +1,8 @@
+import { FaRegSave } from "react-icons/fa";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
+import { useState } from "react";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
@@ -11,13 +13,18 @@ const CityBikeConfiguration: React.FC = () => {
     stations: [],
   };
 
+  const [localConfig, setLocalConfig] = useState(config);
+
   const handleChange = (newConfig: Partial<CityBikeConfig>) => {
-    setWidgetConfig(WidgetEnum.cityBike, {
-      ...config,
+    setLocalConfig({
+      ...localConfig,
       ...newConfig,
     });
   };
 
+  const saveConfig = () => {
+    setWidgetConfig(WidgetEnum.cityBike, localConfig);
+  };
   return (
     <div className="h-row">
       <div className="h-column">
@@ -27,11 +34,11 @@ const CityBikeConfiguration: React.FC = () => {
             <input
               type="text"
               placeholder="Latitute"
-              value={config.homeCoordinates.lat ?? ""}
+              value={localConfig.homeCoordinates.lat ?? ""}
               onChange={(e) =>
                 handleChange({
                   homeCoordinates: {
-                    ...config.homeCoordinates,
+                    ...localConfig.homeCoordinates,
                     lat: e.target.value,
                   },
                 })
@@ -40,11 +47,11 @@ const CityBikeConfiguration: React.FC = () => {
             <input
               type="text"
               placeholder="Longitude"
-              value={config.homeCoordinates.lon ?? ""}
+              value={localConfig.homeCoordinates.lon ?? ""}
               onChange={(e) =>
                 handleChange({
                   homeCoordinates: {
-                    ...config.homeCoordinates,
+                    ...localConfig.homeCoordinates,
                     lon: e.target.value,
                   },
                 })
@@ -58,11 +65,11 @@ const CityBikeConfiguration: React.FC = () => {
             <input
               type="text"
               placeholder="Latitute"
-              value={config.centerCoordinates.lat}
+              value={localConfig.centerCoordinates.lat}
               onChange={(e) =>
                 handleChange({
                   centerCoordinates: {
-                    ...config.centerCoordinates,
+                    ...localConfig.centerCoordinates,
                     lat: e.target.value,
                   },
                 })
@@ -71,11 +78,11 @@ const CityBikeConfiguration: React.FC = () => {
             <input
               type="text"
               placeholder="Longitude"
-              value={config.centerCoordinates.lon}
+              value={localConfig.centerCoordinates.lon}
               onChange={(e) =>
                 handleChange({
                   centerCoordinates: {
-                    ...config.centerCoordinates,
+                    ...localConfig.centerCoordinates,
                     lon: e.target.value,
                   },
                 })
@@ -89,23 +96,28 @@ const CityBikeConfiguration: React.FC = () => {
             <input
               type="number"
               placeholder="Zoom (eg. 12)"
-              value={config.zoom}
+              value={localConfig.zoom}
               onChange={(e) => handleChange({ zoom: Number(e.target.value) })}
             />
           </div>
         </div>
         <div className="h-column">
           <label htmlFor="stations">Station IDs (comma separated):</label>
-          <input
-            type="text"
-            placeholder="Station IDs eg. 123, 456, 789"
-            value={config.stations.join(", ")}
-            onChange={(e) =>
-              handleChange({
-                stations: e.target.value.split(",").map((s) => s.trim()),
-              })
-            }
-          />
+          <div className="h-row">
+            <input
+              type="text"
+              placeholder="Station IDs eg. 123, 456, 789"
+              value={localConfig.stations.join(", ")}
+              onChange={(e) =>
+                handleChange({
+                  stations: e.target.value.split(",").map((s) => s.trim()),
+                })
+              }
+            />
+            <button onClick={saveConfig}>
+              Save <FaRegSave />
+            </button>
+          </div>
         </div>
       </div>
     </div>

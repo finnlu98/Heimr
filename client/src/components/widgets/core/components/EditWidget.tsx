@@ -13,7 +13,7 @@ const EditWidget: React.FC<EditWidgetProps> = ({ widgetKey }) => {
   const { editMode, toggleEditMode } = useDashboard();
   return (
     <>
-      <div>
+      <div className="h-column">
         <p>Configuration is missing for {widgetKey}</p>
         <button onClick={toggleEditMode} disabled={editMode}>
           Edit widgets

@@ -12,8 +12,12 @@ Feel free to contribute.
 
 - widgets sometime renders with to wide width
 - electricity service trowing when getting to new month
+- disable map when moving it around
 
 ## MVP launch
+
+- Fix smoother config for city bike
+- Fix shareable link for autologin
 
 ## Improvements
 

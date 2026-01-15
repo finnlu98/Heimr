@@ -8,6 +8,7 @@ import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import EditWidget from "../../../core/components/EditWidget";
+import { useCityBike } from "../../context/CityBikeContext";
 
 const homeIcon = L.divIcon({
   className: "home-label-icon",
@@ -16,35 +17,9 @@ const homeIcon = L.divIcon({
 });
 
 const CityBike: React.FC = () => {
-  const [cityBikes, setCityBikes] = useState<Map<number, Station>>();
+  const { cityBikeData } = useCityBike();
   const { widgetConfigs } = useDashboard();
   const cityBikeConfig = widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig;
-
-  useEffect(() => {
-    if (!cityBikeConfig) return;
-    const setAndFetchBikes = async () => setCityBikes(await CityBikeFetcher(cityBikeConfig.stations));
-    setAndFetchBikes();
-  }, [cityBikeConfig]);
-
-  useEffect(() => {
-    const updateInterval = setInterval(
-      () => {
-        updateBikeData();
-      },
-      15 * 5 * 1000,
-    );
-
-    return () => clearInterval(updateInterval);
-  }, []);
-
-  async function updateBikeData() {
-    try {
-      const updatedCityData = await CityBikeFetcher(cityBikeConfig.stations);
-      setCityBikes(updatedCityData);
-    } catch (error) {
-      console.error("Can't update data:", error);
-    }
-  }
 
   function formatMarker(available: number) {
     var formattedClass = "bike-label";
@@ -61,7 +36,7 @@ const CityBike: React.FC = () => {
 
   return (
     <div className="city-bikes-container">
-      {cityBikeConfig ? (
+      {cityBikeConfig && cityBikeData ? (
         <>
           <div className="widget-title">
             <div>Available city bikes</div>
@@ -70,6 +45,7 @@ const CityBike: React.FC = () => {
 
           <div className="map">
             <MapContainer
+              key={`${cityBikeConfig.centerCoordinates.lat}-${cityBikeConfig.centerCoordinates.lon}-${cityBikeConfig.zoom}`}
               className="map-component"
               center={[Number(cityBikeConfig.centerCoordinates.lat), Number(cityBikeConfig.centerCoordinates.lon)]}
               zoom={cityBikeConfig.zoom}
@@ -82,8 +58,8 @@ const CityBike: React.FC = () => {
                 icon={homeIcon}
               />
 
-              {cityBikes &&
-                Array.from(cityBikes.entries()).map(([key, entry]) => (
+              {cityBikeData &&
+                Array.from(cityBikeData.entries()).map(([key, entry]) => (
                   <Marker
                     key={key}
                     position={[Number(entry.lat), Number(entry.lon)]}
