@@ -1,0 +1,16 @@
+# Ignore Docker files from formatting
+.dockerignore
+**/Dockerfile
+**/.dockerignore
+
+# Build outputs
+build/
+dist/
+node_modules/
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
