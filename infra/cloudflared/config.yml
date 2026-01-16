@@ -1,0 +1,24 @@
+# Cloudflare Tunnel Configuration
+#
+# To set up:
+# 1. Create a tunnel in Cloudflare dashboard: https://one.dash.cloudflare.com/
+# 2. Copy the tunnel UUID and replace <TUNNEL_UUID> below
+# 3. Download the credentials JSON file and save it as credentials.json in this directory
+# 4. Configure DNS: Add a CNAME record pointing your domain to <TUNNEL_UUID>.cfargotunnel.com
+#
+# Example:
+#   Name: yourdomain.com
+#   Type: CNAME
+#   Content: <TUNNEL_UUID>.cfargotunnel.com
+#   Proxy status: Proxied
+
+tunnel: <TUNNEL_UUID>
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  # Route all traffic to nginx reverse proxy
+  - hostname: yourdomain.com
+    service: http://nginx:80
+
+  # Catch-all rule (required)
+  - service: http_status:404
