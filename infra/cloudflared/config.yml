@@ -12,12 +12,16 @@
 #   Content: <TUNNEL_UUID>.cfargotunnel.com
 #   Proxy status: Proxied
 
-tunnel: <TUNNEL_UUID>
+tunnel: c77aa117-d468-45e0-8317-8f47faa20639
 credentials-file: /etc/cloudflared/credentials.json
 
 ingress:
   # Route all traffic to nginx reverse proxy
-  - hostname: yourdomain.com
+  - hostname: heimr.space
+    service: http://nginx:80
+
+  # Support www subdomain
+  - hostname: www.heimr.space
     service: http://nginx:80
 
   # Catch-all rule (required)
