@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: heimr_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks: [heimr_net]
+    volumes:
+      - heimr_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    image: ghcr.io/${GHCR_OWNER}/heimr-server:${TAG:-latest}
+    container_name: heimr_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+    command: sh -c "npx prisma migrate deploy && node dist/server.js"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [heimr_net]
+
+  web:
+    image: ghcr.io/${GHCR_OWNER}/heimr-client:${TAG:-latest}
+    container_name: heimr_web
+    restart: unless-stopped
+    depends_on: [api]
+    networks: [heimr_net]
+
+  nginx:
+    image: nginx:alpine
+    container_name: heimr_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on: [web, api]
+    networks: [heimr_net]
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: heimr_tunnel
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ../cloudflared:/etc/cloudflared:ro
+    depends_on: [nginx]
+    networks: [heimr_net]
+    restart: unless-stopped
+
+networks:
+  heimr_net:
+
+volumes:
+  heimr_pgdata:

@@ -1,0 +1,10 @@
+# Sensitive files - DO NOT COMMIT
+infra/cloudflared/credentials.json
+infra/production/.env
+*.pem
+*.key
+
+# Already ignored by root .gitignore, but adding for safety
+.env
+.env.local
+.env.production
