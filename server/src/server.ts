@@ -13,7 +13,7 @@ class Server {
     const PORT = process.env.PORT ? Number(process.env.PORT) : 8000;
     app.use(
       cors({
-        origin: [process.env.FRONTEND_ORIGIN || "http://localhost:80", "http://localhost", "http://192.168.50.54:80"],
+        origin: [process.env.FRONTEND_ORIGIN ?? "http://localhost:3000"],
         credentials: true,
       }),
     );

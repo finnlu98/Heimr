@@ -24,13 +24,10 @@ const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
   return (
     <>
       <div className="h-column">
-        {home?.users ? (
+        {home?.users &&
           home.users
             .filter((u) => u?.email !== user?.email)
-            .map((user, index) => <UserProfile key={index} user={user} editMode={editMode} onSave={onSave} />)
-        ) : (
-          <div>You should add users to this home </div>
-        )}
+            .map((user, index) => <UserProfile key={index} user={user} editMode={editMode} onSave={onSave} />)}
         {editMode && (
           <div className="h-row center">
             <PopupButton>

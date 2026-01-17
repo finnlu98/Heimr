@@ -4,7 +4,7 @@ import axios from "axios";
 const HomePostMan = async (event: string, selectedOption?: string) => {
   try {
     var config = configuration.getHomeAssistantConfig();
-    var endpoint = process.env.REACT_APP_HEIMR_BACKEND_ENDPOINT ?? "";
+    var endpoint = "/api";
     endpoint = endpoint + "/homeactions";
     var homeEndpoint = `${config.Endpoint}events/${event}`;
 
