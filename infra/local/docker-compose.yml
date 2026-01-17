@@ -1,49 +1,21 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: heimr-postgres
+    container_name: heimr-postgres-dev
     restart: unless-stopped
-    env_file:
-      - ../../server/.env
-    networks: [heimr_net]
+    environment:
+      POSTGRES_USER: Heimr
+      POSTGRES_PASSWORD: HeimrPassword123
+      POSTGRES_DB: heimr-dev
     ports:
       - "5432:5432"
     volumes:
-      - heimr_pgdata:/var/lib/postgresql/data
+      - heimr_pgdata_dev:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U Heimr -d heimr_db"]
       interval: 5s
       timeout: 3s
       retries: 20
-  api:
-    image: heimr-server
-    pull_policy: never
-    container_name: heimr_api
-    env_file:
-      - ../../server/.env
-    environment:
-      - DATABASE_URL=postgresql://Heimr:Heimr_Password@db:5432/heimr_db?schema=public
-    command: sh -c "npx prisma migrate deploy && node dist/server.js"
-    depends_on:
-      db:
-        condition: service_healthy
-    networks: [heimr_net]
-    restart: unless-stopped
-    ports:
-      - "5000:5000"
-
-  web:
-    image: heimr-client
-    pull_policy: never
-    container_name: heimr_web
-    depends_on: [api]
-    networks: [heimr_net]
-    restart: unless-stopped
-    ports:
-      - "80:80"
-
-networks:
-  heimr_net:
 
 volumes:
-  heimr_pgdata:
+  heimr_pgdata_dev:

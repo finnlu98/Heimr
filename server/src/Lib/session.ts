@@ -9,7 +9,7 @@ export const sessionMiddleware = session({
   name: "heimr.sid",
   secret: process.env.SESSION_SECRET!,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: new PgSession({
     pool,
     tableName: "sessions",
