@@ -13,6 +13,16 @@ body,
   color: var(--color-off-white);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   display: grid;
   grid-template-columns: 1fr minmax(0, 800px) 1fr;
