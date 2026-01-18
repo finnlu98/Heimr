@@ -20,28 +20,23 @@ const Header: React.FC = () => {
       style={{ backgroundImage: `url(${home?.bannerUrl || "./img/header/oslogate.jpg"})` }}
     >
       <div className="header-content-container">
-        <div className="header-row">
-          <h1 className="header-row-item left">
-            <strong>{home?.name ? home.name : "Heimr"}</strong>
-          </h1>
-          <div className="header-row-item right">
-            <h1>{minutes}</h1>
-          </div>
+        <h1>
+          <strong>{home?.name ? home.name : "Heimr"}</strong>
+        </h1>
+        <div>
+          <h1>{minutes}</h1>
         </div>
-        <div className="header-row">
-          <div className="header-row-item avatars">
-            {home &&
-              home?.users?.map((user, index) => (
-                <div key={index} className="header-avatar">
-                  {user?.avatarUrl ? (
-                    <ImageCircle imgPath={user?.avatarUrl || ""} />
-                  ) : (
-                    <ImageCircle text={user?.email?.[0].toLocaleUpperCase() || ""} />
-                  )}
-                </div>
-              ))}
-          </div>
-          <div className="header-row-item right stock-container">{/* <Stocks /> */}</div>
+        <div className="h-row center">
+          {home &&
+            home?.users?.map((user, index) => (
+              <div key={index}>
+                {user?.avatarUrl ? (
+                  <ImageCircle imgPath={user?.avatarUrl || ""} />
+                ) : (
+                  <ImageCircle text={user?.email?.[0].toLocaleUpperCase() || ""} />
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </div>

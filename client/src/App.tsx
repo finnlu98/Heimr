@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import moment from "moment";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/header/header";
 
 import "./App.css";

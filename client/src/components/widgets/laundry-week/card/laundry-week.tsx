@@ -40,8 +40,8 @@ const LaundryWeek: React.FC = () => {
 
   return (
     <div className="laundry-week">
-      <div className="laundry-week-header">
-        <h5>Washing in week {currentWeek}</h5>
+      <div className="laundry-week-header widget-title">
+        <div>Washing in week {currentWeek}</div>
       </div>
       {laundryConfig.responsibles.length !== 0 ? (
         <>
