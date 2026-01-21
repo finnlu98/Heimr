@@ -40,6 +40,8 @@ export default class GridService {
       height: heightPx,
       cursor: editMode ? "grab" : "",
       transform: `translate(${finalX}px, ${finalY}px)`,
+      touchAction: "none",
+      userSelect: "none",
     };
   }
 

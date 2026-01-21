@@ -11,12 +11,11 @@ import { Grid } from "./components/dashboard/grid/grid";
 import EditModeToggleButton from "./components/dashboard/editMode/edit-mode-button";
 import Sidebar from "./components/dashboard/sidebar/sidebar";
 import DashboardProvider from "./components/dashboard/dashboard-context";
-import AuthProvider, { useAuth } from "./context/AuthContext";
+import AuthProvider from "./context/AuthContext";
 import { LoadingProvider } from "./feedback/providers/LoadingProvider";
 import { ApiBridge } from "./feedback/components/ApiBridge";
 import apiClient from "./api/ApiClient";
 import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
-import { useSearchParams } from "react-router-dom";
 
 function App() {
   const reloadHour = 5;

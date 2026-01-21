@@ -16,12 +16,26 @@
   position: relative;
 }
 
+.square {
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 .circle.small {
   width: 25px;
   height: 25px;
 }
 
 .circle.medium {
+  width: 40px;
+  height: 40px;
+}
+
+.square-medium {
   width: 40px;
   height: 40px;
 }
