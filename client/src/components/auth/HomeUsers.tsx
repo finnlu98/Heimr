@@ -4,7 +4,6 @@ import UserProfile from "./UserProfile";
 import PopupButton from "../shared/popup/Popup";
 import { IoMdSend } from "react-icons/io";
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
 import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 
 interface HomeUsersProps {

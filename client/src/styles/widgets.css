@@ -1,31 +1,34 @@
 .widget-container {
-    border: 3px solid var(--color-off-white);
-    padding: 5px;
-    border-radius: 8px;
-    background-color: var(--color-widget-background);
-    box-shadow: 1px 2.5px 5px black;
-    overflow: hidden;
-    color: var(--color-off-white) !important;
+  border: 3px solid var(--color-off-white);
+  padding: 5px;
+  border-radius: 8px;
+  background-color: var(--color-widget-background);
+  box-shadow: 1px 2.5px 5px black;
+  overflow: hidden;
+  color: var(--color-off-white) !important;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 .widget-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-    width: 100%;
-    height: 100%;
-    flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex: 1;
 }
 
 .widget-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
 }
 
 .widget-title-icon {
   width: 15px;
   height: 15px;
 }
-

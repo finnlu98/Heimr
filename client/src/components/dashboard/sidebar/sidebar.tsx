@@ -10,6 +10,7 @@ import WidgetConfiguration from "../grid/widget/widget-configuration";
 import { Widgets } from "../../widgets/model/wigets";
 import Profile from "../../auth/Profile";
 import ProfileOverview from "../../auth/ProfileOverview";
+import LayoutTemplates from "../default/LayoutTemplates";
 
 const Sidebar: React.FC = () => {
   const { editMode, addWidget } = useDashboard();
@@ -21,6 +22,7 @@ const Sidebar: React.FC = () => {
     widgetKey: null,
   });
   const [editProfile, setEditProfile] = useState(false);
+  const [editLayoutTemplate, setEditLayoutTemplate] = useState(false);
 
   const toggleEditWidget = () => {
     setEditWidget((prev) => {
@@ -58,6 +60,18 @@ const Sidebar: React.FC = () => {
             </div>
             <div className="sidebar-title">
               <div>
+                <IoMdArrowDropright /> Templates
+              </div>
+            </div>
+
+            <div className="widget-menu-row">
+              <div className="item friendly-display-item">Layout templates</div>
+              <div className="item widget-action-buttons">
+                <IoAddCircle className="icon" onClick={() => setEditLayoutTemplate(!editLayoutTemplate)} />
+              </div>
+            </div>
+            <div className="sidebar-title">
+              <div>
                 <IoMdArrowDropright /> Widget menu
               </div>
             </div>
@@ -81,17 +95,22 @@ const Sidebar: React.FC = () => {
               </div>
             </div>
           ))}
-        {editWidget && (
-          <Modal open={editWidget.edit} onClose={toggleEditWidget} title={`Configure ${editWidget.widgetKey}`}>
-            {editWidget.widgetKey && <WidgetConfiguration widget={editWidget.widgetKey} />}
-          </Modal>
-        )}
-        {editProfile && (
-          <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">
-            <ProfileOverview />
-          </Modal>
-        )}
       </div>
+      {editWidget && (
+        <Modal open={editWidget.edit} onClose={toggleEditWidget} title={`Configure ${editWidget.widgetKey}`}>
+          {editWidget.widgetKey && <WidgetConfiguration widget={editWidget.widgetKey} />}
+        </Modal>
+      )}
+      {editProfile && (
+        <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">
+          <ProfileOverview />
+        </Modal>
+      )}
+      {editLayoutTemplate && (
+        <Modal open={editLayoutTemplate} onClose={() => setEditLayoutTemplate(false)} title="Layout templates">
+          <LayoutTemplates />
+        </Modal>
+      )}
     </>
   );
 };

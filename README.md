@@ -19,6 +19,7 @@ Feel free to contribute.
 - Fix smoother config for city bike
 - Fix shareable link for autologin
 - designing on small laptop will be nightmare
+- drag and drop on ipad
 
 ## Improvements
 

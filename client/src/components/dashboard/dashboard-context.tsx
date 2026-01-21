@@ -11,6 +11,7 @@ import { ConfigMigration } from "../../lib/version";
 import GridService from "./grid/service/grid-service";
 
 type DashboardActions = {
+  setWidgets: (widgets: GridItem[]) => void;
   addWidget: (type: WidgetEnum) => void;
   removeWidget: (id: string) => void;
   updateWidget: (item: GridItem) => void;
@@ -135,6 +136,14 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     }));
   };
 
+  const setWidgets = (widgets: GridItem[]) => {
+    setState((prev) => ({
+      ...prev,
+      widgets,
+      isDirty: true,
+    }));
+  };
+
   const addWidget = (item: WidgetEnum) => {
     const newItem: GridItem = {
       id: uuidv4(),
@@ -213,6 +222,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
       value={{
         ...state,
         setWidgetConfig,
+        setWidgets,
         addWidget,
         updateWidget,
         removeWidget,
