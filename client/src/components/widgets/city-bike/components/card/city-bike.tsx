@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import CityBikeFetcher from "../../api/city-bike-fetcher";
-import { Station } from "../../model/CityBikeResponse";
 import "./city-bike.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
