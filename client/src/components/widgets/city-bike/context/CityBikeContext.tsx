@@ -5,6 +5,7 @@ import { CityBikeConfig } from "../CityBikeWidget";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import CityBikeStatusFetcher, { CityBikeStationsFetcher } from "../api/city-bike-fetcher";
 import CityBikeService from "../service/CityBikeService";
+import { Coordinate } from "../../../../model/Coordinate";
 
 interface CityBikeContextProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface CityBikeContextProps {
 type CityBikeContextState = {
   cityBikeData: Map<number, Station> | undefined;
   cityStations: Station[] | null;
+  setClosestStations: (coordinate: Coordinate) => Promise<void>;
 };
 
 const CityBikeContext = createContext<CityBikeContextState | undefined>(undefined);
@@ -42,12 +44,12 @@ const CityBikeProvider: React.FC<CityBikeContextProps> = ({ children }) => {
     return () => clearInterval(updateInterval);
   }, [getCityBikeData]);
 
-  const getCityStations = useCallback(async (): Promise<void> => {
+  const setClosestStations = useCallback(async (coordinate: Coordinate): Promise<void> => {
     try {
       const respone = await CityBikeStationsFetcher();
       if (!respone || !respone.data) return;
       const closestStations = CityBikeService.getClosestStations(
-        { lat: cityBikeConfig.homeCoordinates.lat, lon: cityBikeConfig.homeCoordinates.lon },
+        { lat: coordinate.lat, lon: coordinate.lon },
         respone,
         500,
       );
@@ -55,13 +57,18 @@ const CityBikeProvider: React.FC<CityBikeContextProps> = ({ children }) => {
     } catch (error) {
       console.error("Failed to fetch city bike stations data", error);
     }
-  }, [cityBikeConfig]);
+  }, []);
 
   useEffect(() => {
-    getCityStations();
-  }, [getCityStations]);
+    if (cityBikeConfig?.homeCoordinates) {
+      setClosestStations(cityBikeConfig.homeCoordinates);
+    }
+  }, [cityBikeConfig?.homeCoordinates?.lat, cityBikeConfig?.homeCoordinates?.lon, setClosestStations]);
 
-  const value = useMemo(() => ({ cityBikeData, cityStations }), [cityBikeData, cityStations]);
+  const value = useMemo(
+    () => ({ cityBikeData, cityStations, setClosestStations }),
+    [cityBikeData, cityStations, setClosestStations],
+  );
   return <CityBikeContext.Provider value={value}>{children}</CityBikeContext.Provider>;
 };
 

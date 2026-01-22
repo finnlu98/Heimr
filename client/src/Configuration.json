@@ -1,133 +1,129 @@
 {
-    "ClientData": {
-        "ClientIdentifier": "FinnGriggsProduksjoner-HeimrHomeDash",
-        "Home": {
-            "lat": 59.92159991761743,
-            "lon": 10.737959825316603
-        }
-    },
-    "Entur": 
-    {
-        "Endpoint": "https://api.entur.io/journey-planner/v3/graphql",
-        "Identifier": "FinnGriggsProduksjoner",
-        "BusStopConfiguration":
-        [
-            {
-                "title": "St. Hanshaugen - Solli",
-                "imgPath": "BDO.png",
-                "startPlace": "NSR:StopPlace:6274",
-                "stopPlace": "NSR:StopPlace:62019",
-                "configCard": 
-                {
-                    "numRows": 3,
-                    "minFilter": 3
-                },
-                "configColor":
-                {
-                    "general": 8,
-                    "green": 6,
-                    "yellow": 4 
-                }
-            },
-            {
-                "title": "Frydenlund - Jon Collets vei",
-                "imgPath": "UiO.png",
-                "startPlace": "NSR:StopPlace:6258",
-                "stopPlace": "NSR:StopPlace:6323",
-                "configCard":
-                {
-                    "numRows": 3,
-                    "minFilter": 3
-                },
-                "configColor":
-                {
-                    "general": 8,
-                    "green": 6,
-                    "yellow": 4 
-                }
-            },
-            {
-                "title": "Holberg plass - Lysaker",
-                "imgPath": "Storebrand.png",
-                "startPlace": "NSR:StopPlace:63280",
-                "stopPlace": "NSR:StopPlace:58856",
-                "configCard":
-                {
-                    "numRows": 3,
-                    "minFilter": 3
-                },
-                "configColor":
-                {
-                    "general": 14,
-                    "green": 10,
-                    "yellow": 8 
-                }
-            }
-        ]
-    },
-    "ElectricityPrices": {
-        "Endpoint": "https://www.hvakosterstrommen.no/api/v1/prices/:year/:month-:day_NO1.json"
-    },
-    "KanyeQuoute": {
-        "Endpoint": "https://api.kanye.rest/"
-    },
-    "Weather": {
-        "Endpoint": "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=:lat&lon=:lon"
-    },
-    "Sunrise": {
-        "Endpoint": "https://api.met.no/weatherapi/sunrise/3.0/sun?lat=:lat&lon=:lon&offset=+01:00"
-    },
-    "HomeAssistant": {
-        "Endpoint": "http://homeassistant.local:8123/api/"  
-    },
-    "Calender": {
-        "maxResults": 2,
-        "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=:MAX_RESULTS&timeMin=:TIME_MIN"
-    },
-    "Elvia": {
-        "Tariffs": {
-            "Endpoint": ""
-        },
-        "Consumption": {
-            "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
-        }
-    }, 
-    "OsloCityBike": {
-        "Stations": 
-            [
-                {
-                    "StationId": 400,
-                    "Name": "OsloMet"
-                },
-                {
-                    "StationId": 476,
-                    "Name": "Edvard Storms gate"
-                },
-                {
-                    "StationId": 389,
-                    "Name": "Pilestredet Studenthus"
-                },
-                {
-                    "StationId": 469,
-                    "Name": "Studentparlamentet"
-                }
-            ],
-        "StationsInformation": {
-            "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json"
-        },
-        "Status": {
-            "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json"
-        }
-    },
-    "News": {
-        "NRK": {
-            "Endpoint": "https://www.nrk.no/nyheter/siste.rss"
-        }
-    },
-    "Stocks": {
-        "Tickers": ["NVDA", "QBTS", "IONQ", "RGTI"],
-        "StockData": {
-            "Endpoint": ""
-        }
+  "ClientData": {
+    "ClientIdentifier": "FinnGriggsProduksjoner-HeimrHomeDash",
+    "Home": {
+      "lat": 59.92159991761743,
+      "lon": 10.737959825316603
     }
+  },
+  "Entur": {
+    "Endpoint": "https://api.entur.io/journey-planner/v3/graphql",
+    "Identifier": "FinnGriggsProduksjoner",
+    "BusStopConfiguration": [
+      {
+        "title": "St. Hanshaugen - Solli",
+        "imgPath": "BDO.png",
+        "startPlace": "NSR:StopPlace:6274",
+        "stopPlace": "NSR:StopPlace:62019",
+        "configCard": {
+          "numRows": 3,
+          "minFilter": 3
+        },
+        "configColor": {
+          "general": 8,
+          "green": 6,
+          "yellow": 4
+        }
+      },
+      {
+        "title": "Frydenlund - Jon Collets vei",
+        "imgPath": "UiO.png",
+        "startPlace": "NSR:StopPlace:6258",
+        "stopPlace": "NSR:StopPlace:6323",
+        "configCard": {
+          "numRows": 3,
+          "minFilter": 3
+        },
+        "configColor": {
+          "general": 8,
+          "green": 6,
+          "yellow": 4
+        }
+      },
+      {
+        "title": "Holberg plass - Lysaker",
+        "imgPath": "Storebrand.png",
+        "startPlace": "NSR:StopPlace:63280",
+        "stopPlace": "NSR:StopPlace:58856",
+        "configCard": {
+          "numRows": 3,
+          "minFilter": 3
+        },
+        "configColor": {
+          "general": 14,
+          "green": 10,
+          "yellow": 8
+        }
+      }
+    ]
+  },
+  "ElectricityPrices": {
+    "Endpoint": "https://www.hvakosterstrommen.no/api/v1/prices/:year/:month-:day_NO1.json"
+  },
+  "KanyeQuoute": {
+    "Endpoint": "https://api.kanye.rest/"
+  },
+  "Weather": {
+    "Endpoint": "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=:lat&lon=:lon"
+  },
+  "Sunrise": {
+    "Endpoint": "https://api.met.no/weatherapi/sunrise/3.0/sun?lat=:lat&lon=:lon&offset=+01:00"
+  },
+  "HomeAssistant": {
+    "Endpoint": "http://homeassistant.local:8123/api/"
+  },
+  "Calender": {
+    "maxResults": 2,
+    "Endpoint": "https://www.googleapis.com/calendar/v3/calendars/:CAL_ID/events?key=:API_KEY&maxResults=:MAX_RESULTS&timeMin=:TIME_MIN"
+  },
+  "Elvia": {
+    "Tariffs": {
+      "Endpoint": ""
+    },
+    "Consumption": {
+      "Endpoint": "https://elvia.azure-api.net/customer/metervalues/api/v1/metervalues"
+    }
+  },
+  "OsloCityBike": {
+    "Stations": [
+      {
+        "StationId": 400,
+        "Name": "OsloMet"
+      },
+      {
+        "StationId": 476,
+        "Name": "Edvard Storms gate"
+      },
+      {
+        "StationId": 389,
+        "Name": "Pilestredet Studenthus"
+      },
+      {
+        "StationId": 469,
+        "Name": "Studentparlamentet"
+      }
+    ],
+    "StationsInformation": {
+      "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json"
+    },
+    "Status": {
+      "Endpoint": "https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json"
+    }
+  },
+  "News": {
+    "NRK": {
+      "Endpoint": "https://www.nrk.no/nyheter/siste.rss"
+    }
+  },
+  "Stocks": {
+    "Tickers": ["NVDA", "QBTS", "IONQ", "RGTI"],
+    "StockData": {
+      "Endpoint": ""
+    }
+  },
+  "Kartverket": {
+    "AdressLookup": {
+      "Endpoint": "https://ws.geonorge.no/adresser/v1/sok?sok=:SEARCH&fuzzy=false&utkoordsys=4258&treffPerSide=10&side=0&asciiKompatibel=true"
+    }
+  }
 }

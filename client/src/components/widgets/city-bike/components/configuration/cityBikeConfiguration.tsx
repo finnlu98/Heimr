@@ -2,14 +2,18 @@ import { FaRegSave } from "react-icons/fa";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
-import { useState } from "react";
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
-import L from "leaflet";
+import { useEffect, useState } from "react";
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import L, { map } from "leaflet";
 import { useCityBike } from "../../context/CityBikeContext";
+import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
+import { useAuth } from "../../../../../context/AuthContext";
+import { Address } from "../../../../../model/Adress";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const { cityStations } = useCityBike();
+  const { cityStations, setClosestStations } = useCityBike();
+  const { home } = useAuth();
 
   const config = (widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig) ?? {
     homeCoordinates: { lat: 0, lon: 0 },
@@ -34,10 +38,17 @@ const CityBikeConfiguration: React.FC = () => {
   });
 
   const MapEventHandler = () => {
+    const map = useMap();
+    useEffect(() => {
+      map.setView(
+        [Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)],
+        localConfig.zoom ?? 13,
+      );
+    }, [localConfig.centerCoordinates.lat, localConfig.centerCoordinates.lon, map]);
+
     useMapEvents({
       moveend: (e) => {
         const center = e.target.getCenter();
-        console.log(localConfig);
         handleChange({
           centerCoordinates: {
             lat: center.lat.toString(),
@@ -73,74 +84,52 @@ const CityBikeConfiguration: React.FC = () => {
     });
   }
 
+  function onAddressSelect(address: Address) {
+    handleChange({ homeCoordinates: address.coordinate, centerCoordinates: address.coordinate });
+    setClosestStations(address.coordinate);
+  }
+
   const saveConfig = () => {
     setWidgetConfig(WidgetEnum.cityBike, localConfig);
   };
   return (
-    <div className="h-row">
+    <div className="h-column">
+      <p className="widget-title">Choose stations to include in the widget</p>
       <div className="h-column">
-        <div className="h-column">
-          <label htmlFor="homeId">Home coordinates:</label>
-          <div className="h-row">
-            <input
-              type="text"
-              placeholder="Latitute"
-              value={localConfig.homeCoordinates.lat ?? ""}
-              onChange={(e) =>
-                handleChange({
-                  homeCoordinates: {
-                    ...localConfig.homeCoordinates,
-                    lat: Number(e.target.value),
-                  },
-                })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Longitude"
-              value={localConfig.homeCoordinates.lon ?? ""}
-              onChange={(e) =>
-                handleChange({
-                  homeCoordinates: {
-                    ...localConfig.homeCoordinates,
-                    lon: Number(e.target.value),
-                  },
-                })
-              }
-            />
-          </div>
-        </div>
-        <div className="map">
-          <MapContainer
-            key={`map-config`}
-            className="map-component"
-            center={[Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)]}
-            zoom={localConfig?.zoom ?? 13}
-          >
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
-            <MapEventHandler />
-            <Marker
-              position={[Number(localConfig.homeCoordinates.lat), Number(localConfig.homeCoordinates.lon)]}
-              icon={homeIcon}
-            />
-
-            {cityStations &&
-              cityStations.map((station) => (
-                <Marker
-                  key={station.station_id}
-                  position={[station.lat, station.lon]}
-                  icon={formatMarker(station.station_id)}
-                  eventHandlers={{
-                    click: () => handleStationClick(station.station_id),
-                  }}
-                />
-              ))}
-          </MapContainer>
-        </div>
-        <button onClick={saveConfig}>
-          Save <FaRegSave />
-        </button>
+        <label htmlFor="homeId">Home address:</label>
+        <AdressSearch adress={home?.name ?? ""} onAddressSelect={onAddressSelect} />
       </div>
+      <div className="map">
+        <MapContainer
+          key={`map-config`}
+          className="map-component"
+          center={[Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)]}
+          zoom={localConfig?.zoom ?? 13}
+          zoomControl={false}
+        >
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+          <MapEventHandler />
+          <Marker
+            position={[Number(localConfig.homeCoordinates.lat), Number(localConfig.homeCoordinates.lon)]}
+            icon={homeIcon}
+          />
+
+          {cityStations &&
+            cityStations.map((station) => (
+              <Marker
+                key={station.station_id}
+                position={[station.lat, station.lon]}
+                icon={formatMarker(station.station_id)}
+                eventHandlers={{
+                  click: () => handleStationClick(station.station_id),
+                }}
+              />
+            ))}
+        </MapContainer>
+      </div>
+      <button onClick={saveConfig}>
+        Save <FaRegSave />
+      </button>
     </div>
   );
 };

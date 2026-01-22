@@ -1,124 +1,128 @@
-import config from "./Configuration.json"
+import config from "./Configuration.json";
 
 class Configuration {
-    private readonly configuration: AppConfiguration;
+  private readonly configuration: AppConfiguration;
 
-    constructor() {
-        
-        this.configuration = config as AppConfiguration;
-        this.getHomeAssistantConfig().secretToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? ""
-        this.configuration.Stocks.StockData.Endpoint = process.env.REACT_APP_STOCK_ENDPOINT ?? ""
-    }
-    
-    public getHomeConfig(): Home {
-        return this.configuration.ClientData.Home
-    }
-    
-    public getIdentifierConfig(): string {
-        return this.configuration.ClientData.ClientIdentifier
-    }
+  constructor() {
+    this.configuration = config as AppConfiguration;
+    this.getHomeAssistantConfig().secretToken = process.env.REACT_APP_HOME_ASSISTANT_SECRET_TOKEN ?? "";
+    this.configuration.Stocks.StockData.Endpoint = process.env.REACT_APP_STOCK_ENDPOINT ?? "";
+  }
 
-    public getEnturConfig(): EnturConfig {
-        return this.configuration.Entur;
-    }
+  public getHomeConfig(): Home {
+    return this.configuration.ClientData.Home;
+  }
 
-    public getBusStopConfigs(): BusStopConfiguration[] {
-        return this.configuration.Entur.BusStopConfiguration;
-    }
+  public getIdentifierConfig(): string {
+    return this.configuration.ClientData.ClientIdentifier;
+  }
 
-    public getKanyeQuoteEndpoint(): string {
-        return this.configuration.KanyeQuoute.Endpoint;
-    }
+  public getEnturConfig(): EnturConfig {
+    return this.configuration.Entur;
+  }
 
-    public getElectricityEndpoint(): string {
-        return this.configuration.ElectricityPrices.Endpoint;
-    }
+  public getBusStopConfigs(): BusStopConfiguration[] {
+    return this.configuration.Entur.BusStopConfiguration;
+  }
 
-    public getWeatherEndpoint(): string {
-        return this.configuration.Weather.Endpoint;
-    }
+  public getKanyeQuoteEndpoint(): string {
+    return this.configuration.KanyeQuoute.Endpoint;
+  }
 
-    public getSunriseEndpoint(): string {
-        return this.configuration.Sunrise.Endpoint;
-    }
+  public getElectricityEndpoint(): string {
+    return this.configuration.ElectricityPrices.Endpoint;
+  }
 
-    public getHomeAssistantConfig(): HomeAssitantConfig {
-        return this.configuration.HomeAssistant;
-    }
+  public getWeatherEndpoint(): string {
+    return this.configuration.Weather.Endpoint;
+  }
 
-    public getCalenderConfig(): CalenderConfig {
-        return this.configuration.Calender;
-    }
+  public getSunriseEndpoint(): string {
+    return this.configuration.Sunrise.Endpoint;
+  }
 
-    public getElviaConfig(): ElviaConfig {
-        return this.configuration.Elvia;
-    }
+  public getHomeAssistantConfig(): HomeAssitantConfig {
+    return this.configuration.HomeAssistant;
+  }
 
-    public getOsloCityBikeConfig(): OsloCityBikeConfig {
-        return this.configuration.OsloCityBike;
-    }
+  public getCalenderConfig(): CalenderConfig {
+    return this.configuration.Calender;
+  }
 
-    public getNewsConfig(): NewsConfig {
-        return this.configuration.News;
-    }
+  public getElviaConfig(): ElviaConfig {
+    return this.configuration.Elvia;
+  }
 
-    public getStockConfig(): StockConfig {
-        return this.configuration.Stocks;
-    }
+  public getOsloCityBikeConfig(): OsloCityBikeConfig {
+    return this.configuration.OsloCityBike;
+  }
+
+  public getNewsConfig(): NewsConfig {
+    return this.configuration.News;
+  }
+
+  public getStockConfig(): StockConfig {
+    return this.configuration.Stocks;
+  }
+
+  public getAdressLookupEndpoint(): string {
+    return this.configuration.Kartverket.AdressLookup.Endpoint;
+  }
 }
 
 interface AppConfiguration {
-    ClientData: ClientData;
-    Entur: EnturConfig;
-    ElectricityPrices: ElectricityPricesConfig;
-    KanyeQuoute: KanyeQuoteConfig;
-    Weather: WeatherConfig;
-    Sunrise: SunriseConfig;
-    HomeAssistant: HomeAssitantConfig;
-    Calender: CalenderConfig;
-    Elvia: ElviaConfig;
-    OsloCityBike: OsloCityBikeConfig;
-    News: NewsConfig;
-    Stocks: StockConfig;
+  ClientData: ClientData;
+  Entur: EnturConfig;
+  ElectricityPrices: ElectricityPricesConfig;
+  KanyeQuoute: KanyeQuoteConfig;
+  Weather: WeatherConfig;
+  Sunrise: SunriseConfig;
+  HomeAssistant: HomeAssitantConfig;
+  Calender: CalenderConfig;
+  Elvia: ElviaConfig;
+  OsloCityBike: OsloCityBikeConfig;
+  News: NewsConfig;
+  Stocks: StockConfig;
+  Kartverket: KartverketConfig;
 }
 
 interface ClientData {
-    ClientIdentifier: string
-    Home: Home
+  ClientIdentifier: string;
+  Home: Home;
 }
 
 interface Home {
-    lat: number
-    lon: number
+  lat: number;
+  lon: number;
 }
 
 interface EnturConfig extends EndpointConfig {
-    Identifier: string;
-    BusStopConfiguration: BusStopConfiguration[];
+  Identifier: string;
+  BusStopConfiguration: BusStopConfiguration[];
 }
 
 interface ConfigColor {
-    general: number;
-    green: number;
-    yellow: number;
+  general: number;
+  green: number;
+  yellow: number;
 }
 
 interface ConfigCard {
-    numRows: number;
-    minFilter: number;
+  numRows: number;
+  minFilter: number;
 }
 
 interface BusStopConfiguration {
-    title: string;
-    imgPath: string;
-    startPlace: string;
-    stopPlace: string;
-    configCard: ConfigCard;
-    configColor: ConfigColor;
+  title: string;
+  imgPath: string;
+  startPlace: string;
+  stopPlace: string;
+  configCard: ConfigCard;
+  configColor: ConfigColor;
 }
 
 interface EndpointConfig {
-    Endpoint: string
+  Endpoint: string;
 }
 
 interface ElectricityPricesConfig extends EndpointConfig {}
@@ -130,37 +134,40 @@ interface WeatherConfig extends EndpointConfig {}
 interface SunriseConfig extends EndpointConfig {}
 
 interface HomeAssitantConfig extends EndpointConfig {
-    secretToken?: string
+  secretToken?: string;
 }
 
 interface CalenderConfig extends EndpointConfig {
-    maxResults: number
+  maxResults: number;
 }
 
 interface ElviaConfig {
-    Consumption: EndpointConfig
-    Tariffs: EndpointConfig
+  Consumption: EndpointConfig;
+  Tariffs: EndpointConfig;
 }
 
 interface OsloCityBikeConfig {
-    Stations: TrackStation[]
-    StationsInformation: EndpointConfig
-    Status: EndpointConfig
+  Stations: TrackStation[];
+  StationsInformation: EndpointConfig;
+  Status: EndpointConfig;
 }
 
 interface TrackStation {
-    StationId: number
-    Name: string
-
+  StationId: number;
+  Name: string;
 }
 
 interface NewsConfig {
-    NRK: EndpointConfig
+  NRK: EndpointConfig;
 }
 
 interface StockConfig {
-    Tickers: string[]
-    StockData: EndpointConfig
+  Tickers: string[];
+  StockData: EndpointConfig;
+}
+
+interface KartverketConfig {
+  AdressLookup: EndpointConfig;
 }
 
 const configuration = new Configuration();
