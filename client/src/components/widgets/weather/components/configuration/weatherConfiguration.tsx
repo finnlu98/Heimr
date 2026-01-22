@@ -20,7 +20,6 @@ const WeatherConfiguration: React.FC = () => {
       lat: coordinate.lat,
       lon: coordinate.lon,
     });
-    console.log(widgetConfigs);
   };
 
   function handleAddressSelect(address: Address) {
