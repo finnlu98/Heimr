@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Address } from "../../../model/Adress";
 import useAddressSearch from "./AdressHook";
-import "./AdressSearch.css";
 import "../../../feedback/components/Loading/loading.css";
+import SearchInput from "../searchInput/SearchInput";
 
 interface AdressSearchProps {
   onAddressSelect: (address: Address) => void;
@@ -47,33 +47,17 @@ const AdressSearch: React.FC<AdressSearchProps> = ({ onAddressSelect, adress = "
   };
 
   return (
-    <div className="search-input-container">
-      <div style={{ position: "relative" }}>
-        <input
-          className="search-input"
-          type="text"
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search for an address..."
-        />
-        {isLoading && <div className="small-loading-spinner" />}
-      </div>
-      {error && <div>{error}</div>}
-
-      {results.length > 0 && (
-        <ul className="search-results">
-          {results.map((address, index) => (
-            <li
-              className="search-result-item"
-              key={`${address.coordinate.lat}-${address.coordinate.lon}-${index}`}
-              onClick={() => handleSelect(address)}
-            >
-              {address.frienldyName}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <SearchInput<Address>
+      searchTerm={searchTerm}
+      handleSearch={handleSearch}
+      handleSelect={handleSelect}
+      getDisplayText={(address) => address.frienldyName}
+      getKey={(address, index) => `${address.coordinate.lat}-${address.coordinate.lon}-${index}`}
+      placeholder="Search for an address..."
+      isLoading={isLoading}
+      error={error}
+      results={results}
+    />
   );
 };
 

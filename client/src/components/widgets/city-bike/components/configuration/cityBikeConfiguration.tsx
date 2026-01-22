@@ -4,7 +4,7 @@ import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
-import L, { map } from "leaflet";
+import L from "leaflet";
 import { useCityBike } from "../../context/CityBikeContext";
 import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
 import { useAuth } from "../../../../../context/AuthContext";

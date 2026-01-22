@@ -2,6 +2,7 @@ import { WidgetDefinition, WidgetEnum } from "../model/widget-type";
 import { BiSolidBus } from "react-icons/bi";
 import TravelCard from "./components/card/travel-card";
 import TravelCardConfiguration from "./components/configuration/travel-card-configuration";
+import { TravelStop } from "./model/StopSearchResponse";
 
 export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
   id: WidgetEnum.busCards,
@@ -21,11 +22,17 @@ export interface TravelCardConfig {
 
 export interface TravelRoute {
   imgIdentifier: string;
-  startPlace: string;
-  stopPlace: string;
+  startPlace: TravelStop;
+  stopPlace: TravelStop;
   configCard: ConfigCard;
   configColor: ConfigColor;
 }
+
+// export interface Stop {
+//   id: string;
+//   label: string;
+//   name: string;
+// }
 
 interface ConfigColor {
   general: number;

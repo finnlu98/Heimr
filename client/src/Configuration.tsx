@@ -96,8 +96,10 @@ interface Home {
   lon: number;
 }
 
-interface EnturConfig extends EndpointConfig {
+interface EnturConfig {
   Identifier: string;
+  StopRegister: EndpointConfig;
+  TravelPlanner: EndpointConfig;
   BusStopConfiguration: BusStopConfiguration[];
 }
 
