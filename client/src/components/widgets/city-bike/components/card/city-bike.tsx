@@ -46,7 +46,6 @@ const CityBike: React.FC = () => {
               className="map-component"
               center={[Number(cityBikeConfig.centerCoordinates.lat), Number(cityBikeConfig.centerCoordinates.lon)]}
               zoom={cityBikeConfig.zoom}
-              scrollWheelZoom={false}
               zoomControl={false}
             >
               <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
