@@ -1,7 +1,0 @@
-.not-selected {
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transition:
-    filter 0.3s,
-    opacity 0.3s;
-}

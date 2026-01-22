@@ -6,7 +6,6 @@ import { useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { useCityBike } from "../../context/CityBikeContext";
-import "./cityBikeConfiguration.css";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
