@@ -8,108 +8,102 @@ import { ConfigColor } from "./ConfigColor";
 import FetchBustimes from "../../api/bus-time-fetcher";
 import { v4 as uuidv4 } from "uuid";
 import ImageCircle from "../../../../shared/imageCirlce/ImageCircle";
-
-
+import { TravelStop } from "../../model/StopSearchResponse";
 
 interface BusCardsProps {
-  imgPath: string
-  startPlace: string
-  stopPlace: string
+  imgPath: string;
+  startPlace: TravelStop;
+  stopPlace: TravelStop;
   configCard: {
-    numRows: number,
-    minFilter: number
-  },
-  configColor: ConfigColor
+    numRows: number;
+    minFilter: number;
+  };
+  configColor: ConfigColor;
 }
 
 const BusCards: React.FC<BusCardsProps> = ({ imgPath, startPlace, stopPlace, configCard, configColor }) => {
-  
   const { numRows, minFilter } = configCard;
-  
+
   const [tripPatterns, settripPatterns] = useState<TripPatterns[]>();
   const idRef = useRef(uuidv4());
- 
+
   useEffect(() => {
     const fetchAndFilter = async () => {
-    var busTimes = await FetchBustimes(idRef.current, startPlace, stopPlace)
-    settripPatterns(filterBusRides(busTimes.data.trip.tripPatterns));
-    
-  };
+      var busTimes = await FetchBustimes(idRef.current, startPlace.properties.id, stopPlace.properties.id);
+      settripPatterns(filterBusRides(busTimes.data.trip.tripPatterns));
+    };
     fetchAndFilter();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
-      
-      var filteredBusTimes = filterBusRides(tripPatterns)
-      if(filteredBusTimes.length !== 0)
-        settripPatterns(filteredBusTimes);
+      var filteredBusTimes = filterBusRides(tripPatterns);
+      if (filteredBusTimes.length !== 0) settripPatterns(filteredBusTimes);
     }, 1000);
 
     return () => clearInterval(countdownInterval);
   }, []);
 
   useEffect(() => {
-    const updateInterval = setInterval(() => {
-      updateTravelData();
-    }, 7 * 60 * 1000);
+    const updateInterval = setInterval(
+      () => {
+        updateTravelData();
+      },
+      7 * 60 * 1000,
+    );
 
     return () => clearInterval(updateInterval);
   }, []);
 
   async function updateTravelData() {
     try {
-        const updatedTravelData = await FetchBustimes(idRef.current, startPlace, stopPlace);
-        settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
-      } catch (error) {
-       console.error("Can't update data:", error);
-     }
+      const updatedTravelData = await FetchBustimes(idRef.current, startPlace.properties.id, stopPlace.properties.id);
+      settripPatterns(filterBusRides(updatedTravelData.data.trip.tripPatterns));
+    } catch (error) {
+      console.error("Can't update data:", error);
+    }
   }
 
   function filterBusRides(tripPatterns: TripPatterns[] | undefined): TripPatterns[] {
-    if (tripPatterns === undefined || !tripPatterns) 
-      return [];
-    
+    if (tripPatterns === undefined || !tripPatterns) return [];
+
     return tripPatterns
       .map((tripPattern) => ({
         ...tripPattern,
         legs: tripPattern.legs.filter(
           (leg) =>
             Object.values(Mode).includes(leg.mode.toUpperCase() as Mode) &&
-            calculateMinutesUntil(leg.expectedStartTime) >= minFilter
+            calculateMinutesUntil(leg.expectedStartTime) >= minFilter,
         ),
       }))
       .filter((tripPattern) => tripPattern.legs.length === 1);
   }
 
-  function calculateMinutesUntil(startTime : string) {
+  function calculateMinutesUntil(startTime: string) {
     const now = moment().utc();
     const tripStartTime = moment(startTime).utc();
     const diffInMinutes = tripStartTime.diff(now, "minutes");
     return diffInMinutes;
   }
 
-
-
   return (
     <div className="bus-cards">
-          <ImageCircle imgPath={imgPath} alt="Bus stop arrival" />
-          {tripPatterns && tripPatterns.slice(0, numRows).map((tripPattern) => {
-            return (
-              <BusCard
-                key={tripPattern.legs[0].expectedStartTime}
-                name={tripPattern.legs[0].line.name.split(" ")[0]}
-                startTime={tripPattern.legs[0].expectedStartTime}
-                minutesUntil={calculateMinutesUntil(
-                  tripPattern.legs[0].expectedStartTime
-                )}
-                calculateMinutesUntil={calculateMinutesUntil}
-                configColor={configColor}
-              />
-            );
-          })}
+      <ImageCircle imgPath={imgPath} alt="Bus stop arrival" />
+      {tripPatterns &&
+        tripPatterns.slice(0, numRows).map((tripPattern) => {
+          return (
+            <BusCard
+              key={tripPattern.legs[0].expectedStartTime}
+              name={tripPattern.legs[0].line.name.split(" ")[0]}
+              startTime={tripPattern.legs[0].expectedStartTime}
+              minutesUntil={calculateMinutesUntil(tripPattern.legs[0].expectedStartTime)}
+              calculateMinutesUntil={calculateMinutesUntil}
+              configColor={configColor}
+            />
+          );
+        })}
     </div>
   );
-}
+};
 
 export default BusCards;

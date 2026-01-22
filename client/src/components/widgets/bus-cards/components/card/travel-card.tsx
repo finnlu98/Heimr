@@ -18,7 +18,7 @@ const TravelCard: React.FC = () => {
         <div className="travel-rows">
           {travelConfig?.travelRoutes.map((busStop) => (
             <BusCards
-              key={busStop.stopPlace}
+              key={busStop.stopPlace.properties.id}
               imgPath={busStop.imgIdentifier}
               startPlace={busStop.startPlace}
               stopPlace={busStop.stopPlace}

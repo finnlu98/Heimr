@@ -7,7 +7,12 @@
     }
   },
   "Entur": {
-    "Endpoint": "https://api.entur.io/journey-planner/v3/graphql",
+    "StopRegister": {
+      "Endpoint": "https://api.entur.io/geocoder/v1/autocomplete?text=:SEARCH&layers=venue&size=5"
+    },
+    "TravelPlanner": {
+      "Endpoint": "https://api.entur.io/journey-planner/v3/graphql"
+    },
     "Identifier": "FinnGriggsProduksjoner",
     "BusStopConfiguration": [
       {
