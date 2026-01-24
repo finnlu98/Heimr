@@ -7,11 +7,11 @@
   z-index: 1000;
   overflow: hidden;
   transition: width 0.25s ease;
+  background: var(--color-off-white);
 }
 
 .sidebar.edit-mode {
   width: 260px;
-  background: var(--color-off-white);
   border-right: 2px solid rgba(136, 118, 118, 0.611);
   display: flex;
   flex-direction: column;
@@ -20,6 +20,10 @@
   transition: width 0.25s ease;
   height: 100%;
   gap: 10px;
+}
+
+.sidebar.collapsed {
+  width: 60px;
 }
 
 .sidebar-title {
@@ -70,5 +74,15 @@
 
 .icon:hover {
   filter: brightness(1.15);
+  cursor: pointer;
+}
+
+.sidebar-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--color-widget-background);
   cursor: pointer;
 }

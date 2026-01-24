@@ -4,45 +4,21 @@ import { IoAddCircle } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import "./sidebar.css";
-import { Modal } from "../../shared/modal/modal";
 import { useState } from "react";
-import WidgetConfiguration from "../grid/widget/widget-configuration";
 import { Widgets } from "../../widgets/model/wigets";
 import Profile from "../../auth/Profile";
-import ProfileOverview from "../../auth/ProfileOverview";
-import LayoutTemplates from "../default/LayoutTemplates";
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import EditEntity from "../editMode/edit-entity";
+import { EditingKey } from "../model/EditMode";
 
 const Sidebar: React.FC = () => {
-  const { editMode, addWidget } = useDashboard();
-  const [editWidget, setEditWidget] = useState<{
-    edit: boolean;
-    widgetKey: WidgetEnum | null;
-  }>({
-    edit: false,
-    widgetKey: null,
-  });
-  const [editProfile, setEditProfile] = useState(false);
-  const [editLayoutTemplate, setEditLayoutTemplate] = useState(false);
-
-  const toggleEditWidget = () => {
-    setEditWidget((prev) => {
-      return { ...prev, edit: !prev.edit };
-    });
-  };
-
-  const setWidgetKeyAndToggleEdit = (key: WidgetEnum) => {
-    setEditWidget((prev) => {
-      return {
-        edit: !prev.edit,
-        widgetKey: key,
-      };
-    });
-  };
+  const { editMode, addWidget, setEditingKey } = useDashboard();
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <>
-      <div className={`sidebar ${editMode ? "edit-mode" : ""}`}>
-        {editMode && (
+      <div className={`sidebar ${editMode.editMode ? "edit-mode" : ""} ${collapsed ? "collapsed" : ""}`}>
+        {editMode.editMode && !collapsed && (
           <>
             <div className="widget-menu-row">
               <Profile />
@@ -55,7 +31,7 @@ const Sidebar: React.FC = () => {
             <div className="widget-menu-row">
               <div className="item friendly-display-item">Home settings</div>
               <div className="item widget-action-buttons">
-                <CiEdit className="icon" onClick={() => setEditProfile(!editProfile)} />
+                <CiEdit className="icon" onClick={() => setEditingKey(EditingKey.profile)} />
               </div>
             </div>
             <div className="sidebar-title">
@@ -67,7 +43,7 @@ const Sidebar: React.FC = () => {
             <div className="widget-menu-row">
               <div className="item friendly-display-item">Layout templates</div>
               <div className="item widget-action-buttons">
-                <IoAddCircle className="icon" onClick={() => setEditLayoutTemplate(!editLayoutTemplate)} />
+                <IoAddCircle className="icon" onClick={() => setEditingKey(EditingKey.layoutTemplate)} />
               </div>
             </div>
             <div className="sidebar-title">
@@ -78,7 +54,8 @@ const Sidebar: React.FC = () => {
           </>
         )}
         {Widgets &&
-          editMode &&
+          editMode.editMode &&
+          !collapsed &&
           Object.entries(Widgets).map(([key, entries]) => (
             <div key={key} className="widget-menu-row">
               <div className="item friendly-display">
@@ -87,7 +64,7 @@ const Sidebar: React.FC = () => {
               </div>
               <div className="item widget-action-buttons">
                 <div className="icon">
-                  <CiEdit onClick={() => setWidgetKeyAndToggleEdit(key as WidgetEnum)} />
+                  <CiEdit onClick={() => setEditingKey(key as unknown as EditingKey)} />
                 </div>
                 <div className="icon" onClick={() => addWidget(entries.id)}>
                   <IoAddCircle />
@@ -95,22 +72,13 @@ const Sidebar: React.FC = () => {
               </div>
             </div>
           ))}
+        <div className="sidebar-footer" onClick={() => setCollapsed(!collapsed)}>
+          <button className="button-text-only font-large">
+            {collapsed ? <FaAngleDoubleRight fill="white" /> : <FaAngleDoubleLeft fill="white" />}
+          </button>
+        </div>
       </div>
-      {editWidget && (
-        <Modal open={editWidget.edit} onClose={toggleEditWidget} title={`Configure ${editWidget.widgetKey}`}>
-          {editWidget.widgetKey && <WidgetConfiguration widget={editWidget.widgetKey} />}
-        </Modal>
-      )}
-      {editProfile && (
-        <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">
-          <ProfileOverview />
-        </Modal>
-      )}
-      {editLayoutTemplate && (
-        <Modal open={editLayoutTemplate} onClose={() => setEditLayoutTemplate(false)} title="Layout templates">
-          <LayoutTemplates />
-        </Modal>
-      )}
+      <EditEntity onClose={() => setEditingKey(null)} editKey={editMode.editingWidgetKey} />
     </>
   );
 };

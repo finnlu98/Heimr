@@ -115,6 +115,10 @@
   font-size: small;
 }
 
+.font-large {
+  font-size: large;
+}
+
 .font-bold {
   font-weight: bold;
 }
@@ -174,6 +178,9 @@ button {
   cursor: pointer;
   transition: all 0.2s ease;
   background: var(--color-off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {

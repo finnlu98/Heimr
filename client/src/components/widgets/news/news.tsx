@@ -1,57 +1,61 @@
-import { useEffect, useState } from "react"
-import NewsFetcher from "./api/news-fetcher"
-import { NewsResponse } from "./model/NewsResponse"
-import "./news.css"
+import { useEffect, useState } from "react";
+import NewsFetcher from "./api/news-fetcher";
+import { NewsResponse } from "./model/NewsResponse";
+import "./news.css";
 
 const News: React.FC = () => {
-    
-    const [news, setNews] = useState<NewsResponse>()
+  const [news, setNews] = useState<NewsResponse>();
 
-    useEffect(() => {
-        const fetchAndSetNews = async () => setNews(await NewsFetcher());
-        
-        fetchAndSetNews()
-    }, [])
+  useEffect(() => {
+    const fetchAndSetNews = async () => setNews(await NewsFetcher());
 
-    useEffect(() => {
-          const updateInterval = setInterval(() => {
-            updateNewsData();
-          }, 10 * 60 * 1000);
-      
-          return () => clearInterval(updateInterval);
-        }, []);
+    fetchAndSetNews();
+  }, []);
 
-    async function updateNewsData() {
-        try {
-            const updatedNewsData = await NewsFetcher();
-            setNews(updatedNewsData);
-        } catch (error) {
-             console.error("Can't update data:", error);
-        }
+  useEffect(() => {
+    const updateInterval = setInterval(
+      () => {
+        updateNewsData();
+      },
+      10 * 60 * 1000,
+    );
+
+    return () => clearInterval(updateInterval);
+  }, []);
+
+  async function updateNewsData() {
+    try {
+      const updatedNewsData = await NewsFetcher();
+      setNews(updatedNewsData);
+    } catch (error) {
+      console.error("Can't update data:", error);
     }
-    
-    return (
-        <div className="h-column fill-width">
-            <div className="widget-title">
-                <div>Current news 📰</div>
-            </div>
-            <div>
-                {news && news.rss.channel.item.slice(0, 2).map((newsItem) => {
-                    return (
-                        <div key={newsItem.title} className="standard-rows h-row gap">
-                            <div className="news-text font-small">{newsItem.title}</div>
-                                <div className="news-img-container right-align">
-                                    <img
-                                        className="news-img"
-                                        src={newsItem?.media_content?.url ? `${newsItem.media_content.url}` : "./img/news/newspaper.png" }
-                                        alt="news-image"/>
-                                </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
-    )
-}
+  }
 
-export default News
+  return (
+    <div className="h-column fill-width news-container">
+      <div className="widget-title">
+        <div>Current news 📰</div>
+      </div>
+      <div className="news-items-wrapper h-column">
+        {news &&
+          news.rss.channel.item.map((newsItem) => {
+            return (
+              <div key={newsItem.title} className="standard-rows h-row gap">
+                <div className="news-text font-small">{newsItem.title}</div>
+                <div className="news-img-container right-align">
+                  <img
+                    className="news-img"
+                    src={newsItem?.media_content?.url ? `${newsItem.media_content.url}` : "./img/news/newspaper.png"}
+                    alt="news-image"
+                  />
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+};
+
+export default News;

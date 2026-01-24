@@ -1,18 +1,21 @@
+import { useAuth } from "../../../context/AuthContext";
 import { useDashboard } from "../dashboard-context";
+import { EditingKey } from "../model/EditMode";
 
 const DefaultDashboardActions: React.FC = () => {
-  const { editMode, toggleEditMode } = useDashboard();
+  const { user } = useAuth();
+  const { toggleEditMode, setEditingKey } = useDashboard();
   return (
     <>
-      {!editMode && (
-        <div className="h-column widget-container gap-medium">
-          <div className="h-column center">
-            <p>Welcome! 👋</p>
-            <p>Start building your dashboard 🏠</p>
-          </div>
-          <button onClick={toggleEditMode}>Edit Dashboard</button>
+      <div className="h-column widget-container gap-medium">
+        <div className="h-column center">
+          <p>Welcome! 👋</p>
+          <p>Start building your dashboard 🏠</p>
         </div>
-      )}
+        {!user && <button onClick={() => setEditingKey(EditingKey.profile)}>Log in</button>}
+        <button onClick={() => toggleEditMode()}>Edit Dashboard</button>
+        <button onClick={() => setEditingKey(EditingKey.layoutTemplate)}>Apply Template</button>
+      </div>
     </>
   );
 };

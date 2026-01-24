@@ -9,6 +9,7 @@ import { HomeConfig } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
 import { ConfigMigration } from "../../lib/version";
 import GridService from "./grid/service/grid-service";
+import { EditingKey, EditModeState } from "./model/EditMode";
 
 type DashboardActions = {
   setWidgets: (widgets: GridItem[]) => void;
@@ -16,13 +17,14 @@ type DashboardActions = {
   removeWidget: (id: string) => void;
   updateWidget: (item: GridItem) => void;
   onGridResize: (meta: GridMetaData) => void;
-  toggleEditMode: () => void;
+  toggleEditMode: (editKey?: EditingKey) => void;
+  setEditingKey: (key: EditingKey | null) => void;
   setWidgetConfig: (id: WidgetEnum, cfg: any) => void;
 };
 
 type DashboardState = {
   widgets: GridItem[];
-  editMode: boolean;
+  editMode: EditModeState;
   isDirty: boolean;
   widgetConfigs: Record<WidgetEnum, object>;
   gridMetaData?: GridMetaData;
@@ -31,7 +33,7 @@ type DashboardState = {
 const initialState: DashboardState = {
   widgets: [],
   widgetConfigs: WidgetConfigs,
-  editMode: false,
+  editMode: { editMode: false, editingWidgetKey: null },
   isDirty: false,
 };
 
@@ -59,7 +61,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
       return {
         widgets: widgetLayout,
         widgetConfigs: widgetConfig,
-        editMode: false,
+        editMode: { editMode: false, editingWidgetKey: null },
         isDirty: false,
         gridMetaData: undefined,
       };
@@ -177,16 +179,29 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     }));
   };
 
-  const toggleEditMode = () => {
-    const shouldSave = state.isDirty && state.editMode && user;
+  const toggleEditMode = (editKey?: EditingKey) => {
+    const shouldSave = state.isDirty && state.editMode.editMode && user;
     if (shouldSave) {
       updateConfig();
     }
 
     setState((prev) => ({
       ...prev,
-      editMode: !prev.editMode,
+      editMode: {
+        editMode: !prev.editMode.editMode,
+        editingWidgetKey: !prev.editMode.editMode ? (editKey ?? null) : null,
+      },
       isDirty: false,
+    }));
+  };
+
+  const setEditingKey = (key: EditingKey | null) => {
+    setState((prev) => ({
+      ...prev,
+      editMode: {
+        ...prev.editMode,
+        editingWidgetKey: key,
+      },
     }));
   };
 
@@ -227,6 +242,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         updateWidget,
         removeWidget,
         toggleEditMode,
+        setEditingKey,
         onGridResize,
       }}
     >

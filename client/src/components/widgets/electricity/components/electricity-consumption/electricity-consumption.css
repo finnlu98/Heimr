@@ -3,13 +3,10 @@
 }
 
 .consumption-card {
-  display: flex;
-  flex-direction: column;
   flex: 1;
   border-bottom: 2px solid;
-  padding: 1px;
-  justify-content: center;
   align-items: center;
+  padding-bottom: 4px;
 }
 
 .level-header {

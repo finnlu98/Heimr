@@ -5,11 +5,12 @@ import defaultTemplate from "./templates/DefaultTemplate";
 
 const LayoutTemplates: React.FC = () => {
   const [layoutSelected, setLayoutSelected] = useState<boolean>(false);
-  const { setWidgets } = useDashboard();
+  const { setWidgets, setEditingKey } = useDashboard();
 
   function applyDefaultTemplate() {
     if (!layoutSelected) return;
     setWidgets(defaultTemplate);
+    setEditingKey(null);
   }
 
   return (

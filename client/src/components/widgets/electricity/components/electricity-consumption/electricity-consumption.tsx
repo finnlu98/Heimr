@@ -21,15 +21,15 @@ const ElectricyConsumption: React.FC = () => {
       ) : (
         <div className="h-column gap">
           <div className="consumption-cards h-row gap center">
-            <div className="consumption-card">
+            <div className="consumption-card h-column gap-tiny">
               <ImPower className="react-icon-orange" />
-              <div>{elviaService?.getConsumptionMonth()} kwh</div>
+              <div className="font-small">{elviaService?.getConsumptionMonth()} kwh</div>
             </div>
-            <div className="consumption-card gap-tiny">
+            <div className="consumption-card h-column gap-tiny">
               <MdPriceChange className="react-icon-green" />
-              <div>{elviaService?.getEstimatedPriceMonth()} NOK</div>
+              <div className="font-small">{elviaService?.getEstimatedPriceMonth()} NOK</div>
             </div>
-            <div className="consumption-card gap-tiny">
+            <div className="consumption-card h-column gap-tiny">
               <div className="level-header">
                 <GiLevelTwo className="react-icon-orange" />{" "}
                 {ElectricityLevelFormatter.formatLevel(elviaService?.getCapacityLevel())}
@@ -38,7 +38,7 @@ const ElectricyConsumption: React.FC = () => {
                 {ElectricityLevelFormatter.formatInterval(elviaService?.getCapacityLevel())} kwh
               </div>
             </div>
-            <div className="consumption-card gap-tiny">
+            <div className="consumption-card h-column gap-tiny">
               <div className="level-header">
                 <IoIosTimer className="react-icon-gray" />{" "}
                 {moment(elviaService?.getHighestHour()?.startTime).format("h a")}
