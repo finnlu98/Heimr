@@ -5,6 +5,10 @@
   position: relative;
 }
 
+.logged-out {
+  justify-content: center;
+}
+
 .action-buttons-right {
   position: absolute;
   bottom: 20px;
@@ -16,6 +20,11 @@
   bottom: 20px;
   left: 20px;
 }
+
+.profile-overview-container {
+  padding-top: 20px;
+}
+
 .profile-overview {
   gap: 50px;
   align-items: flex-start;

@@ -3,12 +3,13 @@ import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import { useCityBike } from "../../context/CityBikeContext";
 import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
 import { useAuth } from "../../../../../context/AuthContext";
 import { Address } from "../../../../../model/Adress";
+import "./cityBikeConfiguration.css";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
@@ -93,8 +94,7 @@ const CityBikeConfiguration: React.FC = () => {
     setWidgetConfig(WidgetEnum.cityBike, localConfig);
   };
   return (
-    <div className="h-column">
-      <p className="widget-title">Choose stations to include in the widget</p>
+    <div className="city-bike-configuration h-column">
       <div className="h-column">
         <label htmlFor="homeId">Home address:</label>
         <AdressSearch adress={home?.name ?? ""} onAddressSelect={onAddressSelect} />
@@ -108,6 +108,7 @@ const CityBikeConfiguration: React.FC = () => {
           zoomControl={false}
         >
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+          <ZoomControl position="bottomright" />
           <MapEventHandler />
           <Marker
             position={[Number(localConfig.homeCoordinates.lat), Number(localConfig.homeCoordinates.lon)]}
@@ -127,9 +128,11 @@ const CityBikeConfiguration: React.FC = () => {
             ))}
         </MapContainer>
       </div>
-      <button onClick={saveConfig}>
-        Save <FaRegSave />
-      </button>
+      <div className="justify-end">
+        <button onClick={saveConfig}>
+          Save <FaRegSave />
+        </button>
+      </div>
     </div>
   );
 };

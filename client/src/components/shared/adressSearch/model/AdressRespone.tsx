@@ -8,4 +8,5 @@ export class SearchAddressResponse extends BaseResponse {
 class AdressResult {
   adressetekst!: string;
   representasjonspunkt!: Coordinate;
+  kommunenavn!: string;
 }

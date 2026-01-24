@@ -22,8 +22,6 @@ const ProfileOverview: React.FC = () => {
   const homeProfileSaveRef = useRef<(() => Promise<void>) | null>(null);
   const homeUsersSaveRef = useRef<(() => Promise<void>) | null>(null);
 
-  const { anyLoading } = useLoading();
-
   function handleSubmit() {
     if (email === "") return;
     login(email);
@@ -57,11 +55,11 @@ const ProfileOverview: React.FC = () => {
 
   return (
     <>
-      <div className="login-container h-column">
+      <div className={`login-container h-column surface ${user ? "" : "logged-out"}`}>
         {!user ? (
           <Login email={email} setEmail={setEmail} handleSubmit={handleSubmit} />
         ) : (
-          <div className="h-column gap-large">
+          <div className="profile-overview-container h-column gap-large">
             <div>
               <p>Hi there! 👋</p>
               <p>You are logged in with {user.email}</p>

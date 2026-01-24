@@ -1,3 +1,9 @@
+.surface {
+  background-color: var(--color-surface1);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .standard-rows {
   border-top: none;
   border-bottom: 3px solid var(--color-off-gray);
@@ -103,6 +109,11 @@
   justify-content: center;
 }
 
+.justify-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .text-align-center {
   text-align: center;
 }
@@ -150,6 +161,7 @@ input {
   border-radius: 6px;
   transition: border-color 0.2s ease;
   background-color: #fff;
+  width: 100%;
 }
 
 input::placeholder {
@@ -170,7 +182,7 @@ label {
 
 button {
   appearance: none;
-  border: 1px solid var(--color-off-gray);
+  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px 16px;
   font-size: 14px;

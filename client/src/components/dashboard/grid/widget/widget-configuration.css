@@ -9,6 +9,7 @@
 .edit-widget-content {
   display: flex;
   width: 100%;
+  max-height: 90%;
   gap: 3rem;
 }
 

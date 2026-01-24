@@ -9,6 +9,7 @@ import ImageCircle from "../../../../shared/imageCirlce/ImageCircle";
 import UploadImageCircle from "../../../../shared/imageCirlce/UploadImageCircle";
 import SearchStop, { SearchStopHandle } from "./SearchStop";
 import { TravelStop } from "../../model/StopSearchResponse";
+import { TiArrowRightOutline } from "react-icons/ti";
 
 const defaultConfig = { numRows: 3, minFilter: 3 };
 const defaultColors = { general: 10, green: 7, yellow: 5 };
@@ -68,11 +69,6 @@ const TravelCardConfiguration: React.FC = () => {
 
   return (
     <div className="travel-config">
-      <div className="travel-header"></div>
-      <div className="travel-header">Start stop</div>
-      <div className="travel-header">End stop</div>
-      <div></div>
-
       {config &&
         config.travelRoutes.map((route) => {
           return (
@@ -81,6 +77,9 @@ const TravelCardConfiguration: React.FC = () => {
                 <ImageCircle imgPath={route.imgIdentifier} alt="prev-img" />{" "}
               </div>
               <div>{route.startPlace.properties.name}</div>
+              <p>
+                <TiArrowRightOutline />
+              </p>
               <div> {route.stopPlace.properties.name}</div>
               <div
                 className="travel-action-button"
@@ -97,6 +96,9 @@ const TravelCardConfiguration: React.FC = () => {
         placeholder="Start stop"
         ref={startStopRef}
       />
+      <p>
+        <TiArrowRightOutline />
+      </p>
 
       <SearchStop
         onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, stopPlace: stop }))}

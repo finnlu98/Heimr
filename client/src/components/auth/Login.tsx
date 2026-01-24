@@ -11,7 +11,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ email, setEmail, handleSubmit }) => {
   return (
     <>
-      <div>
+      <div className="h-column gap">
         <p>Enter your email to login 🚀</p>
         <div className="h-row">
           <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />

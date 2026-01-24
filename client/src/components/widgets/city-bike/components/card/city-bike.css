@@ -19,6 +19,7 @@
   border-radius: 10%;
   height: 150px;
   width: 100%;
+  z-index: 400 !important; /*Fix issue with zoom control would be above all other layers. */
 }
 
 .bike-label-icon {

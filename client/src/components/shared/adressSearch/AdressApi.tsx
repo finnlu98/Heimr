@@ -19,7 +19,16 @@ const mapToAddress = (res: SearchAddressResponse): Address[] => {
   return res.adresser.map((adress) => ({
     frienldyName: adress.adressetekst,
     coordinate: adress.representasjonspunkt,
+    municipalityName: toTitleCase(adress.kommunenavn),
   }));
+};
+
+const toTitleCase = (text: string): string => {
+  return text
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
 export default SearchAdressFetcher;

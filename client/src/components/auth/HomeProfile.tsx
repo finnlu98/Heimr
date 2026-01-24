@@ -3,6 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import { IoAddCircleOutline } from "react-icons/io5";
 import "./HomeProfile.css";
 import LoadingButton from "../../feedback/components/Loading/LoadingButton";
+import AdressSearch from "../shared/adressSearch/AdressSearch";
+import { Address } from "../../model/Adress";
 
 interface HomeProfileProps {
   editMode: boolean;
@@ -46,6 +48,10 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
     }
   };
 
+  const onAddressSelect: (address: Address) => void = (address) => {
+    setLocation({ lat: address.coordinate.lat, lon: address.coordinate.lon });
+  };
+
   return (
     <div className="h-column">
       <label className="section-label">🖺 Home Information</label>
@@ -63,20 +69,7 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
           </div>
           <div className="h-row">
             <p>📍</p>
-            <input
-              type="text"
-              placeholder="Latitude"
-              value={location ? `${location.lat}` : ""}
-              readOnly={!editMode}
-              onChange={(e) => setLocation((prev) => ({ lat: Number(e.target.value), lon: prev?.lon ?? 0 }))}
-            />
-            <input
-              type="text"
-              placeholder="Longitude"
-              value={location ? `${location.lon}` : ""}
-              readOnly={!editMode}
-              onChange={(e) => setLocation((prev) => ({ lat: prev?.lat ?? 0, lon: Number(e.target.value) }))}
-            />
+            <AdressSearch onAddressSelect={onAddressSelect} adress={homeName} />
           </div>
           <div className="h-row">
             <p>🖼️</p>

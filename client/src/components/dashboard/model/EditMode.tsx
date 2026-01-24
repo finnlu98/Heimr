@@ -9,7 +9,7 @@ export enum EditingKey {
   weather = "Weather",
   stocks = "Stocks",
   news = "News",
-  laundryWeek = "Laundry Week",
+  laundryWeek = "Laundry  Week",
   homeActions = "Home Actions",
   electricity = "Electricity",
   cityBike = "City Bike",

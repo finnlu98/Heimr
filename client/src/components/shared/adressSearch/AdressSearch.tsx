@@ -51,7 +51,7 @@ const AdressSearch: React.FC<AdressSearchProps> = ({ onAddressSelect, adress = "
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       handleSelect={handleSelect}
-      getDisplayText={(address) => address.frienldyName}
+      getDisplayText={(address) => `${address.frienldyName}, ${address.municipalityName ?? "Unknown Municipality"}`}
       getKey={(address, index) => `${address.coordinate.lat}-${address.coordinate.lon}-${index}`}
       placeholder="Search for an address..."
       isLoading={isLoading}

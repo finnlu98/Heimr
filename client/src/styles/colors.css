@@ -2,8 +2,12 @@
 :root {
   --color-background: rgb(250, 229, 209);
   --color-widget-background: rgb(201, 160, 113);
+
+  --color-surface1: rgba(248, 248, 248, 0.611);
+
   --color-off-white: rgb(248, 248, 248);
   --color-off-gray: rgba(248, 248, 248, 0.611);
+  --color-off-black: rgb(34, 34, 34);
   --color-standard-green: rgb(57, 187, 115);
   --color-standard-yellow: rgb(255, 145, 101);
   --color-standard-red: firebrick;
