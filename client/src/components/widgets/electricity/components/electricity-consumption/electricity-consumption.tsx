@@ -7,24 +7,19 @@ import { IoIosTimer } from "react-icons/io";
 import BarChart from "../charts/bar-chart";
 import { ElectricityLevelFormatter } from "../../model/enum/ElectricityLevel";
 import { useElectricityConsumption } from "../../context/ElectricityContext";
-import EditWidget from "../../../core/components/EditWidget";
 import { WidgetEnum } from "../../../model/widget-type";
-import { useLoading } from "../../../../../feedback/hooks/useLoading";
-import LoadingOverlay from "../../../../../feedback/components/Loading/LoadingOverlay";
+import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 
 const ElectricyConsumption: React.FC = () => {
   const { elviaService, chartFormattedData, hasElviaKey } = useElectricityConsumption();
-  const { isLoading: checkLoading } = useLoading();
 
   return (
     <>
-      {checkLoading("post-elvia-key") || checkLoading("fetch-elvia-consumption") ? (
-        <LoadingOverlay />
-      ) : !hasElviaKey ? (
-        <div className="h-column gap center">
-          <EditWidget widgetKey={WidgetEnum.electricity} />
-        </div>
-      ) : (
+      <LoadingHelperWidget
+        widgetKey={WidgetEnum.electricity}
+        loadingKeys={["post-elvia-key", "fetch-elvia-consumption", "has-elvia-key"]}
+        showConfig={() => !hasElviaKey}
+      >
         <div className="h-column gap">
           <div className="consumption-cards h-row gap center">
             <div className="consumption-card h-column gap-tiny">
@@ -64,7 +59,7 @@ const ElectricyConsumption: React.FC = () => {
             )}
           </div>
         </div>
-      )}
+      </LoadingHelperWidget>
     </>
   );
 };

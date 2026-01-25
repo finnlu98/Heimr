@@ -59,6 +59,10 @@ const ElectricityProvider: React.FC<ElectricityContextProps> = ({ children }) =>
     try {
       const res = await apiClient.get<{ integration: string | null }>(`/integration`, {
         params: { provider: provider },
+        meta: {
+          loadingKey: "has-elvia-key",
+          errorMessage: "Failed to get Elvia key status",
+        },
       });
       setHasElviaKey(res.data.integration !== null);
     } catch (error) {

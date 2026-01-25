@@ -6,6 +6,7 @@ import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import EditWidget from "../../../core/components/EditWidget";
 import { useCityBike } from "../../context/CityBikeContext";
+import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 
 const homeIcon = L.divIcon({
   className: "home-label-icon",
@@ -32,43 +33,41 @@ const CityBike: React.FC = () => {
   }
 
   return (
-    <div className="city-bikes-container">
-      {cityBikeConfig && cityBikeData ? (
-        <>
-          <div className="widget-title">
-            <div>Available city bikes</div>
-            <img className="header-icon" src="./img/city-bike/bicycle-parking.png" alt="bicycle"></img>
-          </div>
-
-          <div className="map">
-            <MapContainer
-              key={`${cityBikeConfig.centerCoordinates.lat}-${cityBikeConfig.centerCoordinates.lon}-${cityBikeConfig.zoom}`}
-              className="map-component"
-              center={[Number(cityBikeConfig.centerCoordinates.lat), Number(cityBikeConfig.centerCoordinates.lon)]}
-              zoom={cityBikeConfig.zoom}
-              zoomControl={false}
-            >
-              <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
-              <Marker
-                position={[Number(cityBikeConfig.homeCoordinates.lat), Number(cityBikeConfig.homeCoordinates.lon)]}
-                icon={homeIcon}
-              />
-
-              {cityBikeData &&
-                Array.from(cityBikeData.entries()).map(([key, entry]) => (
-                  <Marker
-                    key={key}
-                    position={[Number(entry.lat), Number(entry.lon)]}
-                    icon={formatMarker(entry.num_bikes_available)}
-                  ></Marker>
-                ))}
-            </MapContainer>
-          </div>
-        </>
-      ) : (
-        <EditWidget widgetKey={WidgetEnum.cityBike} />
-      )}
-    </div>
+    <LoadingHelperWidget
+      widgetKey={WidgetEnum.cityBike}
+      loadingKeys={["fetch-city-bike-status", "fetch-city-bike-stations"]}
+      showConfig={() => !cityBikeConfig || !cityBikeData}
+    >
+      <div className="city-bikes-container">
+        <div className="widget-title">
+          <div>Available city bikes</div>
+          <img className="header-icon" src="./img/city-bike/bicycle-parking.png" alt="bicycle"></img>
+        </div>
+        <div className="map">
+          <MapContainer
+            key={`${cityBikeConfig.centerCoordinates.lat}-${cityBikeConfig.centerCoordinates.lon}-${cityBikeConfig.zoom}`}
+            className="map-component"
+            center={[Number(cityBikeConfig.centerCoordinates.lat), Number(cityBikeConfig.centerCoordinates.lon)]}
+            zoom={cityBikeConfig.zoom}
+            zoomControl={false}
+          >
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+            <Marker
+              position={[Number(cityBikeConfig.homeCoordinates.lat), Number(cityBikeConfig.homeCoordinates.lon)]}
+              icon={homeIcon}
+            />
+            {cityBikeData &&
+              Array.from(cityBikeData.entries()).map(([key, entry]) => (
+                <Marker
+                  key={key}
+                  position={[Number(entry.lat), Number(entry.lon)]}
+                  icon={formatMarker(entry.num_bikes_available)}
+                ></Marker>
+              ))}
+          </MapContainer>
+        </div>
+      </div>
+    </LoadingHelperWidget>
   );
 };
 

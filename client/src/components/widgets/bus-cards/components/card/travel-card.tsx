@@ -4,17 +4,21 @@ import "./travel-card.css";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { WidgetEnum } from "../../../model/widget-type";
 import { TravelCardConfig } from "../../TravelCardWidget";
-import EditWidget from "../../../core/components/EditWidget";
+import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 
 const TravelCard: React.FC = () => {
   const { widgetConfigs } = useDashboard();
   const travelConfig = widgetConfigs[WidgetEnum.busCards] as TravelCardConfig;
   return (
-    <div className="travel-container">
-      <div className="widget-title">
-        Public transport <img className="widget-title-icon" src="./img/bus-card/sign.png" alt="sign" />
-      </div>
-      {travelConfig ? (
+    <LoadingHelperWidget
+      widgetKey={WidgetEnum.busCards}
+      loadingKeys={["fetch-bus-card"]}
+      showConfig={() => !travelConfig}
+    >
+      <div className="travel-container">
+        <div className="widget-title">
+          Public transport <img className="widget-title-icon" src="./img/bus-card/sign.png" alt="sign" />
+        </div>
         <div className="travel-rows">
           {travelConfig?.travelRoutes.map((busStop) => (
             <BusCards
@@ -27,10 +31,8 @@ const TravelCard: React.FC = () => {
             />
           ))}
         </div>
-      ) : (
-        <EditWidget widgetKey={WidgetEnum.busCards} />
-      )}
-    </div>
+      </div>
+    </LoadingHelperWidget>
   );
 };
 
