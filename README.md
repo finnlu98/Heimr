@@ -13,13 +13,11 @@ Feel free to contribute.
 - widgets sometime renders with to wide width
 - electricity service trowing when getting to new month
 - disable map when moving it around
+- adding new user does not await for result
 
 ## MVP launch
 
-- Fix smoother config for city bike
-- Fix shareable link for autologin
 - designing on small laptop will be nightmare
-- drag and drop on ipad
 
 ## Improvements
 

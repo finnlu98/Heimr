@@ -55,8 +55,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
     } else if (editMode) {
       return (
         <LoadingButton
-          loadingKey={`delete-user-${user.email}`}
-          onClick={() => deleteHomeMember(user.email)}
+          loadingKey={`delete-user-${user?.email}`}
+          onClick={() => deleteHomeMember(user?.email)}
           className="button-tertiary"
         >
           <MdDelete />
@@ -73,7 +73,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
         <div className="household-grid gap-large">
           {renderFirstColumn()}
           {user && !imgPath && !editMode ? (
-            <ImageCircle text={user.email.charAt(0).toUpperCase()} />
+            <ImageCircle text={user?.email.charAt(0).toUpperCase()} />
           ) : (
             <UploadImageCircle onImageChange={handleImageChange} imgPath={imgPath} disabled={!editMode} />
           )}
