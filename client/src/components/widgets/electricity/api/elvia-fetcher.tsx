@@ -11,10 +11,19 @@ const ElviaFetcher = async () => {
   const formattedEndpoint = new URL(consumptionEndpoint);
   formattedEndpoint.searchParams.set("startTime", moment().startOf("month").format());
 
-  const response = await apiClient.post<ElviaConsumptionResponse>(brokerEndpoint, {
-    endpoint: formattedEndpoint.toString(),
-    integration: "Elvia",
-  });
+  const response = await apiClient.post<ElviaConsumptionResponse>(
+    brokerEndpoint,
+    {
+      endpoint: formattedEndpoint.toString(),
+      integration: "Elvia",
+    },
+    {
+      meta: {
+        loadingKey: "fetch-elvia-consumption",
+        errorMessage: "Failed to fetch Elvia consumption data",
+      },
+    },
+  );
   const elviaService = new ElviaService(response.data);
   elviaService.getConsumptionToday();
 

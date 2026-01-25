@@ -9,12 +9,18 @@ import { ElectricityLevelFormatter } from "../../model/enum/ElectricityLevel";
 import { useElectricityConsumption } from "../../context/ElectricityContext";
 import EditWidget from "../../../core/components/EditWidget";
 import { WidgetEnum } from "../../../model/widget-type";
+import { useLoading } from "../../../../../feedback/hooks/useLoading";
+import LoadingOverlay from "../../../../../feedback/components/Loading/LoadingOverlay";
 
 const ElectricyConsumption: React.FC = () => {
   const { elviaService, chartFormattedData, hasElviaKey } = useElectricityConsumption();
+  const { isLoading: checkLoading } = useLoading();
+
   return (
     <>
-      {!hasElviaKey ? (
+      {checkLoading("post-elvia-key") || checkLoading("fetch-elvia-consumption") ? (
+        <LoadingOverlay />
+      ) : !hasElviaKey ? (
         <div className="h-column gap center">
           <EditWidget widgetKey={WidgetEnum.electricity} />
         </div>
