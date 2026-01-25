@@ -16,6 +16,7 @@ import { LoadingProvider } from "./feedback/providers/LoadingProvider";
 import { ApiBridge } from "./feedback/components/ApiBridge";
 import apiClient from "./api/ApiClient";
 import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
+import externalApiClient from "./api/ExternalApiClient";
 
 function App() {
   const reloadHour = 5;
@@ -43,6 +44,7 @@ function App() {
   return (
     <LoadingProvider>
       <ApiBridge apiClient={apiClient} />
+      <ApiBridge apiClient={externalApiClient} />
       <AuthProvider>
         <DashboardProvider>
           <WidgetProviders>

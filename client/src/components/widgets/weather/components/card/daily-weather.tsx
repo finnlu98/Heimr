@@ -8,6 +8,7 @@ import { WeatherType } from "../../model/Enum/WeatherType";
 import { useWeather } from "../../context/WeatherContext";
 import EditWidget from "../../../core/components/EditWidget";
 import { WidgetEnum } from "../../../model/widget-type";
+import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 
 const Dailyweather: React.FC = () => {
   const { weatherData } = useWeather();
@@ -29,8 +30,12 @@ const Dailyweather: React.FC = () => {
   }
 
   return (
-    <div className="weather-widget">
-      {weatherData ? (
+    <LoadingHelperWidget
+      widgetKey={WidgetEnum.weather}
+      showConfig={() => !weatherData}
+      loadingKeys={["fetch-weather", "fetch-sunrise"]}
+    >
+      <div className="weather-widget">
         <>
           <div className="weather-title">
             Going out?{" "}
@@ -75,10 +80,8 @@ const Dailyweather: React.FC = () => {
             </div>
           </div>
         </>
-      ) : (
-        <EditWidget widgetKey={WidgetEnum.weather} />
-      )}
-    </div>
+      </div>
+    </LoadingHelperWidget>
   );
 };
 

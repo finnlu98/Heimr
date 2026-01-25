@@ -18,9 +18,17 @@ export const ICalCalendarFetcher = async (endpoints: string[]): Promise<Calendar
 
   for (const endpoint of endpoints) {
     try {
-      const response = await apiClient.post<string>("/broker", {
-        endpoint: endpoint,
-      });
+      const response = await apiClient.post<string>(
+        "/broker",
+        {
+          endpoint: endpoint,
+        },
+        {
+          meta: {
+            loadingKey: `fetch-ical-events`,
+          },
+        },
+      );
       const events = parseICalData(response.data);
       calendarEvents.push(...events);
     } catch (error) {

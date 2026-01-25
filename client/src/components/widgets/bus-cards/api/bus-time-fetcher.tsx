@@ -2,6 +2,7 @@ import axios from "axios";
 import { TravelResponse } from "../model/TravelResponse";
 import Configuration from "../../../../Configuration";
 import FetcherHelper from "../../../../api/FetcherHelper";
+import externalApiClient from "../../../../api/ExternalApiClient";
 
 const FetchBustimes = async (id: string, fromPlace: string, toPlace: string) => {
   try {
@@ -49,10 +50,10 @@ const FetchBustimes = async (id: string, fromPlace: string, toPlace: string) => 
     const cacheKey = TravelResponse.Identifier + fromPlace + toPlace;
 
     const res = fetcher.getData(cacheKey, async () => {
-      const response = await axios.post<TravelResponse>(
+      const response = await externalApiClient.post<TravelResponse>(
         endpoint,
         { query: graphqlQuery },
-        { headers: { "ET-Client-Name": identifier } },
+        { headers: { "ET-Client-Name": identifier }, meta: { loadingKey: "fetch-bus-card" } },
       );
 
       return response.data;
