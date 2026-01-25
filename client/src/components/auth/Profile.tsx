@@ -4,6 +4,7 @@ import { Modal } from "../shared/modal/modal";
 import { useAuth } from "../../context/AuthContext";
 import ImageCircle from "../shared/imageCirlce/ImageCircle";
 import ProfileOverview from "./ProfileOverview";
+import { CiLogin } from "react-icons/ci";
 
 const Profile: React.FC = () => {
   const [editProfile, setEditProfile] = useState(false);
@@ -12,8 +13,14 @@ const Profile: React.FC = () => {
   return (
     <div>
       <div className="profile-container h-row" onClick={() => setEditProfile(true)}>
-        <ImageCircle imgPath={user?.avatarUrl} text={user ? user.email.charAt(0).toUpperCase() : "?"} />
-        <div>{user?.name}</div>
+        {user ? (
+          <>
+            <ImageCircle imgPath={user?.avatarUrl} text={user.email.charAt(0).toUpperCase()} />
+            <div>{user?.name}</div>
+          </>
+        ) : (
+          <div>Heimr</div>
+        )}
       </div>
       {editProfile && (
         <Modal open={editProfile} onClose={() => setEditProfile(false)} title="Profile settings">

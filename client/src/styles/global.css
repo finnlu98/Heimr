@@ -189,7 +189,7 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: var(--color-off-white);
+  background: var(--color-primary-button);
   display: flex;
   align-items: center;
   justify-content: center;
