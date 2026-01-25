@@ -207,6 +207,9 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   useEffect(() => {
     if (token) {
       consumeMagicLink(token);
+      const url = new URL(window.location.href);
+      url.search = "";
+      window.history.replaceState({}, document.title, url.toString());
     }
   }, [token, consumeMagicLink]);
 

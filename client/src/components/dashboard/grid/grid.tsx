@@ -96,13 +96,13 @@ export const Grid: React.FC = () => {
     width: "100%",
     height: "100%",
     backgroundSize: gridMetaData ? `${gridMetaData.colWidth}px ${gridMetaData.colHeight}px` : undefined,
-    border: editMode || widgets.length === 0 ? "1px solid #ddd" : undefined,
+    border: editMode.editMode || widgets.length === 0 ? "1px solid #ddd" : undefined,
     backgroundImage:
-      editMode || widgets.length === 0
+      editMode.editMode || widgets.length === 0
         ? "linear-gradient(to right, #eee 1px, transparent 1px)," +
           "linear-gradient(to bottom, #eee 1px, transparent 1px)"
         : undefined,
-    backgroundColor: editMode ? "#d3d3d33f" : undefined,
+    backgroundColor: editMode.editMode ? "#d3d3d33f" : undefined,
   };
 
   return (
