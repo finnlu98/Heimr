@@ -1,44 +1,18 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo "==> Starting Heimr deployment..."
+# Prevent overlapping runs (cron-safe)
+exec 9>/tmp/heimr-deploy.lock
+flock -n 9 || exit 0
 
-# Load environment variables
-if [ -f .env ]; then
-    export $(cat .env | grep -v '^#' | xargs)
-    echo "✓ Environment variables loaded"
-else
-    echo "✗ .env file not found!"
-    exit 1
-fi
+cd /opt/heimr
 
-# Login to GitHub Container Registry
-echo "==> Logging in to GHCR..."
-echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_OWNER" --password-stdin
+echo "==> $(date) Deploying Heimr (public images)..."
 
-# Pull latest images
-echo "==> Pulling latest images..."
-docker-compose pull
+# Pull new images (does nothing if unchanged)
+docker compose pull
 
-# Run database migrations
-echo "==> Running database migrations..."
-docker-compose up -d db
-sleep 5
-docker-compose up -d api
-sleep 10
-docker exec heimr_api npx prisma migrate deploy || echo "Warning: Migration failed or no migrations to apply"
+# Start/update stack
+docker compose up -d
 
-# Restart all services
-echo "==> Restarting all services..."
-docker-compose up -d --remove-orphans
-
-# Clean up old images
-echo "==> Cleaning up old images..."
-docker image prune -f
-
-# Show status
-echo "==> Deployment complete!"
-docker-compose ps
-
-echo ""
-echo "Logs can be viewed with: docker-compose logs -f"
+echo "✓ Done"
