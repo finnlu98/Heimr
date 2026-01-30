@@ -9,6 +9,7 @@ export const sessionMiddleware = session({
   name: "heimr.sid",
   secret: process.env.SESSION_SECRET!,
   resave: false,
+  proxy: true,
   saveUninitialized: true,
   store: new PgSession({
     pool,
@@ -16,7 +17,7 @@ export const sessionMiddleware = session({
   }),
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: "auto",
     sameSite: "lax",
     maxAge: 1000 * 60 * 60 * 24 * 365 * 5,
   },
