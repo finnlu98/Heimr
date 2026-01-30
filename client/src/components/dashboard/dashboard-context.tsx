@@ -31,7 +31,7 @@ type DashboardState = {
 };
 
 const initialState: DashboardState = {
-  widgets: [],
+  widgets: [{ widget: WidgetEnum.header, id: uuidv4(), col: 0, row: 0, colSpan: 24, rowSpan: 3 }],
   widgetConfigs: WidgetConfigs,
   editMode: { editMode: false, editingWidgetKey: null },
   isDirty: false,

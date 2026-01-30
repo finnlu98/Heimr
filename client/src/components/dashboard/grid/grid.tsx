@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { DndContext, DragEndEvent, DragMoveEvent } from "@dnd-kit/core";
-
 import { PreviewState } from "./model/grid-models";
 import WidgetContainer from "./widget/widget-container";
 import GridService from "./service/grid-service";
@@ -8,6 +7,7 @@ import { MoveType } from "./model/move-type";
 import { useDashboard } from "../dashboard-context";
 import DefaultDashboardActions from "../default/DefaultDashboardActions";
 import "./grid.css";
+import { WidgetEnum } from "../../widgets/model/widget-type";
 
 const COLUMNS = 24;
 const GAP = 5;
@@ -91,14 +91,18 @@ export const Grid: React.FC = () => {
     }
   };
 
+  function showDefaultView() {
+    return widgets.length <= 1 && widgets.some((w) => w.widget === WidgetEnum.header);
+  }
+
   const gridStyle: React.CSSProperties = {
     position: "relative",
     width: "100%",
     height: "100%",
     backgroundSize: gridMetaData ? `${gridMetaData.colWidth}px ${gridMetaData.colHeight}px` : undefined,
-    border: editMode.editMode || widgets.length === 0 ? "1px solid #ddd" : undefined,
+    border: editMode.editMode || showDefaultView() ? "1px solid #ddd" : undefined,
     backgroundImage:
-      editMode.editMode || widgets.length === 0
+      editMode.editMode || showDefaultView()
         ? "linear-gradient(to right, #eee 1px, transparent 1px)," +
           "linear-gradient(to bottom, #eee 1px, transparent 1px)"
         : undefined,
@@ -107,33 +111,32 @@ export const Grid: React.FC = () => {
 
   return (
     <div ref={containerRef} style={gridStyle}>
-      {widgets.length === 0 ? (
+      {showDefaultView() && (
         <div className="default-dashboard-actions">
           <DefaultDashboardActions />
         </div>
-      ) : (
-        <DndContext onDragMove={handleDragMove} onDragEnd={handleDragEnd}>
-          {gridMetaData &&
-            widgets.map((item) => <WidgetContainer key={item.id} gridItem={item} gridData={gridMetaData} />)}
-
-          {preview && gridMetaData && (
-            <div
-              style={{
-                position: "absolute",
-                left: preview.col * gridMetaData?.colWidth,
-                top: preview.row * gridMetaData?.colHeight,
-                width: preview.colSpan * gridMetaData?.colWidth,
-                height: preview.rowSpan * gridMetaData?.colHeight,
-                borderRadius: 8,
-                border: "2px dashed rgba(0,0,0,0.4)",
-                background: "rgba(0,0,0,0.05)",
-                pointerEvents: "none",
-                zIndex: 999,
-              }}
-            />
-          )}
-        </DndContext>
       )}
+      <DndContext onDragMove={handleDragMove} onDragEnd={handleDragEnd}>
+        {gridMetaData &&
+          widgets.map((item) => <WidgetContainer key={item.id} gridItem={item} gridData={gridMetaData} />)}
+
+        {preview && gridMetaData && (
+          <div
+            style={{
+              position: "absolute",
+              left: preview.col * gridMetaData?.colWidth,
+              top: preview.row * gridMetaData?.colHeight,
+              width: preview.colSpan * gridMetaData?.colWidth,
+              height: preview.rowSpan * gridMetaData?.colHeight,
+              borderRadius: 8,
+              border: "2px dashed rgba(0,0,0,0.4)",
+              background: "rgba(0,0,0,0.05)",
+              pointerEvents: "none",
+              zIndex: 999,
+            }}
+          />
+        )}
+      </DndContext>
     </div>
   );
 };
