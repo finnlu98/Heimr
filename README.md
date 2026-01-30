@@ -17,6 +17,8 @@ Feel free to contribute.
 
 ## MVP launch
 
+- implement dev mode for delay on axois
+
 ## Improvements
 
 - cancel edit changes
