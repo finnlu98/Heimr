@@ -17,10 +17,6 @@ Feel free to contribute.
 
 ## MVP launch
 
-- designing on small laptop will be nightmare
-  - move header to be editable as well
-  - height should be calculated dynamically
-
 ## Improvements
 
 - cancel edit changes
