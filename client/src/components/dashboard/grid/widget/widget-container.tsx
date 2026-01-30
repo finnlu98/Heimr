@@ -39,6 +39,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
     cursor: "se-resize",
     background: "rgba(0,0,0,0.3)",
     borderTopLeftRadius: 8,
+    zIndex: 10,
   };
 
   const topRightHandleStyle: React.CSSProperties = {
@@ -53,11 +54,12 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 10,
   };
 
   return (
     <div
-      className="widget-container"
+      className={`${Widgets[gridItem.widget].defaultWidgetStyling !== false ? "widget-container" : "widget-container-no-bg"}`}
       ref={setNodeRef}
       {...(editMode.editMode ? listeners : {})}
       {...(editMode.editMode ? attributes : {})}

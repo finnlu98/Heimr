@@ -8,8 +8,10 @@ import { HomeActionsWidget } from "../home/HomeWidget";
 import { LaundryWeekWidget } from "../laundry-week/LaundryWeekWidget";
 import { StocksWidget } from "../stocks/StocksWidget";
 import { WeatherWidget } from "../weather/WeatherWidget";
+import { HeaderWidget } from "../../header/HeaderWidget";
 
 export const Widgets: Record<WidgetEnum, WidgetDefinition<any>> = {
+  [WidgetEnum.header]: HeaderWidget,
   [WidgetEnum.weather]: WeatherWidget,
   [WidgetEnum.stocks]: StocksWidget,
   [WidgetEnum.news]: NewsWidget,
