@@ -24,15 +24,20 @@ h6 {
 }
 
 .app {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 800px) 1fr;
   min-height: 100vh;
 }
 
-.container {
+.grid-container {
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.zoom-controls {
+  position: fixed;
+  right: 1rem;
+  top: 40%;
+  z-index: 1000;
   padding: 0.5rem;
-  height: 100%;
-  width: 100%;
 }
 
 .loading-container {
@@ -43,15 +48,4 @@ h6 {
   height: 100vh;
   text-align: center;
   color: white;
-}
-
-.Footer {
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.grid-container {
-  height: calc(100vh - 250px);
-  width: 100%;
 }

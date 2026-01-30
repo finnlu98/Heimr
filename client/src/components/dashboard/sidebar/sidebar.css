@@ -5,9 +5,26 @@
   width: 0;
   height: 100vh;
   z-index: 1000;
-  overflow: hidden;
+  overflow: auto;
   transition: width 0.25s ease;
   background: var(--color-off-white);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.edit-mode {

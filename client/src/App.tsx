@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
-import Header from "./components/header/header";
 
 import "./App.css";
 import "./styles/global.css";
@@ -17,29 +16,12 @@ import { ApiBridge } from "./feedback/components/ApiBridge";
 import apiClient from "./api/ApiClient";
 import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
 import externalApiClient from "./api/ExternalApiClient";
+import { ScreenSizeSelector } from "./components/dashboard/screenSizeSelector/screen-size-selector";
+import ZoomControl from "./components/dashboard/zoomControl/zoom-control";
 
 function App() {
-  const reloadHour = 5;
-  const reloadMinute = 30;
-
-  useEffect(() => {
-    const shouldReload = () => {
-      const now = moment();
-      return now.hour() === reloadHour && now.minute() === reloadMinute && now.second() === 0;
-    };
-
-    const reloadAtTargetHour = () => {
-      if (shouldReload()) {
-        window.location.reload();
-      }
-    };
-
-    reloadAtTargetHour();
-
-    const intervalId = setInterval(reloadAtTargetHour, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const [screenSize, setScreenSize] = useState<{ width: number; height: number }>({ width: 800, height: 1064 });
+  const [zoom, setZoom] = useState(1);
 
   return (
     <LoadingProvider>
@@ -48,17 +30,24 @@ function App() {
       <AuthProvider>
         <DashboardProvider>
           <WidgetProviders>
+            <ScreenSizeSelector currentSize={screenSize} onSizeChange={setScreenSize} />
+            <ZoomControl zoom={zoom} onZoomChange={setZoom} screenSize={screenSize} />
             <div className="app">
               <div>
                 <Sidebar />
               </div>
-              <div className="container">
-                <Header />
-                <div className="grid-container">
-                  <Grid />
-                </div>
-                <EditModeToggleButton />
+              <div
+                className="grid-container"
+                style={{
+                  width: `${screenSize.width}px`,
+                  height: `${screenSize.height}px`,
+                  transform: `scale(${zoom})`,
+                  transformOrigin: "top center",
+                }}
+              >
+                <Grid />
               </div>
+              <EditModeToggleButton />
             </div>
           </WidgetProviders>
         </DashboardProvider>

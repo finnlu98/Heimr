@@ -4,7 +4,7 @@ Heimr is a home dashboard that provides useful information about your household 
 
 Feel free to contribute.
 
-![Screenshot of dashboard 01.12.23](img/dash.png)
+![Screenshot of dashboard 01.12.23](doc/img/dash.png)
 
 # Backlog – Heimr
 
@@ -18,11 +18,17 @@ Feel free to contribute.
 ## MVP launch
 
 - designing on small laptop will be nightmare
+  - move header to be editable as well
+  - height should be calculated dynamically
 
 ## Improvements
 
+- cancel edit changes
+- update data should be displayed as small spinner in right corner
 - Needs confirmation config is OK
 - config file fully configurable
+- delay to fetchers only in dev mode (BE and FE)
+- gh workflow should build and deploy seperatably
 
 ## Refactors
 
@@ -32,9 +38,7 @@ Feel free to contribute.
 Data fetching:
 Refactor widget data fetching architecture
 
-- Move data fetching from individual widget components to contexts
-- Options: Individual widget contexts OR centralized dashboard context
-- Benefits: Eliminate circular dependencies, enable data sharing (e.g., Header), better caching
+- missing for news, travel card (more?)
 
 ## Later
 

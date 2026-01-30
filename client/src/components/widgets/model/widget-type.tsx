@@ -1,4 +1,5 @@
 export enum WidgetEnum {
+  header = "Header",
   weather = "Weather",
   stocks = "Stocks",
   news = "News",
@@ -16,6 +17,7 @@ export interface WidgetDefinition<T> {
   widgetIcon: React.ReactNode;
   widgetComponent: React.ReactNode;
   widgetConfig?: WidgetConfig<T>;
+  defaultWidgetStyling?: boolean;
   defaultColSpan: number;
   defaultRowSpan: number;
 }

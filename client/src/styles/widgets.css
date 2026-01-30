@@ -1,8 +1,7 @@
-.widget-container {
+.widget-container,
+.widget-container-no-bg {
   border: 3px solid var(--color-off-white);
-  padding: 5px;
   border-radius: 8px;
-  background-color: var(--color-widget-background);
   box-shadow: 1px 2.5px 5px black;
   overflow: hidden;
   color: var(--color-off-white) !important;
@@ -11,6 +10,12 @@
   user-select: none;
   -webkit-touch-callout: none;
 }
+
+.widget-container {
+  padding: 5px;
+  background-color: var(--color-widget-background);
+}
+
 .widget-content {
   display: flex;
   justify-content: center;
