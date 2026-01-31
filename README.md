@@ -13,9 +13,10 @@ Feel free to contribute.
 - widgets sometime renders with to wide width
 - electricity service trowing when getting to new month
 - disable map when moving it around
-- adding new user does not await for result
 
 ## MVP launch
+
+-
 
 ## Improvements
 
@@ -27,6 +28,7 @@ Feel free to contribute.
 - home local storage
 - gh workflow should build and deploy seperatably
 - horizontal scroll
+- sidebar icons show when collapsed
 
 ## Refactors
 

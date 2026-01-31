@@ -18,41 +18,44 @@ import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
 import externalApiClient from "./api/ExternalApiClient";
 import { ScreenSizeSelector } from "./components/dashboard/screenSizeSelector/screen-size-selector";
 import ZoomControl from "./components/dashboard/zoomControl/zoom-control";
+import ErrorBoundary from "./components/error/error-boundary";
 
 function App() {
   const [screenSize, setScreenSize] = useState<{ width: number; height: number }>({ width: 800, height: 1064 });
   const [zoom, setZoom] = useState(1);
 
   return (
-    <LoadingProvider>
-      <ApiBridge apiClient={apiClient} />
-      <ApiBridge apiClient={externalApiClient} />
-      <AuthProvider>
-        <DashboardProvider>
-          <WidgetProviders>
-            <ScreenSizeSelector currentSize={screenSize} onSizeChange={setScreenSize} />
-            <ZoomControl zoom={zoom} onZoomChange={setZoom} screenSize={screenSize} />
-            <div className="app">
-              <div>
-                <Sidebar />
+    <ErrorBoundary>
+      <LoadingProvider>
+        <ApiBridge apiClient={apiClient} />
+        <ApiBridge apiClient={externalApiClient} />
+        <AuthProvider>
+          <DashboardProvider>
+            <WidgetProviders>
+              <ScreenSizeSelector currentSize={screenSize} onSizeChange={setScreenSize} />
+              <ZoomControl zoom={zoom} onZoomChange={setZoom} screenSize={screenSize} />
+              <div className="app">
+                <div>
+                  <Sidebar />
+                </div>
+                <div
+                  className="grid-container"
+                  style={{
+                    width: `${screenSize.width}px`,
+                    height: `${screenSize.height}px`,
+                    transform: `scale(${zoom})`,
+                    transformOrigin: "top center",
+                  }}
+                >
+                  <Grid />
+                </div>
+                <EditModeToggleButton />
               </div>
-              <div
-                className="grid-container"
-                style={{
-                  width: `${screenSize.width}px`,
-                  height: `${screenSize.height}px`,
-                  transform: `scale(${zoom})`,
-                  transformOrigin: "top center",
-                }}
-              >
-                <Grid />
-              </div>
-              <EditModeToggleButton />
-            </div>
-          </WidgetProviders>
-        </DashboardProvider>
-      </AuthProvider>
-    </LoadingProvider>
+            </WidgetProviders>
+          </DashboardProvider>
+        </AuthProvider>
+      </LoadingProvider>
+    </ErrorBoundary>
   );
 }
 
