@@ -66,3 +66,4 @@ networks:
 volumes:
   heimr_pgdata:
   media-storage:
+  media-storage:
