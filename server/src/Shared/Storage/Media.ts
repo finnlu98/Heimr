@@ -3,7 +3,7 @@ import path from "path";
 import { StoragePath } from "./StoragePath";
 
 export function registerMediaRoute(app: express.Express) {
-  const mediaRoot = path.join(process.cwd(), StoragePath.StorageRoot);
+  const mediaRoot = process.env.NODE_ENV === "production" ? "/data" : path.join(process.cwd(), StoragePath.StorageRoot);
   app.use(
     `/${StoragePath.MediaEndpoint}`,
     express.static(mediaRoot, {
