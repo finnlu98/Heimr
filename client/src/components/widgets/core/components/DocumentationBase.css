@@ -1,0 +1,17 @@
+.documentation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.documentation-logo {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  max-width: 120px;
+}
+
+hr {
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+}
