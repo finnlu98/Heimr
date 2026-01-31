@@ -4,6 +4,8 @@ import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import ImageCircle from "../shared/imageCirlce/ImageCircle";
 
+const defaultBanner = "/img/header/oslogate.jpg";
+
 const Header: React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
   const { home } = useAuth();
@@ -17,7 +19,7 @@ const Header: React.FC = () => {
   return (
     <div
       className="header-container"
-      style={{ backgroundImage: `url(${home?.bannerUrl || "./img/header/oslogate.jpg"})` }}
+      style={{ backgroundImage: `url(${home?.bannerUrl || defaultBanner})` }}
     >
       <div className="header-content-container">
         <h1>
