@@ -24,5 +24,6 @@ export interface WidgetDefinition<T> {
 
 export interface WidgetConfig<T> {
   component: React.ReactNode;
+  documentation?: React.ReactNode;
   config?: T;
 }

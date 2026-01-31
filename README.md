@@ -13,6 +13,7 @@ Feel free to contribute.
 - widgets sometime renders with to wide width
 - electricity service trowing when getting to new month
 - disable map when moving it around
+- buttons in home profile goes over the surface
 
 ## MVP launch
 
@@ -57,3 +58,11 @@ Refactor widget data fetching architecture
 - Expenses
 - Shopping list with geo tracking
 - Electricity advice
+
+### Integration
+
+- Forbrukerrådet
+- Norges bank
+- Yr badetemperatur
+- Politet
+- Bring
