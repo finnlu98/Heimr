@@ -8,9 +8,15 @@ interface AdressSearchProps {
   onAddressSelect: (address: Address) => void;
   adress?: string;
   debounceMs?: number;
+  readonly?: boolean;
 }
 
-const AdressSearch: React.FC<AdressSearchProps> = ({ onAddressSelect, adress = "", debounceMs = 500 }) => {
+const AdressSearch: React.FC<AdressSearchProps> = ({
+  onAddressSelect,
+  adress = "",
+  debounceMs = 500,
+  readonly = false,
+}) => {
   const [searchTerm, setSearchTerm] = useState(adress);
   const { results, isLoading, error, searchAddresses, clearResults } = useAddressSearch();
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
@@ -57,6 +63,7 @@ const AdressSearch: React.FC<AdressSearchProps> = ({ onAddressSelect, adress = "
       isLoading={isLoading}
       error={error}
       results={results}
+      readonly={readonly}
     />
   );
 };

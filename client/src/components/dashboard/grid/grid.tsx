@@ -7,7 +7,7 @@ import { MoveType } from "./model/move-type";
 import { useDashboard } from "../dashboard-context";
 import DefaultDashboardActions from "../default/DefaultDashboardActions";
 import "./grid.css";
-import { WidgetEnum } from "../../widgets/model/widget-type";
+import { isDefaultView } from "../util/isDefaultView";
 
 const COLUMNS = 24;
 const GAP = 5;
@@ -91,18 +91,14 @@ export const Grid: React.FC = () => {
     }
   };
 
-  function showDefaultView() {
-    return widgets.length <= 1 && widgets.some((w) => w.widget === WidgetEnum.header);
-  }
-
   const gridStyle: React.CSSProperties = {
     position: "relative",
     width: "100%",
     height: "100%",
     backgroundSize: gridMetaData ? `${gridMetaData.colWidth}px ${gridMetaData.colHeight}px` : undefined,
-    border: editMode.editMode || showDefaultView() ? "1px solid #ddd" : undefined,
+    border: editMode.editMode || isDefaultView(widgets) ? "1px solid #ddd" : undefined,
     backgroundImage:
-      editMode.editMode || showDefaultView()
+      editMode.editMode || isDefaultView(widgets)
         ? "linear-gradient(to right, #eee 1px, transparent 1px)," +
           "linear-gradient(to bottom, #eee 1px, transparent 1px)"
         : undefined,
@@ -111,7 +107,7 @@ export const Grid: React.FC = () => {
 
   return (
     <div ref={containerRef} style={gridStyle}>
-      {showDefaultView() && (
+      {isDefaultView(widgets) && (
         <div className="default-dashboard-actions">
           <DefaultDashboardActions />
         </div>

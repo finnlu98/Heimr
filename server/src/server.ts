@@ -5,6 +5,7 @@ import cors from "cors";
 import { sessionMiddleware } from "./Lib/session";
 import { registerMediaRoute } from "./Shared/Storage/Media";
 import { globalLimiter } from "./Shared/RateLimiting/Limiters";
+import { registerDelay } from "./Lib/delay";
 
 class Server {
   constructor() {
@@ -19,11 +20,9 @@ class Server {
     );
     app.use(express.json());
     registerMediaRoute(app);
+    registerDelay(app);
     app.use(sessionMiddleware);
-    app.use(async (req, res, next) => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      next();
-    });
+
     app.use(globalLimiter);
     const router = new Routes(app);
     app.listen(PORT, "0.0.0.0", () => {

@@ -4,23 +4,24 @@ import { IoMdClose } from "react-icons/io";
 import { createPortal } from "react-dom";
 
 type ModalProps = {
-  title: string;
+  title?: string;
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  size?: "small" | "medium" | "large";
 };
 
-export const Modal: React.FC<ModalProps> = ({ title, children, open, onClose }) => {
+export const Modal: React.FC<ModalProps> = ({ title, children, open, onClose, size = "medium" }) => {
   if (!open) return null;
 
   return createPortal(
     <div className="modal-overlay">
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+      <div className={`modal-container ${size}`} onClick={(e) => e.stopPropagation()}>
         <div onClick={onClose} className="modal-close">
           {" "}
           <IoMdClose />{" "}
         </div>
-        <div className="modal-title">{title}</div>
+        {title && <div className="modal-title">{title}</div>}
         {children}
       </div>
     </div>,

@@ -9,7 +9,6 @@ import Login from "./Login";
 import HomeUsers from "./HomeUsers";
 import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useLoading } from "../../feedback/hooks/useLoading";
 
 const ProfileOverview: React.FC = () => {
   const [email, setEmail] = useState("");

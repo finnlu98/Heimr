@@ -32,26 +32,28 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 
-  const refresh = async () => {
-    try {
-      const res = await apiClient.get<{ user: User }>("/auth/me");
-      setUser(res.data.user);
-      await getHome();
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getHome = async () => {
+  const getHome = useCallback(async () => {
     try {
       const res = await apiClient.get<{ home: Home }>("/auth/me/home");
       setHome(res.data.home);
     } catch (error) {
       console.error("Failed to fetch home data", error);
     }
-  };
+  }, []);
+
+  const refresh = useCallback(async () => {
+    try {
+      const res = await apiClient.get<{ user: User }>("/auth/me");
+      const fetched = res.data.user;
+
+      setUser(fetched);
+      await getHome();
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [getHome]);
 
   const createHome = async () => {
     try {
@@ -143,7 +145,6 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
           errorMessage: "Failed to remove member",
         },
       });
-
       setHome({ ...home, users: home.users?.filter((user) => user.email !== email) });
     } catch (error) {
       console.error("Failed to delete home member", error);
@@ -152,8 +153,7 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
 
   useEffect(() => {
     refresh();
-    getHome();
-  }, []);
+  }, [refresh]);
 
   const logout = async () => {
     await apiClient.post(
@@ -185,24 +185,27 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     await refresh();
   };
 
-  const consumeMagicLink = useCallback(async (magicLink: string) => {
-    try {
-      await apiClient.post(
-        "/auth/magic/consume",
-        { token: magicLink },
-        {
-          meta: {
-            loadingKey: "consume-magic-link",
-            successMessage: "Magic link consumed successfully",
-            errorMessage: "Failed to consume magic link",
+  const consumeMagicLink = useCallback(
+    async (magicLink: string) => {
+      try {
+        await apiClient.post(
+          "/auth/magic/consume",
+          { token: magicLink },
+          {
+            meta: {
+              loadingKey: "consume-magic-link",
+              successMessage: "Magic link consumed successfully",
+              errorMessage: "Failed to consume magic link",
+            },
           },
-        },
-      );
-      await refresh();
-    } catch (error) {
-      console.error("Failed to consume magic link", error);
-    }
-  }, []);
+        );
+        await refresh();
+      } catch (error) {
+        console.error("Failed to consume magic link", error);
+      }
+    },
+    [refresh],
+  );
 
   useEffect(() => {
     if (token) {

@@ -1,10 +1,9 @@
 import { useDashboard } from "../dashboard-context";
-import { WidgetEnum } from "../../widgets/model/widget-type";
 import { IoAddCircle } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import "./sidebar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Widgets } from "../../widgets/model/wigets";
 import Profile from "../../auth/Profile";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
@@ -14,6 +13,12 @@ import { EditingKey } from "../model/EditMode";
 const Sidebar: React.FC = () => {
   const { editMode, addWidget, setEditingKey } = useDashboard();
   const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (editMode.editMode === false) {
+      setCollapsed(false);
+    }
+  }, [editMode.editMode]);
 
   return (
     <>

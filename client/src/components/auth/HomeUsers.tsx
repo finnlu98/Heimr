@@ -14,7 +14,6 @@ interface HomeUsersProps {
 const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
   const { home, user, addHomeMember } = useAuth();
   const [addEmail, setAddEmail] = useState("");
-
   async function addEmailToHome(email: string, closePopup: () => void) {
     await addHomeMember(email);
     closePopup();
@@ -26,7 +25,7 @@ const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
         {home?.users &&
           home.users
             .filter((u) => u?.email !== user?.email)
-            .map((user, index) => <UserProfile key={index} user={user} editMode={editMode} onSave={onSave} />)}
+            .map((user, index) => <UserProfile key={user.email} user={user} editMode={editMode} onSave={onSave} />)}
         {editMode && (
           <div className="h-row center">
             <PopupButton>
