@@ -16,10 +16,18 @@ Feel free to contribute.
 
 ## MVP launch
 
--
+- add info tab for configuration
+- change bus to have a title identifier
+
+## Hard launch
+
+- accreditate all integrations
+- review if you have rights to use image
+- write about privacy etc.
 
 ## Improvements
 
+- Components render more smoothly when enter editing
 - review logs from react warnings in terminal and fix them
 - cancel edit changes
 - update data should be displayed as small spinner in right corner
