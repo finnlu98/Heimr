@@ -17,14 +17,19 @@ Feel free to contribute.
 
 ## MVP launch
 
-- add info tab for configuration
-- change bus to have a title identifier
+- img identifier for image should be posted to server and img path in config¨
+
+- Tomorrow move pi to kimK dev
+- Setup tailscale
+- provide proper environment config
+- TEST!
 
 ## Hard launch
 
 - accreditate all integrations
 - review if you have rights to use image
 - write about privacy etc.
+- Go through security requirements for server
 
 ## Improvements
 

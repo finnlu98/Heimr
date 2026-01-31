@@ -1,26 +1,14 @@
-.busstider-header {
-  color: var(--color-off-white);
-  border-bottom: 3px solid var(--color-off-white);
-  overflow: hidden;
-  padding: 5px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .public-icon {
   padding-right: 8px;
 }
 
 .bus-cards {
   display: flex;
-  align-items: stretch;
-  justify-content: center;
   gap: 10px;
-
+  align-items: center;
 }
 
-.bus-card-arrow-down {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.trip-identifier {
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-off-white);
 }

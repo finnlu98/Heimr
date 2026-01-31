@@ -19,7 +19,7 @@ const ElectricyConsumption: React.FC = () => {
       loadingKeys={["post-elvia-key", "fetch-elvia-consumption", "has-elvia-key"]}
       showConfig={() => !hasElviaKey}
     >
-      <div className="h-column gap">
+      <div className="electricity-container h-column gap">
         <div className="consumption-cards h-row gap center">
           <div className="consumption-card h-column gap-tiny">
             <ImPower className="react-icon-orange" />
@@ -47,7 +47,7 @@ const ElectricyConsumption: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-align-center font-small">
+        <div className="bar-chart-container h-column center text-align-center font-small">
           Peak kwh per day in {moment().format("MMMM")}
           {chartFormattedData && (
             <BarChart
