@@ -4,6 +4,7 @@ import TravelCard from "./components/card/travel-card";
 import TravelCardConfiguration from "./components/configuration/travel-card-configuration";
 import { TravelStop } from "./model/StopSearchResponse";
 import DocumentationBase from "../core/components/DocumentationBase";
+import { TripIdentifier } from "./model/enum/TripIdentifier";
 
 export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
   id: WidgetEnum.busCards,
@@ -25,6 +26,7 @@ export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
 };
 
 export interface TravelCardConfig {
+  tripIdentifier: TripIdentifier;
   travelRoutes: TravelRoute[];
 }
 

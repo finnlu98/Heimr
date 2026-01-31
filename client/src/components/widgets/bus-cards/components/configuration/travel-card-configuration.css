@@ -1,15 +1,13 @@
+.travel-config-container {
+  width: 100%;
+}
+
 .travel-config {
   display: grid;
   gap: 1rem;
   grid-template-columns: auto 1fr auto 1fr auto;
   align-items: center;
   justify-content: center;
-  width: 90%;
-
-  /* background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .travel-header {

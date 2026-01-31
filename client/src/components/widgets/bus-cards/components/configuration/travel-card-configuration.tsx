@@ -10,6 +10,7 @@ import UploadImageCircle from "../../../../shared/imageCirlce/UploadImageCircle"
 import SearchStop, { SearchStopHandle } from "./SearchStop";
 import { TravelStop } from "../../model/StopSearchResponse";
 import { TiArrowRightOutline } from "react-icons/ti";
+import { TripIdentifier } from "../../model/enum/TripIdentifier";
 
 const defaultConfig = { numRows: 3, minFilter: 3 };
 const defaultColors = { general: 10, green: 7, yellow: 5 };
@@ -18,6 +19,7 @@ const TravelCardConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
   const config = (widgetConfigs[WidgetEnum.busCards] as TravelCardConfig) ?? {
     travelRoutes: [],
+    tripIdentifier: TripIdentifier.title,
   };
   const [travelRoute, setTravelRoute] = useState<TravelRoute>({
     imgIdentifier: "",
@@ -26,6 +28,7 @@ const TravelCardConfiguration: React.FC = () => {
     configCard: defaultConfig,
     configColor: defaultColors,
   });
+  const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(TripIdentifier.title);
   const startStopRef = useRef<SearchStopHandle>(null);
   const endStopRef = useRef<SearchStopHandle>(null);
 
@@ -67,46 +70,79 @@ const TravelCardConfiguration: React.FC = () => {
     });
   }
 
-  return (
-    <div className="travel-config">
-      {config &&
-        config.travelRoutes.map((route) => {
-          return (
-            <>
-              <div>
-                <ImageCircle imgPath={route.imgIdentifier} alt="prev-img" />{" "}
-              </div>
-              <div>{route.startPlace.properties.name}</div>
-              <p>
-                <TiArrowRightOutline />
-              </p>
-              <div> {route.stopPlace.properties.name}</div>
-              <div
-                className="travel-action-button"
-                onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}
-              >
-                <MdDelete size={20} />
-              </div>
-            </>
-          );
-        })}
-      <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
-      <SearchStop
-        onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, startPlace: stop }))}
-        placeholder="Start stop"
-        ref={startStopRef}
-      />
-      <p>
-        <TiArrowRightOutline />
-      </p>
+  function onSetTravelIdentifier(identifier: TripIdentifier) {
+    setTravelIdentifier(identifier);
+    setWidgetConfig(WidgetEnum.busCards, {
+      ...config,
+      tripIdentifier: identifier,
+    });
+  }
 
-      <SearchStop
-        onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, stopPlace: stop }))}
-        placeholder="End stop"
-        ref={endStopRef}
-      />
-      <div className="travel-action-button" onClick={() => addTravelRoute(travelRoute)}>
-        <IoAddCircle size={20} />
+  return (
+    <div className="travel-config-container h-column gap-large">
+      <div className="h-row gap-large">
+        <label className="standard-row">Select trip identifier:</label>
+        <label className="h-row">
+          Title
+          <input
+            type="radio"
+            name="title"
+            value="title"
+            checked={travelIdentifier === TripIdentifier.title}
+            onChange={() => onSetTravelIdentifier(TripIdentifier.title)}
+          />
+        </label>
+        <label className="h-row">
+          Image
+          <input
+            type="radio"
+            name="image"
+            value="image"
+            checked={travelIdentifier === TripIdentifier.img}
+            onChange={() => onSetTravelIdentifier(TripIdentifier.img)}
+          />
+        </label>
+      </div>
+      <div className="travel-config">
+        {config &&
+          config.travelRoutes.map((route) => {
+            return (
+              <>
+                <div>
+                  <ImageCircle imgPath={route.imgIdentifier} alt="prev-img" />{" "}
+                </div>
+                <div>{route.startPlace.properties.name}</div>
+                <p>
+                  <TiArrowRightOutline />
+                </p>
+                <div> {route.stopPlace.properties.name}</div>
+                <div
+                  className="travel-action-button"
+                  onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}
+                >
+                  <MdDelete size={20} />
+                </div>
+              </>
+            );
+          })}
+        <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
+        <SearchStop
+          onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, startPlace: stop }))}
+          placeholder="Start stop"
+          ref={startStopRef}
+        />
+        <p>
+          <TiArrowRightOutline />
+        </p>
+
+        <SearchStop
+          onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, stopPlace: stop }))}
+          placeholder="End stop"
+          ref={endStopRef}
+        />
+        <div className="travel-action-button" onClick={() => addTravelRoute(travelRoute)}>
+          <IoAddCircle size={20} />
+        </div>
       </div>
     </div>
   );
