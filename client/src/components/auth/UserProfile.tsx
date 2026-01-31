@@ -29,7 +29,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
   useEffect(() => {
     const saveProfile = async () => {
       if (!user) return;
-      if (name === "" && file === null) return;
+      const isDirty = name !== (user?.name || "") || file !== null;
+      if (!isDirty) return;
 
       if (me) {
         await updatePersonalia({ name }, file);
@@ -39,7 +40,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, me, editMode, onSave })
     };
 
     onSave(saveProfile);
-  }, [name, file, user, updatePersonalia, onSave]);
+  }, [name, me, file, user, updatePersonalia, updateHomeMember, onSave]);
 
   useEffect(() => {
     if (!editMode) {

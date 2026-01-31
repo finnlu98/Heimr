@@ -22,9 +22,17 @@
 
 .profile-overview-container {
   padding-top: 20px;
+  padding-inline: 20px;
 }
 
 .profile-overview {
   gap: 50px;
   align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .profile-overview {
+    flex-direction: column;
+    align-items: center;
+  }
 }

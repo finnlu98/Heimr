@@ -23,6 +23,14 @@ export default class AuthorizationService {
       create: { email, status: "invited", created_at: new Date() },
     });
 
+    if (!user.home_id) {
+      const home = await prisma.home.create({ data: {} });
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { home_id: home.id },
+      });
+    }
+
     const token = generateToken();
     const tokenHash = hashToken(token);
 
@@ -37,7 +45,7 @@ export default class AuthorizationService {
       },
     });
 
-    return `${process.env.FRONTEND_ORIGIN}/auth/magic?token=${encodeURIComponent(token)}`;
+    return `${process.env.FRONTEND_ORIGIN}?token=${encodeURIComponent(token)}`;
   }
 
   async consumeMagicToken(token: string): Promise<{

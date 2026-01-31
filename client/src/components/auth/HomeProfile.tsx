@@ -26,7 +26,7 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
     };
 
     onSave(saveProfile);
-  }, [homeName, location, imgFile, updateHome, onSave]);
+  }, [home, homeName, location, imgFile, updateHome, onSave]);
 
   useEffect(() => {
     if (!editMode) {
@@ -69,7 +69,7 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
           </div>
           <div className="h-row">
             <p>📍</p>
-            <AdressSearch onAddressSelect={onAddressSelect} adress={homeName} />
+            <AdressSearch onAddressSelect={onAddressSelect} adress={homeName} readonly={!editMode} />
           </div>
           <div className="h-row">
             <p>🖼️</p>

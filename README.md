@@ -17,16 +17,16 @@ Feel free to contribute.
 
 ## MVP launch
 
-- implement dev mode for delay on axois
-
 ## Improvements
 
+- review logs from react warnings in terminal and fix them
 - cancel edit changes
 - update data should be displayed as small spinner in right corner
 - Needs confirmation config is OK
 - config file fully configurable
-- delay to fetchers only in dev mode (BE and FE)
+- home local storage
 - gh workflow should build and deploy seperatably
+- horizontal scroll
 
 ## Refactors
 

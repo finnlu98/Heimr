@@ -5,11 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { GridMetaData } from "./grid/model/grid-models";
 import { WidgetConfigs } from "../widgets/model/wigets";
 import apiClient from "../../api/ApiClient";
-import { HomeConfig } from "../../model/HomeConfigState";
+import { HomeConfig, HomeConfigUtils } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
 import { ConfigMigration } from "../../lib/version";
 import GridService from "./grid/service/grid-service";
 import { EditingKey, EditModeState } from "./model/EditMode";
+import LoadServerConfig from "./loadServerConfig/load-server-config";
+import { isDefaultView } from "./util/isDefaultView";
 
 type DashboardActions = {
   setWidgets: (widgets: GridItem[]) => void;
@@ -47,6 +49,8 @@ const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   const { user } = useAuth();
+  const [serverConfig, setServerConfig] = useState<HomeConfig | null>(null);
+
   const [state, setState] = useState<DashboardState>(() => {
     try {
       const cachedLayout = localStorage.getItem("heimr-grid-layout");
@@ -75,22 +79,35 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     if (!user) return;
 
     const loadFromBackend = async () => {
-      const hasLayout = state.widgets && state.widgets.length > 0;
+      const hasLayout = isDefaultView(state.widgets);
       const hasConfig = state.widgetConfigs && Object.keys(state.widgetConfigs).length > 0;
-
-      if (hasLayout && hasConfig) {
-        return;
-      }
 
       try {
         const response = await apiClient.get<HomeConfig>("me/home/config");
         const serverConfig = response.data;
 
-        setState((prev) => ({
-          ...prev,
-          widgets: ConfigMigration.migrateLayout(serverConfig?.widgetPositions ?? prev.widgets),
-          widgetConfigs: ConfigMigration.migrateConfig(serverConfig?.widgetConfig ?? prev.widgetConfigs),
-        }));
+        if (!hasLayout && !hasConfig) {
+          setState((prev) => ({
+            ...prev,
+            widgets: ConfigMigration.migrateLayout(serverConfig?.widgetPositions ?? prev.widgets),
+            widgetConfigs: ConfigMigration.migrateConfig(serverConfig?.widgetConfig ?? prev.widgetConfigs),
+          }));
+          return;
+        }
+
+        const localConfig: HomeConfig = {
+          widgetPositions: state.widgets,
+          widgetConfig: state.widgetConfigs,
+        };
+
+        const serverConfigObj: HomeConfig = {
+          widgetPositions: ConfigMigration.migrateLayout(serverConfig?.widgetPositions) || [],
+          widgetConfig: ConfigMigration.migrateConfig(serverConfig?.widgetConfig) || {},
+        };
+
+        if (!HomeConfigUtils.equals(localConfig, serverConfigObj)) {
+          setServerConfig(serverConfig);
+        }
       } catch (error) {
         console.warn("Failed to fetch from backend:", error);
       }
@@ -98,6 +115,16 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
     loadFromBackend();
   }, [user]);
+
+  function handleLoadServerConfig() {
+    if (serverConfig) {
+      setState((prev) => ({
+        ...prev,
+        widgets: ConfigMigration.migrateLayout(serverConfig.widgetPositions),
+        widgetConfigs: ConfigMigration.migrateConfig(serverConfig.widgetConfig),
+      }));
+    }
+  }
 
   function updateConfig() {
     apiClient
@@ -246,6 +273,11 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         onGridResize,
       }}
     >
+      <LoadServerConfig
+        isOpen={!!serverConfig}
+        onClose={() => setServerConfig(null)}
+        onConfirm={handleLoadServerConfig}
+      />
       {children}
     </DashboardContext.Provider>
   );

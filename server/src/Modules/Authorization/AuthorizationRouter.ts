@@ -154,7 +154,7 @@ export default class AuthorizationRouter extends BaseRouter {
       if (!result) {
         return res.status(400).json({ error: "Failed to add member" });
       }
-      return res.status(200).json({ result });
+      return res.status(200).json({ user: result });
     });
 
     this.route.put(`${this.subRoute}/me/home/member`, upload.single("avatar"), async (req, res) => {
@@ -169,7 +169,7 @@ export default class AuthorizationRouter extends BaseRouter {
       if (!result) {
         return res.status(400).json({ error: "Failed to update member" });
       }
-      return res.status(200).json(result);
+      return res.status(200).json({ user: result });
     });
 
     this.route.delete(`${this.subRoute}/me/home/members`, async (req, res) => {

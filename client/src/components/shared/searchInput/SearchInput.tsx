@@ -10,6 +10,8 @@ interface SearchInputProps<T> {
   error?: string | null;
   isLoading?: boolean;
   results: T[];
+  disabled?: boolean;
+  readonly?: boolean;
 }
 
 function SearchInput<T>({
@@ -22,6 +24,8 @@ function SearchInput<T>({
   error,
   isLoading,
   results,
+  disabled,
+  readonly,
 }: SearchInputProps<T>) {
   return (
     <div className="search-input-container">
@@ -32,6 +36,8 @@ function SearchInput<T>({
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder={placeholder || "Search..."}
+          disabled={disabled}
+          readOnly={readonly}
         />
         {isLoading && <div className="small-loading-spinner" />}
       </div>
