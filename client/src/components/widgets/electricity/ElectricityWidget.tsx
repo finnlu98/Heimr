@@ -20,7 +20,7 @@ export const ElectricityWidget: WidgetDefinition<ElectricityConfig> = {
       />
     ),
   },
-  defaultColSpan: 10,
+  defaultColSpan: 12,
   defaultRowSpan: 6,
 };
 

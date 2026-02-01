@@ -21,8 +21,8 @@ export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
       />
     ),
   },
-  defaultColSpan: 6,
-  defaultRowSpan: 6,
+  defaultColSpan: 12,
+  defaultRowSpan: 8,
 };
 
 export interface TravelCardConfig {

@@ -28,7 +28,7 @@ const TravelCardConfiguration: React.FC = () => {
     configCard: defaultConfig,
     configColor: defaultColors,
   });
-  const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(TripIdentifier.title);
+  const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(config.tripIdentifier);
   const startStopRef = useRef<SearchStopHandle>(null);
   const endStopRef = useRef<SearchStopHandle>(null);
 
