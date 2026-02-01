@@ -25,33 +25,33 @@ const Sidebar: React.FC = () => {
       <div className={`sidebar ${editMode.editMode ? "edit-mode" : ""} ${collapsed ? "collapsed" : ""}`}>
         {editMode.editMode && !collapsed && (
           <>
-            <div className="widget-menu-row">
+            <div className="widget-menu-row surface animate-appear-left">
               <Profile />
             </div>
-            <div className="sidebar-title">
+            <div className="sidebar-title animate-appear-left">
               <div>
                 <IoMdArrowDropright /> Home
               </div>
             </div>
-            <div className="widget-menu-row">
+            <div className="widget-menu-row surface animate-appear-left">
               <div className="item friendly-display-item">Home settings</div>
               <div className="item widget-action-buttons">
                 <CiEdit className="icon" onClick={() => setEditingKey(EditingKey.profile)} />
               </div>
             </div>
-            <div className="sidebar-title">
+            <div className="sidebar-title animate-appear-left">
               <div>
                 <IoMdArrowDropright /> Templates
               </div>
             </div>
 
-            <div className="widget-menu-row">
+            <div className="widget-menu-row surface animate-appear-left">
               <div className="item friendly-display-item">Layout templates</div>
               <div className="item widget-action-buttons">
                 <IoAddCircle className="icon" onClick={() => setEditingKey(EditingKey.layoutTemplate)} />
               </div>
             </div>
-            <div className="sidebar-title">
+            <div className="sidebar-title animate-appear-left">
               <div>
                 <IoMdArrowDropright /> Widget menu
               </div>
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
           editMode.editMode &&
           !collapsed &&
           Object.entries(Widgets).map(([key, entries]) => (
-            <div key={key} className="widget-menu-row">
+            <div key={key} className="widget-menu-row surface animate-appear-left">
               <div className="item friendly-display">
                 <div className="friendly-display-item">{entries.widgetIcon} </div>
                 <div className="friendly-display-item">{entries.friendlyName} </div>
@@ -77,9 +77,9 @@ const Sidebar: React.FC = () => {
               </div>
             </div>
           ))}
-        <div className="sidebar-footer" onClick={() => setCollapsed(!collapsed)}>
-          <button className="button-text-only font-large">
-            {collapsed ? <FaAngleDoubleRight fill="white" /> : <FaAngleDoubleLeft fill="white" />}
+        <div className="sidebar-footer widget-menu-row surface " onClick={() => setCollapsed(!collapsed)}>
+          <button className="button-text-only font-large animate-appear-left">
+            {collapsed ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}
           </button>
         </div>
       </div>
