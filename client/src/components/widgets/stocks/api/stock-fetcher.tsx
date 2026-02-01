@@ -1,4 +1,3 @@
-import axios from "axios";
 import { StockResponse } from "../model/StockResponse";
 import apiClient from "../../../../api/ApiClient";
 

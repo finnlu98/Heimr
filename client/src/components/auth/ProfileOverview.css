@@ -1,27 +1,21 @@
 .login-container {
   align-items: center;
-  height: 85%;
+  min-height: 85%;
   position: relative;
+  padding: 20px;
 }
 
 .logged-out {
   justify-content: center;
 }
 
-.action-buttons-right {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-
-.action-buttons-left {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+.action-buttons {
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
 }
 
 .profile-overview-container {
-  padding-top: 20px;
   padding-inline: 20px;
 }
 

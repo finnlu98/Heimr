@@ -5,6 +5,8 @@ import { useDashboard } from "../../dashboard-context";
 import { MdDelete } from "react-icons/md";
 import GridService from "../service/grid-service";
 import { Widgets } from "../../../widgets/model/wigets";
+import { IoIosResize } from "react-icons/io";
+
 interface WidgetContainerProps {
   gridItem: GridItem;
   gridData: GridMetaData;
@@ -81,7 +83,9 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
       )}
 
       {editMode.editMode && (
-        <div ref={setResizeRef} {...resizeListeners} {...resizeAttributes} style={resizeHandleStyle} />
+        <div ref={setResizeRef} {...resizeListeners} {...resizeAttributes} style={resizeHandleStyle}>
+          <IoIosResize />
+        </div>
       )}
       <div className="widget-content">{Widgets[gridItem.widget].widgetComponent}</div>
     </div>
