@@ -2,11 +2,20 @@
   width: 100%;
   height: 100%;
   position: relative;
-  background-size: cover;
-  background-position: center;
   color: var(--color-off-white);
   border-radius: 8px;
   box-shadow: 1px 2.5px 5px black;
+  overflow: hidden;
+}
+
+.header-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 .header-container::after {

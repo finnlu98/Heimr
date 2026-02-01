@@ -1,4 +1,3 @@
-import axios from "axios";
 import configuration from "../../../../Configuration";
 import { NewsResponse } from "../model/NewsResponse";
 import FetcherHelper from "../../../../api/FetcherHelper";

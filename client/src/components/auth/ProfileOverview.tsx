@@ -54,7 +54,7 @@ const ProfileOverview: React.FC = () => {
 
   return (
     <>
-      <div className={`login-container h-column surface ${user ? "" : "logged-out"}`}>
+      <div className={`login-container h-column gap-large surface ${user ? "" : "logged-out"}`}>
         {!user ? (
           <Login email={email} setEmail={setEmail} handleSubmit={handleSubmit} />
         ) : (
@@ -78,31 +78,31 @@ const ProfileOverview: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-      {user && (
-        <div>
-          <div className="h-row action-buttons-right">
-            {editMode ? (
-              <>
-                <LoadingButton onClick={saveAllProfiles} isLoading={isSaving}>
-                  Save <IoMdSend />
-                </LoadingButton>
+        {user && (
+          <div className="h-row action-buttons">
+            <div>
+              <LoadingButton onClick={() => logout()} loadingKey="logout">
+                Sign out <FaSignOutAlt />
+              </LoadingButton>
+            </div>
+            <div className="h-row">
+              {editMode ? (
+                <>
+                  <LoadingButton onClick={saveAllProfiles} isLoading={isSaving}>
+                    Save <IoMdSend />
+                  </LoadingButton>
 
-                <button onClick={cancelEdit}>Cancel</button>
-              </>
-            ) : (
-              <button onClick={() => setEditMode(true)}>
-                Edit <CiEdit />
-              </button>
-            )}
+                  <button onClick={cancelEdit}>Cancel</button>
+                </>
+              ) : (
+                <button onClick={() => setEditMode(true)}>
+                  Edit <CiEdit />
+                </button>
+              )}
+            </div>
           </div>
-          <div className="action-buttons-left">
-            <LoadingButton onClick={() => logout()} loadingKey="logout">
-              Sign out <FaSignOutAlt />
-            </LoadingButton>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };

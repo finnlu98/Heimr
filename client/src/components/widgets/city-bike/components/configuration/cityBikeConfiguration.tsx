@@ -97,7 +97,7 @@ const CityBikeConfiguration: React.FC = () => {
     <div className="city-bike-configuration h-column">
       <div className="h-column">
         <label htmlFor="homeId">Home address:</label>
-        <AdressSearch adress={home?.name ?? ""} onAddressSelect={onAddressSelect} />
+        <AdressSearch onAddressSelect={onAddressSelect} />
       </div>
       <div className="map">
         <MapContainer

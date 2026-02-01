@@ -214,6 +214,9 @@ label {
 }
 
 button {
+  color: black;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
   appearance: none;
   border: 1px solid #ddd;
   border-radius: 8px;

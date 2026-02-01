@@ -40,7 +40,7 @@ const News: React.FC = () => {
         <div className="widget-title">
           <div>Current news 📰</div>
         </div>
-        <div className="news-items-wrapper h-column">
+        <div className="h-column">
           {news &&
             news.rss.channel.item.map((newsItem) => {
               return (

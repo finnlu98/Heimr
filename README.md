@@ -11,59 +11,56 @@ Feel free to contribute.
 ## Bugs
 
 - widgets sometime renders with to wide width
-- electricity service trowing when getting to new month
-- disable map when moving it around
-- buttons in home profile goes over the surface
+- electricity service throwing error when getting to new month
+- disable city bike map when moving it around
+- negative minutes for bustimes
 
 ## MVP launch
 
-- Tomorrow move pi to kimK dev
-- Setup tailscale
-- provide proper environment config
 - TEST!
 
 ## Hard launch
 
-- img identifier for image should be posted to server and img path in config (this ok for soft launch)
+- img identifier for image should be posted to server and img path in config (this is ok for mvp launch)
 - accreditate all integrations
-- review if you have rights to use image
+- review if you have rights to use all images in solution
 - write about privacy etc.
 - Go through security requirements for server
 - update data should be displayed as small spinner in right corner
 
 ## Improvements
 
+- Make dashboard smaller when opening edit mode
+- collapse sidebar media query - on tap expand - sidebar icons show when collapsed
+- when picking adress for the first time zoom to selection city bike
+- customizable header - add mini widgets (needs standard class to pick widget to add)
 - Components render more smoothly when enter editing
 - review logs from react warnings in terminal and fix them
-- cancel edit changes
-- Needs confirmation config is OK
-- config file fully configurable
-- home local storage
+- make it possible to cancel edit changes
+- User needs confirmation widget settings is OK
+- add possiblity to add home local storage
 - gh workflow should build and deploy seperatably
 - horizontal scroll
-- sidebar icons show when collapsed
 
 ## Refactors
 
 - Electricity c service computes same computation multiple times unecessary
 - rename everything so it has the same naming convention
-
-Data fetching:
-Refactor widget data fetching architecture
-
-- missing for news, travel card (more?)
+- Refactor widget data fetching for common architecture and classes
+- missing standard fetching for news and travel card (more?)
 
 ## Later
 
 ### Widgets
 
+- rate your stay
 - App position data for home state, not HAS
 - Home assistant iframe widget
 - Expenses
 - Shopping list with geo tracking
 - Electricity advice
 
-### Integration
+### New Integrations
 
 - Forbrukerrådet
 - Norges bank

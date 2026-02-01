@@ -1,4 +1,3 @@
-import axios from "axios";
 import configuration from "../../../../Configuration";
 import { WeatherResponse } from "../model/response/WeatherResponse";
 import { WeatherForecast } from "../model/data/WeatherForecast";
