@@ -40,6 +40,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
     background: "rgba(0,0,0,0.3)",
     borderTopLeftRadius: 8,
     zIndex: 10,
+    transition: "opacity 0.3s ease",
   };
 
   const topRightHandleStyle: React.CSSProperties = {
@@ -55,6 +56,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
+    transition: "opacity 0.3s ease",
   };
 
   return (

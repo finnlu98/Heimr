@@ -13,7 +13,7 @@ const TravelCard: React.FC = () => {
     <LoadingHelperWidget
       widgetKey={WidgetEnum.busCards}
       loadingKeys={["fetch-bus-card"]}
-      showConfig={() => !travelConfig}
+      showConfig={() => !travelConfig || travelConfig?.travelRoutes.length === 0}
     >
       <div className="travel-container">
         <div className="widget-title">
@@ -23,6 +23,8 @@ const TravelCard: React.FC = () => {
           {travelConfig?.travelRoutes.map((busStop) => (
             <BusCards
               key={busStop.stopPlace.properties.id}
+              tripIdentifier={travelConfig.tripIdentifier}
+              tripTitle={busStop.startPlace.properties.name}
               imgPath={busStop.imgIdentifier}
               startPlace={busStop.startPlace}
               stopPlace={busStop.stopPlace}

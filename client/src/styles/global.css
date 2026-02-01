@@ -175,6 +175,38 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
+input[type="radio"] {
+  appearance: none;
+  width: 5px;
+  height: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+input[type="radio"]:hover {
+  border-color: #4a90e2;
+}
+
+input[type="radio"]:checked {
+  background-color: #4a90e2;
+  border-color: #4a90e2;
+}
+
+input[type="radio"]:checked::after {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 label {
   font-size: 14px;
   font-weight: 500;
@@ -204,6 +236,21 @@ button {
   from {
     opacity: 0;
     transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-appear-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;

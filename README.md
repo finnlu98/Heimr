@@ -13,24 +13,29 @@ Feel free to contribute.
 - widgets sometime renders with to wide width
 - electricity service trowing when getting to new month
 - disable map when moving it around
+- buttons in home profile goes over the surface
 
 ## MVP launch
 
-- add info tab for configuration
-- change bus to have a title identifier
+- Tomorrow move pi to kimK dev
+- Setup tailscale
+- provide proper environment config
+- TEST!
 
 ## Hard launch
 
+- img identifier for image should be posted to server and img path in config (this ok for soft launch)
 - accreditate all integrations
 - review if you have rights to use image
 - write about privacy etc.
+- Go through security requirements for server
+- update data should be displayed as small spinner in right corner
 
 ## Improvements
 
 - Components render more smoothly when enter editing
 - review logs from react warnings in terminal and fix them
 - cancel edit changes
-- update data should be displayed as small spinner in right corner
 - Needs confirmation config is OK
 - config file fully configurable
 - home local storage
@@ -57,3 +62,11 @@ Refactor widget data fetching architecture
 - Expenses
 - Shopping list with geo tracking
 - Electricity advice
+
+### Integration
+
+- Forbrukerrådet
+- Norges bank
+- Yr badetemperatur
+- Politet
+- Bring
