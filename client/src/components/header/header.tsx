@@ -4,7 +4,7 @@ import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import ImageCircle from "../shared/imageCirlce/ImageCircle";
 
-const defaultBanner = "./img/header/oslogate.jpg";
+const defaultBanner = "./img/header/OsloGate.jpg";
 
 const Header: React.FC = () => {
   const [minutes, setMinutes] = useState(moment().format("HH:mm:ss"));
