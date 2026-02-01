@@ -6,8 +6,6 @@
   height: 100vh;
   z-index: 1000;
   overflow: auto;
-  transition: width 0.25s ease;
-  background: var(--color-off-white);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -29,12 +27,10 @@
 
 .sidebar.edit-mode {
   width: 260px;
-  border-right: 2px solid rgba(136, 118, 118, 0.611);
   display: flex;
   flex-direction: column;
   padding: 10px;
   box-sizing: border-box;
-  transition: width 0.25s ease;
   height: 100%;
   gap: 10px;
 }
@@ -51,12 +47,11 @@
   padding: 10px;
   font-weight: bold;
   color: black;
-  border-bottom: 2px solid black;
 }
 
 .widget-menu-row {
   display: flex;
-  background-color: var(--color-widget-background);
+  /* background-color: var(--color-widget-background); */
   border-radius: 10px;
   border: 1px solid rgba(136, 118, 118, 0.611);
   align-items: center;
@@ -100,6 +95,6 @@
   margin-top: auto;
   border-radius: 10px;
   padding: 10px;
-  background-color: var(--color-widget-background);
   cursor: pointer;
+  position: relative;
 }

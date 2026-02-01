@@ -17,8 +17,6 @@ Feel free to contribute.
 
 ## MVP launch
 
-- img identifier for image should be posted to server and img path in config¨
-
 - Tomorrow move pi to kimK dev
 - Setup tailscale
 - provide proper environment config
@@ -26,17 +24,18 @@ Feel free to contribute.
 
 ## Hard launch
 
+- img identifier for image should be posted to server and img path in config (this ok for soft launch)
 - accreditate all integrations
 - review if you have rights to use image
 - write about privacy etc.
 - Go through security requirements for server
+- update data should be displayed as small spinner in right corner
 
 ## Improvements
 
 - Components render more smoothly when enter editing
 - review logs from react warnings in terminal and fix them
 - cancel edit changes
-- update data should be displayed as small spinner in right corner
 - Needs confirmation config is OK
 - config file fully configurable
 - home local storage

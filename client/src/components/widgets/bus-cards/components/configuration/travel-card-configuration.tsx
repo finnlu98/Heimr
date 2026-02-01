@@ -4,7 +4,7 @@ import { TravelCardConfig, TravelRoute } from "../../TravelCardWidget";
 import { WidgetEnum } from "../../../model/widget-type";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import ImageCircle from "../../../../shared/imageCirlce/ImageCircle";
 import UploadImageCircle from "../../../../shared/imageCirlce/UploadImageCircle";
 import SearchStop, { SearchStopHandle } from "./SearchStop";
@@ -70,6 +70,23 @@ const TravelCardConfiguration: React.FC = () => {
     });
   }
 
+  function onUpdateImage(dataUrl: string | null, startPlace: TravelStop, stopPlace: TravelStop) {
+    if (!dataUrl) return;
+    console.log("updating image for route:", dataUrl);
+    setWidgetConfig(WidgetEnum.busCards, {
+      ...config,
+      travelRoutes: config.travelRoutes.map((route) => {
+        if (route.startPlace === startPlace && route.stopPlace === stopPlace) {
+          return {
+            ...route,
+            imgIdentifier: dataUrl,
+          };
+        }
+        return route;
+      }),
+    });
+  }
+
   function onSetTravelIdentifier(identifier: TripIdentifier) {
     setTravelIdentifier(identifier);
     setWidgetConfig(WidgetEnum.busCards, {
@@ -107,9 +124,14 @@ const TravelCardConfiguration: React.FC = () => {
         {config &&
           config.travelRoutes.map((route) => {
             return (
-              <>
+              <Fragment key={`${route.startPlace.properties.id}-${route.stopPlace.properties.id}`}>
                 <div>
-                  <ImageCircle imgPath={route.imgIdentifier} alt="prev-img" />{" "}
+                  {travelIdentifier === TripIdentifier.img && (
+                    <UploadImageCircle
+                      onImageChange={(dataUrl) => onUpdateImage(dataUrl, route.startPlace, route.stopPlace)}
+                      imgPath={route.imgIdentifier}
+                    />
+                  )}
                 </div>
                 <div>{route.startPlace.properties.name}</div>
                 <p>
@@ -122,10 +144,14 @@ const TravelCardConfiguration: React.FC = () => {
                 >
                   <MdDelete size={20} />
                 </div>
-              </>
+              </Fragment>
             );
           })}
-        <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
+        <div>
+          {travelIdentifier === TripIdentifier.img && (
+            <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
+          )}
+        </div>
         <SearchStop
           onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, startPlace: stop }))}
           placeholder="Start stop"

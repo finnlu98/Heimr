@@ -103,6 +103,7 @@ export const Grid: React.FC = () => {
           "linear-gradient(to bottom, #eee 1px, transparent 1px)"
         : undefined,
     backgroundColor: editMode.editMode ? "#d3d3d33f" : undefined,
+    transition: "background-color 0.3s ease, border 0.3s ease",
   };
 
   return (
