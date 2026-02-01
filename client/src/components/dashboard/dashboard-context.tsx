@@ -1,9 +1,9 @@
 import { useState, useEffect, createContext, useContext, useCallback } from "react";
 import { GridItem } from "./grid/model/grid-models";
-import { WidgetEnum } from "../widgets/model/widget-type";
+import { WidgetDefinition, WidgetEnum } from "../widgets/model/widget-type";
 import { v4 as uuidv4 } from "uuid";
 import { GridMetaData } from "./grid/model/grid-models";
-import { WidgetConfigs } from "../widgets/model/wigets";
+import { WidgetConfigs, Widgets } from "../widgets/model/wigets";
 import apiClient from "../../api/ApiClient";
 import { HomeConfig, HomeConfigUtils } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
@@ -174,12 +174,13 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   };
 
   const addWidget = (item: WidgetEnum) => {
+    console.log(state.widgetConfigs[item]);
     const newItem: GridItem = {
       id: uuidv4(),
       col: 0,
-      row: 0,
-      colSpan: 6,
-      rowSpan: 4,
+      row: 3,
+      colSpan: (Widgets[item] as WidgetDefinition<any>)?.defaultColSpan ?? 12,
+      rowSpan: (Widgets[item] as WidgetDefinition<any>)?.defaultRowSpan ?? 6,
       widget: item,
     };
 

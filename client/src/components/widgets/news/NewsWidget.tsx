@@ -18,8 +18,8 @@ export const NewsWidget: WidgetDefinition<NewsConfig> = {
       />
     ),
   },
-  defaultColSpan: 10,
-  defaultRowSpan: 4,
+  defaultColSpan: 12,
+  defaultRowSpan: 8,
 };
 
 export interface NewsConfig {}

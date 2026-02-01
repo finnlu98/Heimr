@@ -20,8 +20,8 @@ export const CityBikeWidget: WidgetDefinition<CityBikeConfig> = {
       />
     ),
   },
-  defaultColSpan: 4,
-  defaultRowSpan: 4,
+  defaultColSpan: 8,
+  defaultRowSpan: 8,
 };
 
 export interface CityBikeConfig {
