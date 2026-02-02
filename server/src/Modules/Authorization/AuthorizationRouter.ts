@@ -52,8 +52,15 @@ export default class AuthorizationRouter extends BaseRouter {
         return res.status(401).json({ error: "Invalid email" });
       }
 
-      if (user.status !== "active") {
+      if (user.status === "disabled") {
         return res.status(403).json({ error: "User disabled" });
+      }
+
+      if (user.status === "invited") {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { status: "active" },
+        });
       }
 
       (req.session as any).userId = user.id;

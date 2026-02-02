@@ -1,6 +1,7 @@
 import { Coordinates, Transform } from "@dnd-kit/utilities";
 import { GridItem, GridMetaData, PreviewState, Rect } from "../model/grid-models";
 import { MoveType } from "../model/move-type";
+import { ResizeDirection } from "../model/resize-direction";
 
 export default class GridService {
   static compactLayout(widgets: GridItem[], gridData: GridMetaData): GridItem[] {
@@ -45,14 +46,7 @@ export default class GridService {
     };
   }
 
-  static computeMove(
-    id: string,
-    boxes: GridItem[],
-    moveBox: GridItem,
-    gridData: GridMetaData,
-    delta: Coordinates,
-    addGap: boolean,
-  ): GridItem {
+  static computeMove(moveBox: GridItem, gridData: GridMetaData, delta: Coordinates): GridItem {
     const dxCells = Math.round(delta.x / gridData.colWidth);
     const dyCells = Math.round(delta.y / gridData.colHeight);
 
@@ -93,27 +87,61 @@ export default class GridService {
     return !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
   }
 
-  static computeResize(moveBox: GridItem, gridData: GridMetaData, delta: Coordinates): GridItem {
+  static computeResize(
+    moveBox: GridItem,
+    gridData: GridMetaData,
+    delta: Coordinates,
+    direction: ResizeDirection = ResizeDirection.BottomRight,
+  ): GridItem {
     const deltaCols = Math.round(delta.x / gridData.colWidth);
     const deltaRows = Math.round(delta.y / gridData.colHeight);
-    const newCols = Math.max(1, moveBox.colSpan + deltaCols);
-    const newRows = Math.max(1, moveBox.rowSpan + deltaRows);
-    return { ...moveBox, colSpan: newCols, rowSpan: newRows };
+
+    let newCol = moveBox.col;
+    let newRow = moveBox.row;
+    let newColSpan = moveBox.colSpan;
+    let newRowSpan = moveBox.rowSpan;
+
+    if (direction.includes(ResizeDirection.Right)) {
+      newColSpan = Math.max(1, moveBox.colSpan + deltaCols);
+    } else if (direction.includes(ResizeDirection.Left)) {
+      const newSpan = Math.max(1, moveBox.colSpan - deltaCols);
+      const spanDiff = moveBox.colSpan - newSpan;
+      newCol = Math.max(0, moveBox.col + spanDiff);
+      newColSpan = newSpan;
+    }
+
+    if (direction.includes(ResizeDirection.Bottom)) {
+      newRowSpan = Math.max(1, moveBox.rowSpan + deltaRows);
+    } else if (direction.includes(ResizeDirection.Top)) {
+      const newSpan = Math.max(1, moveBox.rowSpan - deltaRows);
+      const spanDiff = moveBox.rowSpan - newSpan;
+      newRow = Math.max(0, moveBox.row + spanDiff);
+      newRowSpan = newSpan;
+    }
+
+    const maxCol = gridData.columns - newColSpan;
+    newCol = Math.max(0, Math.min(maxCol, newCol));
+
+    const maxRow = gridData.height / gridData.colHeight - newRowSpan;
+    newRow = Math.max(0, Math.min(maxRow, newRow));
+
+    return { ...moveBox, col: newCol, row: newRow, colSpan: newColSpan, rowSpan: newRowSpan };
   }
 
   static computeShadow(
     id: string,
-    boxes: GridItem[],
     moveBox: GridItem,
     gridData: GridMetaData,
     delta: Coordinates,
     moveType: MoveType,
+    direction?: ResizeDirection,
   ): PreviewState | undefined {
     var shadowBox: GridItem | null = null;
 
-    if (moveType === MoveType.move) shadowBox = this.computeMove(id, boxes, moveBox, gridData, delta, false);
+    if (moveType === MoveType.move) shadowBox = this.computeMove(moveBox, gridData, delta);
 
-    if (moveType === MoveType.resize) shadowBox = this.computeResize(moveBox, gridData, delta);
+    if (moveType === MoveType.resize)
+      shadowBox = this.computeResize(moveBox, gridData, delta, direction || ResizeDirection.BottomRight);
 
     if (shadowBox) {
       return { id: id, col: shadowBox.col, row: shadowBox.row, colSpan: shadowBox.colSpan, rowSpan: shadowBox.rowSpan };

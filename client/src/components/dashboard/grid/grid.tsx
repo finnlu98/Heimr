@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import { DndContext, DragEndEvent, DragMoveEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragMoveEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { PreviewState } from "./model/grid-models";
 import WidgetContainer from "./widget/widget-container";
 import GridService from "./service/grid-service";
 import { MoveType } from "./model/move-type";
+import { ResizeDirection } from "./model/resize-direction";
 import { useDashboard } from "../dashboard-context";
 import DefaultDashboardActions from "../default/DefaultDashboardActions";
 import "./grid.css";
@@ -50,8 +51,8 @@ export const Grid: React.FC = () => {
     const { active, delta } = event;
     const id = active.id as string;
 
-    const isResize = id.endsWith("-resize");
-    const baseId = isResize ? id.replace(/-resize$/, "") : id;
+    const isResize = id.includes(MoveType.resize);
+    const baseId = isResize ? getBaseId(id) : id;
 
     const current = widgets.find((b) => b.id === baseId);
     if (!current || !gridMetaData) {
@@ -60,8 +61,9 @@ export const Grid: React.FC = () => {
     }
 
     const moveType = isResize ? MoveType.resize : MoveType.move;
+    const direction = getDirectionFromId(id);
 
-    const shadowBox = GridService.computeShadow(id, widgets, current, gridMetaData, delta, moveType);
+    const shadowBox = GridService.computeShadow(id, current, gridMetaData, delta, moveType, direction);
     if (shadowBox) setPreview(shadowBox);
   };
 
@@ -73,23 +75,40 @@ export const Grid: React.FC = () => {
     const { active, delta } = event;
     const id = active.id;
 
-    const isResize = id.toString().endsWith("-resize");
-    const baseId = isResize ? id.toString().replace(/-resize$/, "") : id;
+    const isResize = id.toString().includes(MoveType.resize);
+    const baseId = isResize ? getBaseId(id) : id;
 
     const box = widgets.find((b) => b.id === baseId);
 
     if (box && gridMetaData) {
-      if (id.toString().includes("resize")) {
-        var updateItemResize = GridService.computeResize(box, gridMetaData, delta);
+      if (id.toString().includes(MoveType.resize)) {
+        const direction = getDirectionFromId(id.toString());
+        var updateItemResize = GridService.computeResize(box, gridMetaData, delta, direction);
         setPreview(null);
         updateWidget(updateItemResize);
       } else {
-        var updateItemMove = GridService.computeMove(id.toString(), widgets, box, gridMetaData, delta, true);
+        var updateItemMove = GridService.computeMove(box, gridMetaData, delta);
         setPreview(null);
         updateWidget(updateItemMove);
       }
     }
   };
+
+  function getDirectionFromId(id: string): ResizeDirection {
+    if (id.includes(ResizeDirection.TopLeft)) return ResizeDirection.TopLeft;
+    if (id.includes(ResizeDirection.TopRight)) return ResizeDirection.TopRight;
+    if (id.includes(ResizeDirection.BottomLeft)) return ResizeDirection.BottomLeft;
+    if (id.includes(ResizeDirection.BottomRight)) return ResizeDirection.BottomRight;
+    if (id.includes(ResizeDirection.Top)) return ResizeDirection.Top;
+    if (id.includes(ResizeDirection.Bottom)) return ResizeDirection.Bottom;
+    if (id.includes(ResizeDirection.Left)) return ResizeDirection.Left;
+    if (id.includes(ResizeDirection.Right)) return ResizeDirection.Right;
+    return ResizeDirection.BottomRight;
+  }
+
+  function getBaseId(id: UniqueIdentifier): string {
+    return id.toString().replace(/-resize.*$/, "");
+  }
 
   const gridStyle: React.CSSProperties = {
     position: "relative",
