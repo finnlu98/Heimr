@@ -6,6 +6,7 @@ import { FaBusAlt, FaTrain } from "react-icons/fa";
 import { Mode } from "../../model/enum/Mode";
 import { MdOutlineTram } from "react-icons/md";
 import { BsTrainFront } from "react-icons/bs";
+import { TbCircleLetterT } from "react-icons/tb";
 
 interface BusCardProps {
   name: string;
@@ -78,13 +79,13 @@ const BusCard: React.FC<BusCardProps> = ({
   function getModeIcon(mode: string) {
     switch (mode.toLocaleUpperCase()) {
       case Mode.bus:
-        return <FaBusAlt />;
+        return <FaBusAlt size={20} />;
       case Mode.tram:
-        return <FaTrain />;
+        return <FaTrain size={20} />;
       case Mode.metro:
-        return <FaTrain />;
+        return <TbCircleLetterT size={20} />;
       default:
-        return <FaBusAlt />;
+        return <FaBusAlt size={20} />;
     }
   }
 
