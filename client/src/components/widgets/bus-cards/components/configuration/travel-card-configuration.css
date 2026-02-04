@@ -1,5 +1,7 @@
 .travel-config-container {
   width: 100%;
+  min-height: 200px;
+  overflow: visible;
 }
 
 .travel-config {
@@ -22,4 +24,8 @@
 
 .travel-input {
   width: 100%;
+}
+
+.search-input {
+  z-index: 100;
 }

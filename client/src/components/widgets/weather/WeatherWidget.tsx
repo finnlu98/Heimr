@@ -20,7 +20,7 @@ export const WeatherWidget: WidgetDefinition<WeatherConfig> = {
       />
     ),
   },
-  defaultColSpan: 10,
+  defaultColSpan: 12,
   defaultRowSpan: 6,
 };
 

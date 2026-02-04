@@ -28,7 +28,7 @@ const TravelCardConfiguration: React.FC = () => {
     configCard: defaultConfig,
     configColor: defaultColors,
   });
-  const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(TripIdentifier.title);
+  const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(config.tripIdentifier);
   const startStopRef = useRef<SearchStopHandle>(null);
   const endStopRef = useRef<SearchStopHandle>(null);
 
@@ -152,20 +152,24 @@ const TravelCardConfiguration: React.FC = () => {
             <UploadImageCircle onImageChange={onImageChange} imgPath={travelRoute.imgIdentifier} />
           )}
         </div>
-        <SearchStop
-          onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, startPlace: stop }))}
-          placeholder="Start stop"
-          ref={startStopRef}
-        />
+        <div className="search-input">
+          <SearchStop
+            onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, startPlace: stop }))}
+            placeholder="Start stop"
+            ref={startStopRef}
+          />
+        </div>
+
         <p>
           <TiArrowRightOutline />
         </p>
-
-        <SearchStop
-          onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, stopPlace: stop }))}
-          placeholder="End stop"
-          ref={endStopRef}
-        />
+        <div className="search-input">
+          <SearchStop
+            onStopSelect={(stop) => setTravelRoute((prev) => ({ ...prev, stopPlace: stop }))}
+            placeholder="End stop"
+            ref={endStopRef}
+          />
+        </div>
         <div className="travel-action-button" onClick={() => addTravelRoute(travelRoute)}>
           <IoAddCircle size={20} />
         </div>

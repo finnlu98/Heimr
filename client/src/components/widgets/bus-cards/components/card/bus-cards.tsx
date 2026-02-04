@@ -82,7 +82,8 @@ const BusCards: React.FC<BusCardsProps> = ({
         ...tripPattern,
         legs: tripPattern.legs.filter(
           (leg) =>
-            Object.values(Mode).includes(leg.mode.toUpperCase() as Mode) &&
+            leg.mode.toUpperCase() !== Mode.foot &&
+            leg.mode.toUpperCase() !== Mode.leg &&
             calculateMinutesUntil(leg.expectedStartTime) >= minFilter,
         ),
       }))
@@ -113,6 +114,7 @@ const BusCards: React.FC<BusCardsProps> = ({
                 key={tripPattern.legs[0].expectedStartTime}
                 name={tripPattern.legs[0].line.name.split(" ")[0]}
                 publicCode={tripPattern.legs[0].line.publicCode}
+                mode={tripPattern.legs[0].mode}
                 startTime={tripPattern.legs[0].expectedStartTime}
                 minutesUntil={calculateMinutesUntil(tripPattern.legs[0].expectedStartTime)}
                 calculateMinutesUntil={calculateMinutesUntil}

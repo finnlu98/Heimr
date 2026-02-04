@@ -2,11 +2,16 @@ import moment from "moment";
 import React, { useState, useEffect, useCallback } from "react";
 import "./bus-card.css";
 import { ConfigColor } from "./ConfigColor";
-import { FaBusAlt } from "react-icons/fa";
+import { FaBusAlt, FaTrain } from "react-icons/fa";
+import { Mode } from "../../model/enum/Mode";
+import { MdOutlineTram } from "react-icons/md";
+import { BsTrainFront } from "react-icons/bs";
+import { TbCircleLetterT } from "react-icons/tb";
 
 interface BusCardProps {
   name: string;
   publicCode: string;
+  mode: string;
   startTime: string;
   minutesUntil: number;
   calculateMinutesUntil: (startTime: string) => number;
@@ -16,6 +21,7 @@ interface BusCardProps {
 const BusCard: React.FC<BusCardProps> = ({
   name,
   publicCode,
+  mode,
   startTime,
   minutesUntil,
   calculateMinutesUntil,
@@ -70,10 +76,23 @@ const BusCard: React.FC<BusCardProps> = ({
     }
   }
 
+  function getModeIcon(mode: string) {
+    switch (mode.toLocaleUpperCase()) {
+      case Mode.bus:
+        return <FaBusAlt size={20} />;
+      case Mode.tram:
+        return <FaTrain size={20} />;
+      case Mode.metro:
+        return <TbCircleLetterT size={20} />;
+      default:
+        return <FaBusAlt size={20} />;
+    }
+  }
+
   return (
     <div className="bus-card h-column">
       <div className="h-row font-small">
-        <FaBusAlt />
+        <div>{getModeIcon(mode)}</div>
         {publicCode}
       </div>
       <div>{formatShowTime(minutes)}</div>

@@ -83,9 +83,9 @@ Currently only supporting data from Norway and some cards are Oslo specific.
 - disable city bike map when moving it around
 - negative minutes for bustimes
 
-## MVP launch
+## MVP launch fix tilbakemeldinger
 
-- TEST!
+- Gi beskjed at konfigurasjon ikke er lagret eller at det ble lagret
 
 ## Hard launch
 
@@ -98,6 +98,7 @@ Currently only supporting data from Norway and some cards are Oslo specific.
 
 ## Improvements
 
+- calculate widget size and pos based on state when adding new widget
 - Make dashboard smaller when opening edit mode
 - collapse sidebar media query - on tap expand - sidebar icons show when collapsed
 - when picking adress for the first time zoom to selection city bike
@@ -135,3 +136,4 @@ Currently only supporting data from Norway and some cards are Oslo specific.
 - Yr badetemperatur
 - Politet
 - Bring
+- Statens vegvesen: trafikkdata
