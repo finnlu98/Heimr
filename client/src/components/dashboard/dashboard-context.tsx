@@ -12,6 +12,8 @@ import GridService from "./grid/service/grid-service";
 import { EditingKey, EditModeState } from "./model/EditMode";
 import LoadServerConfig from "./loadServerConfig/load-server-config";
 import { isDefaultView } from "./util/isDefaultView";
+import { useAlert } from "../../feedback/alert/provider/AltertProvider";
+import { AlertVariant } from "../../feedback/alert/model/AlertTypes";
 
 type DashboardActions = {
   setWidgets: (widgets: GridItem[]) => void;
@@ -49,6 +51,7 @@ const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   const { user } = useAuth();
+  const { showAlert } = useAlert();
   const [serverConfig, setServerConfig] = useState<HomeConfig | null>(null);
 
   const [state, setState] = useState<DashboardState>(() => {
@@ -127,14 +130,16 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   }
 
   function updateConfig() {
-    apiClient
-      .post("/me/home/config", {
+    try {
+      apiClient.post("/me/home/config", {
         widgetPositions: ConfigMigration.wrapLayout(state.widgets),
         widgetConfig: ConfigMigration.wrapConfig(state.widgetConfigs),
-      })
-      .catch((error) => {
-        console.error("Failed to save config to backend:", error);
       });
+      showAlert("Dashboard configuration saved successfully.", AlertVariant.SUCCESS);
+    } catch (error) {
+      console.error("Failed to initiate config save to backend:", error);
+      return;
+    }
   }
 
   useEffect(() => {
@@ -174,7 +179,6 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   };
 
   const addWidget = (item: WidgetEnum) => {
-    console.log(state.widgetConfigs[item]);
     const newItem: GridItem = {
       id: uuidv4(),
       col: 0,
@@ -209,6 +213,14 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
   const toggleEditMode = (editKey?: EditingKey) => {
     const shouldSave = state.isDirty && state.editMode.editMode && user;
+    if (state.isDirty && state.editMode.editMode && !user) {
+      showAlert(
+        "Your changes have not been saved to your profile since you are not logged in. Go to home settings and log in to save your changes.",
+        AlertVariant.INFO,
+        10000,
+      );
+    }
+
     if (shouldSave) {
       updateConfig();
     }

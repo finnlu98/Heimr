@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { IoAddCircleOutline } from "react-icons/io5";
 import "./HomeProfile.css";
-import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 import AdressSearch from "../shared/adressSearch/AdressSearch";
 import { Address } from "../../model/Adress";
+import LoadingButton from "../../feedback/loading/components/Loading/LoadingButton";
 
 interface HomeProfileProps {
   editMode: boolean;

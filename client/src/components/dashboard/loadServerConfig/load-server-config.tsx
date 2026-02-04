@@ -1,3 +1,4 @@
+import { ImInfo } from "react-icons/im";
 import { Modal } from "../../shared/modal/modal";
 
 interface LoadServerConfigProps {
@@ -17,11 +18,14 @@ const LoadServerConfig: React.FC<LoadServerConfigProps> = ({ isOpen = false, onC
   return (
     <Modal open={isOpen} onClose={onClose} size="small">
       <div className="h-column gap-large">
-        <h4>Load Saved Configuration?</h4>
-        <p>You have saved configuration for widget layout and options stored on your profile. Do you want to use it?</p>
+        <h4 className="h-row">
+          <ImInfo /> There exist a design on your profile
+        </h4>
+        <p>You made changes before signing in. Do you want to keep the old design or replace it with the new one?</p>
+
         <div className="h-row">
-          <button onClick={handleConfirm}>Load Saved Layout</button>
-          <button onClick={onClose}>Cancel</button>
+          <button onClick={handleConfirm}>Keep Old Design</button>
+          <button onClick={onClose}>Use new design</button>
         </div>
       </div>
     </Modal>

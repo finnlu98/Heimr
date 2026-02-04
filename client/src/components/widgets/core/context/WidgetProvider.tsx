@@ -1,5 +1,4 @@
 import CalenderProvider from "../../calender/context/CalenderContext";
-import CityBike from "../../city-bike/components/card/city-bike";
 import CityBikeProvider from "../../city-bike/context/CityBikeContext";
 import ElectricityProvider from "../../electricity/context/ElectricityContext";
 import WeatherProvider from "../../weather/context/WeatherContext";

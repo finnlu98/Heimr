@@ -20,6 +20,7 @@ export interface WidgetDefinition<T> {
   defaultWidgetStyling?: boolean;
   defaultColSpan: number;
   defaultRowSpan: number;
+  boolenHiddenSupported?: boolean;
 }
 
 export interface WidgetConfig<T> {

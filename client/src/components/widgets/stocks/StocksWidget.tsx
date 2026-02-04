@@ -13,6 +13,7 @@ export const StocksWidget: WidgetDefinition<StocksConfig> = {
   },
   defaultColSpan: 10,
   defaultRowSpan: 4,
+  boolenHiddenSupported: true,
 };
 
 export interface StocksConfig {

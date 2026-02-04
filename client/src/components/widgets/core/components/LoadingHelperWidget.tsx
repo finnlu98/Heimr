@@ -1,5 +1,5 @@
-import LoadingOverlay from "../../../../feedback/components/Loading/LoadingOverlay";
-import { useLoading } from "../../../../feedback/hooks/useLoading";
+import LoadingOverlay from "../../../../feedback/loading/components/Loading/LoadingOverlay";
+import { useLoading } from "../../../../feedback/loading/hooks/useLoading";
 import { WidgetEnum } from "../../model/widget-type";
 import EditWidget from "./EditWidget";
 
