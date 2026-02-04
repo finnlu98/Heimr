@@ -22,6 +22,10 @@
   padding: 20px;
 }
 
+.widget-preview {
+  max-height: 400px;
+}
+
 @media (max-width: 900px) {
   .edit-widget-container {
     flex-direction: column;

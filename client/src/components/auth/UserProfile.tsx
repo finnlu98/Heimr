@@ -5,7 +5,7 @@ import UploadImageCircle from "../shared/imageCirlce/UploadImageCircle";
 import { useAuth } from "../../context/AuthContext";
 import "./UserProfile.css";
 import { MdDelete } from "react-icons/md";
-import LoadingButton from "../../feedback/components/Loading/LoadingButton";
+import LoadingButton from "../../feedback/loading/components/Loading/LoadingButton";
 
 interface UserProfileProps {
   user: User;

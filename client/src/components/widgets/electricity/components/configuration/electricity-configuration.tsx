@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LoadingButton from "../../../../../feedback/components/Loading/LoadingButton";
 import { useElectricityConsumption } from "../../context/ElectricityContext";
 import { IoMdSend } from "react-icons/io";
+import LoadingButton from "../../../../../feedback/loading/components/Loading/LoadingButton";
 
 const ElectricityConfiguration: React.FC = () => {
   const [elviaKey, setElviaKey] = useState<string>("");

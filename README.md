@@ -85,8 +85,6 @@ Currently only supporting data from Norway and some cards are Oslo specific.
 
 ## MVP launch fix tilbakemeldinger
 
-- Gi beskjed at konfigurasjon ikke er lagret eller at det ble lagret
-
 ## Hard launch
 
 - img identifier for image should be posted to server and img path in config (this is ok for mvp launch)

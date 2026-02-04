@@ -9,6 +9,7 @@ export const HomeActionsWidget: WidgetDefinition<HomeActionsConfig> = {
   widgetComponent: <HomeActionButtons />,
   defaultColSpan: 10,
   defaultRowSpan: 4,
+  boolenHiddenSupported: true,
 };
 
 export interface HomeActionsConfig {}

@@ -1,6 +1,6 @@
 import { IoMdSend } from "react-icons/io";
 import "./Login.css";
-import LoadingButton from "../../feedback/components/Loading/LoadingButton";
+import LoadingButton from "../../feedback/loading/components/Loading/LoadingButton";
 
 interface LoginProps {
   email: string;

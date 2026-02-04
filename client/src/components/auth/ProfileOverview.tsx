@@ -7,8 +7,8 @@ import HomeProfile from "./HomeProfile";
 import UserProfile from "./UserProfile";
 import Login from "./Login";
 import HomeUsers from "./HomeUsers";
-import LoadingButton from "../../feedback/components/Loading/LoadingButton";
 import { FaSignOutAlt } from "react-icons/fa";
+import LoadingButton from "../../feedback/loading/components/Loading/LoadingButton";
 
 const ProfileOverview: React.FC = () => {
   const [email, setEmail] = useState("");
