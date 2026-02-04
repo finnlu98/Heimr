@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Address } from "../../../model/Adress";
 import useAddressSearch from "./AdressHook";
-import "../../../feedback/components/Loading/loading.css";
 import SearchInput from "../searchInput/SearchInput";
 
 interface AdressSearchProps {

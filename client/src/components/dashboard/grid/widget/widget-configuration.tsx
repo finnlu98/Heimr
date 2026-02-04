@@ -1,9 +1,9 @@
 import { Widgets } from "../../../widgets/model/wigets";
 import { WidgetEnum } from "../../../widgets/model/widget-type";
-import "./widget-configuration.css";
 import Tab from "../../../shared/tab/Tab";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiCircleInfo } from "react-icons/ci";
+import "./widget-configuration.css";
 
 interface WidgetConfigurationProps {
   widget: WidgetEnum;
@@ -45,7 +45,9 @@ const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget }) => 
             ]}
           />
         </div>
-        <div className="widget-container edit-widget-content-item">{Widgets[widget].widgetComponent}</div>
+        <div className="widget-container edit-widget-content-item widget-preview">
+          {Widgets[widget].widgetComponent}
+        </div>
       </div>
     </div>
   );

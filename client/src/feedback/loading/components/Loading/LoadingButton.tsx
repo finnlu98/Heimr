@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import { useLoading } from "../../hooks/useLoading";
 import "./loading-button.css";
+import { useLoading } from "../../hooks/useLoading";
 
 interface LoadingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loadingKey?: string;
