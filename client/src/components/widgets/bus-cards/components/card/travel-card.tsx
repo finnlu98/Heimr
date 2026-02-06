@@ -1,34 +1,36 @@
 import BusCards from "./bus-cards";
 import "./travel-card.css";
-import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { TravelCardConfig } from "../../TravelCardWidget";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
+import { BusData } from "../../model/BusData";
+import { useDashboard } from "../../../../dashboard/dashboard-context";
+import { TravelCardConfig } from "../../TravelCardWidget";
+import { TripIdentifier } from "../../model/enum/TripIdentifier";
 
-const TravelCard: React.FC = () => {
+interface TravelCardProps {
+  data?: BusData[] | undefined;
+}
+
+const TravelCard: React.FC<TravelCardProps> = ({ data }) => {
   const { widgetConfigs } = useDashboard();
-  const travelConfig = widgetConfigs[WidgetEnum.busCards] as TravelCardConfig;
+  const config = widgetConfigs[WidgetEnum.busCards] as TravelCardConfig;
   return (
     <LoadingHelperWidget
       widgetKey={WidgetEnum.busCards}
       loadingKeys={["fetch-bus-card"]}
-      showConfig={() => !travelConfig || travelConfig?.travelRoutes.length === 0}
+      showConfig={() => !data || data.length === 0}
     >
       <div className="travel-container">
         <div className="widget-title">
           Public transport <img className="widget-title-icon" src="./img/bus-card/sign.png" alt="sign" />
         </div>
         <div className="travel-rows">
-          {travelConfig?.travelRoutes.map((busStop) => (
+          {data?.map((busData) => (
             <BusCards
-              key={busStop.stopPlace.properties.id}
-              tripIdentifier={travelConfig.tripIdentifier}
-              tripTitle={busStop.startPlace.properties.name}
-              imgPath={busStop.imgIdentifier}
-              startPlace={busStop.startPlace}
-              stopPlace={busStop.stopPlace}
-              configCard={busStop.configCard}
-              configColor={busStop.configColor}
+              key={busData.travelRoute.stopPlace.properties.id}
+              tripIdentifier={config?.tripIdentifier ?? TripIdentifier.title}
+              travelRoute={busData.travelRoute}
+              tripPatterns={busData.travelResponse.data.trip.tripPatterns}
             />
           ))}
         </div>

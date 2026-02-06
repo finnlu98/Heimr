@@ -38,9 +38,7 @@
 ## Refactors
 
 - Electricity c service computes same computation multiple times unecessary
-- rename everything so it has the same naming convention
-- Refactor widget data fetching for common architecture and classes
-- missing standard fetching and travel card (more?)
+- rename everything so it has the same naming convention - looking for linting package
 - add fetch interval to widgetdefinition
 
 ## Later

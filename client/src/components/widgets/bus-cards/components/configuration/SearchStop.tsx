@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import SearchInput from "../../../../shared/searchInput/SearchInput";
 import { TravelStop } from "../../model/StopSearchResponse";
-import useStopSearch from "./StopHook";
+import useStopSearch from "../../hooks/stop-hook";
 
 interface SearchStopProps {
   onStopSelect: (stop: TravelStop) => void;

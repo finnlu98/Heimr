@@ -19,6 +19,18 @@ export default abstract class BaseWidgetApi {
     return response.data;
   }
 
+  protected async postJson<T>(url: string, header: any, body: any, loadingKey?: string): Promise<T> {
+    header = {
+      ...header,
+      meta: {
+        loadingKey,
+      },
+    };
+
+    const response = await externalApiClient.post<T>(url, body, header);
+    return response.data;
+  }
+
   protected async getXml<T>(url: string, loadingKey?: string): Promise<T> {
     const response = await externalApiClient.get<string>(url, {
       responseType: "text",

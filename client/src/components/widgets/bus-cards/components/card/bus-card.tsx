@@ -4,12 +4,9 @@ import "./bus-card.css";
 import { ConfigColor } from "./ConfigColor";
 import { FaBusAlt, FaTrain } from "react-icons/fa";
 import { Mode } from "../../model/enum/Mode";
-import { MdOutlineTram } from "react-icons/md";
-import { BsTrainFront } from "react-icons/bs";
 import { TbCircleLetterT } from "react-icons/tb";
 
 interface BusCardProps {
-  name: string;
   publicCode: string;
   mode: string;
   startTime: string;
@@ -19,7 +16,6 @@ interface BusCardProps {
 }
 
 const BusCard: React.FC<BusCardProps> = ({
-  name,
   publicCode,
   mode,
   startTime,
@@ -28,7 +24,6 @@ const BusCard: React.FC<BusCardProps> = ({
   configColor,
 }) => {
   const [minutes, setMinutes] = useState<number>(minutesUntil);
-  const [nameCleaned, setName] = useState(name);
 
   const evalBadTimeCallback = useCallback(
     (time: number) => {
@@ -53,20 +48,6 @@ const BusCard: React.FC<BusCardProps> = ({
 
     return () => clearInterval(countdownInterval);
   }, [startTime, minutes, calculateMinutesUntil, evalBadTimeCallback]);
-
-  useEffect(() => {
-    setName(cleanName(nameCleaned));
-  }, [nameCleaned, setName]);
-
-  function cleanName(name: string) {
-    if (name.includes("/")) {
-      const parts = name.split("/");
-
-      return `${parts[0]}`;
-    }
-
-    return name;
-  }
 
   function formatShowTime(minutes: number) {
     if (minutes < 10) {

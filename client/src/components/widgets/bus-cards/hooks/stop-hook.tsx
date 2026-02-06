@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TravelStop } from "../../model/StopSearchResponse";
-import SearchStopFetcher from "../../api/stop-register-fetcher";
+import { TravelStop } from "../model/StopSearchResponse";
+import SearchStopFetcher from "../api/stop-register-fetcher";
 
 const useStopSearch = () => {
   const [results, setResults] = useState<TravelStop[]>([]);

@@ -5,6 +5,8 @@ import { TravelStop } from "./model/StopSearchResponse";
 import DocumentationBase from "../core/components/DocumentationBase";
 import { TripIdentifier } from "./model/enum/TripIdentifier";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
+import { BusData } from "./model/BusData";
+import { useBusQuery } from "./hooks/bus-hook";
 
 const TravelDocumentation = () => (
   <DocumentationBase
@@ -14,10 +16,11 @@ const TravelDocumentation = () => (
   />
 );
 
-export const TravelCardWidget: WidgetDefinition<TravelCardConfig> = {
+export const TravelCardWidget: WidgetDefinition<TravelCardConfig, BusData[]> = {
   id: WidgetEnum.busCards,
   friendlyName: "Travel",
   widgetIcon: <BiSolidBus />,
+  useQuery: useBusQuery,
   widgetComponent: TravelCard,
   widgetConfig: {
     component: TravelCardConfiguration,
@@ -39,12 +42,6 @@ export interface TravelRoute {
   configCard: ConfigCard;
   configColor: ConfigColor;
 }
-
-// export interface Stop {
-//   id: string;
-//   label: string;
-//   name: string;
-// }
 
 interface ConfigColor {
   general: number;
