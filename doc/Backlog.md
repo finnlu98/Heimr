@@ -5,6 +5,7 @@
 - widgets sometime renders with to wide width
 - disable city bike map when moving it around
 - negative minutes for bustimes
+- bustime fetch is not updated on new route and route name is always 1
 
 ## MVP launch fix tilbakemeldinger
 
