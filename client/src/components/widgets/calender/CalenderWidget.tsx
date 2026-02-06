@@ -3,6 +3,8 @@ import Calender from "./components/card/calender";
 import CalenderConfiguration from "./components/configuration/calender-configuration";
 import DocumentationBase from "../core/components/DocumentationBase";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
+import { CalendarEvent } from "./api/calender-ical-fetcher";
+import { useCalenderQuery } from "./hook/calender-hook";
 
 const CalenderDocumentation = () => (
   <DocumentationBase
@@ -17,10 +19,11 @@ const CalenderDocumentation = () => (
   />
 );
 
-export const CalenderWidget: WidgetDefinition<CalenderConfig> = {
+export const CalenderWidget: WidgetDefinition<CalenderConfig, CalendarEvent[]> = {
   id: WidgetEnum.calender,
   friendlyName: "Calender",
   widgetIcon: <SlCalender />,
+  useQuery: useCalenderQuery,
   widgetComponent: Calender,
   widgetConfig: {
     component: CalenderConfiguration,

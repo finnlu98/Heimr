@@ -1,5 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import externalApiClient from "../../../../api/ExternalApiClient";
+import { AxiosInstance } from "axios";
+import apiClient from "../../../../api/ApiClient";
 
 export default abstract class BaseWidgetApi {
   protected formatEndpoint(endpoint: string, params: Record<string, string>): string {
@@ -19,7 +21,21 @@ export default abstract class BaseWidgetApi {
     return response.data;
   }
 
-  protected async postJson<T>(url: string, header: any, body: any, loadingKey?: string): Promise<T> {
+  protected async postExternalJson<T>(url: string, header: any, body: any, loadingKey?: string): Promise<T> {
+    return await this.postJson<T>(externalApiClient, url, header, body, loadingKey);
+  }
+
+  protected async postInternalJson<T>(url: string, header: any, body: any, loadingKey?: string): Promise<T> {
+    return await this.postJson<T>(apiClient, url, header, body, loadingKey);
+  }
+
+  protected async postJson<T>(
+    client: AxiosInstance,
+    url: string,
+    header: any,
+    body: any,
+    loadingKey?: string,
+  ): Promise<T> {
     header = {
       ...header,
       meta: {
@@ -27,7 +43,7 @@ export default abstract class BaseWidgetApi {
       },
     };
 
-    const response = await externalApiClient.post<T>(url, body, header);
+    const response = await client.post<T>(url, body, header);
     return response.data;
   }
 

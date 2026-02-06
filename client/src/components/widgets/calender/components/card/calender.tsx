@@ -1,16 +1,19 @@
 import "./calender.css";
 import CalenderRow from "./calender-row";
 import { v4 as uuidv4 } from "uuid";
-import { useCalender } from "../../context/CalenderContext";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
+import { CalendarEvent } from "../../api/calender-ical-fetcher";
 
-const Calender: React.FC = () => {
-  const { calenderEvents } = useCalender();
-  const [firstEvent, ...secondaryEvents] = calenderEvents ?? [];
+interface CalenderProps {
+  data?: CalendarEvent[] | undefined;
+}
+
+const Calender: React.FC<CalenderProps> = ({ data }) => {
+  const [firstEvent, ...secondaryEvents] = data ?? [];
 
   function setCalenderRows() {
-    if (calenderEvents?.length === 0) return <div>No activities planned here, come on guys. Have some fun 🤦‍♂️</div>;
+    if (data?.length === 0) return <div>No activities planned here, come on guys. Have some fun 🤦‍♂️</div>;
 
     return (
       <div className="secondary-items-container">
@@ -22,15 +25,11 @@ const Calender: React.FC = () => {
   }
 
   return (
-    <LoadingHelperWidget
-      widgetKey={WidgetEnum.calender}
-      showConfig={() => !calenderEvents}
-      loadingKeys={["fetch-ical-events"]}
-    >
+    <LoadingHelperWidget widgetKey={WidgetEnum.calender} showConfig={() => !data} loadingKeys={["fetch-ical-events"]}>
       <div className="calender-container">
         <div className="main-item-container">
           <div className="widget-title">Next activities..</div>
-          {calenderEvents?.length !== 0 && <CalenderRow item={firstEvent} hiearchy="main" />}
+          {data?.length !== 0 && <CalenderRow item={firstEvent} hiearchy="main" />}
         </div>
         {setCalenderRows()}
       </div>

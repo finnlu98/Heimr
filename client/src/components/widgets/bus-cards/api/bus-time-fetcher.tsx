@@ -63,7 +63,7 @@ class BusApi extends BaseWidgetApi {
       const endpoint = config.TravelPlanner.Endpoint;
       const identifier = Configuration.getIdentifierConfig();
 
-      return await this.postJson<TravelResponse>(
+      return await this.postExternalJson<TravelResponse>(
         endpoint,
         { headers: { "ET-Client-Name": identifier } },
         { query: graphqlQuery },
