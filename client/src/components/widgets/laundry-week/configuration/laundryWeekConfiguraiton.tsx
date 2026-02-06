@@ -1,24 +1,19 @@
 import { IoAddCircle } from "react-icons/io5";
 import { useDashboard } from "../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../model/widget-type";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
+import { WidgetEnum } from "../../core/model/widget-type";
 
 const LaundryWeekConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const config = (widgetConfigs[
-    WidgetEnum.laundryWeek
-  ] as LaundryWeekConfig) ?? { responsibles: [] };
+  const config = (widgetConfigs[WidgetEnum.laundryWeek] as LaundryWeekConfig) ?? { responsibles: [] };
 
   const [newResponsible, setNewResponsible] = useState("");
 
   function handleAddResponsible() {
     if (newResponsible.trim() === "") return;
-    const updatedResponsibles = [
-      ...(config.responsibles || []),
-      newResponsible.trim(),
-    ];
+    const updatedResponsibles = [...(config.responsibles || []), newResponsible.trim()];
     setWidgetConfig(WidgetEnum.laundryWeek, {
       ...config,
       responsibles: updatedResponsibles,
@@ -27,9 +22,7 @@ const LaundryWeekConfiguration: React.FC = () => {
   }
 
   function handleRemoveResponsible(responsible: string) {
-    const updatedResponsibles = config.responsibles.filter(
-      (r) => r !== responsible,
-    );
+    const updatedResponsibles = config.responsibles.filter((r) => r !== responsible);
     setWidgetConfig(WidgetEnum.laundryWeek, {
       ...config,
       responsibles: updatedResponsibles,
@@ -42,10 +35,7 @@ const LaundryWeekConfiguration: React.FC = () => {
       {config?.responsibles?.map((responsible, index) => (
         <div className="h-row">
           <div key={index}>{responsible}</div>
-          <div
-            className="right-align"
-            onClick={() => handleRemoveResponsible(responsible)}
-          >
+          <div className="right-align" onClick={() => handleRemoveResponsible(responsible)}>
             <MdDelete size={20} />
           </div>
         </div>

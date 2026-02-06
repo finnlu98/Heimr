@@ -5,14 +5,15 @@ import moment from "moment";
 import { GiSunrise } from "react-icons/gi";
 import { GiSunset } from "react-icons/gi";
 import { WeatherType } from "../../model/Enum/WeatherType";
-import { useWeather } from "../../context/WeatherContext";
-import EditWidget from "../../../core/components/EditWidget";
-import { WidgetEnum } from "../../../model/widget-type";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WeatherData } from "../../model/data/WeatherData";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
-const Dailyweather: React.FC = () => {
-  const { weatherData } = useWeather();
+interface DailyweatherProps {
+  data?: WeatherData;
+}
 
+const Dailyweather: React.FC<DailyweatherProps> = ({ data: weatherData }) => {
   function umbrellaAdvice(precip: number | undefined, symbol_code: string | undefined): string {
     if (precip === undefined || symbol_code === undefined) return "Have a beutiful day";
 

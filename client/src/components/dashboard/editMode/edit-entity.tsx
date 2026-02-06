@@ -2,9 +2,9 @@ import React from "react";
 import { EditingKey } from "../model/EditMode";
 import { Modal } from "../../shared/modal/modal";
 import WidgetConfiguration from "../grid/widget/widget-configuration";
-import { WidgetEnum } from "../../widgets/model/widget-type";
 import ProfileOverview from "../../auth/ProfileOverview";
 import LayoutTemplates from "../default/LayoutTemplates";
+import { WidgetEnum } from "../../widgets/core/model/widget-type";
 
 interface EditEntityProps {
   onClose: () => void;

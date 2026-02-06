@@ -1,9 +1,7 @@
 import { useState, useEffect, createContext, useContext, useCallback } from "react";
 import { GridItem } from "./grid/model/grid-models";
-import { WidgetDefinition, WidgetEnum } from "../widgets/model/widget-type";
 import { v4 as uuidv4 } from "uuid";
 import { GridMetaData } from "./grid/model/grid-models";
-import { WidgetConfigs, Widgets } from "../widgets/model/wigets";
 import apiClient from "../../api/ApiClient";
 import { HomeConfig, HomeConfigUtils } from "../../model/HomeConfigState";
 import { useAuth } from "../../context/AuthContext";
@@ -14,6 +12,8 @@ import LoadServerConfig from "./loadServerConfig/load-server-config";
 import { isDefaultView } from "./util/isDefaultView";
 import { useAlert } from "../../feedback/alert/provider/AltertProvider";
 import { AlertVariant } from "../../feedback/alert/model/AlertTypes";
+import { WidgetDefinition, WidgetEnum } from "../widgets/core/model/widget-type";
+import { WidgetConfigs, Widgets } from "../widgets/core/model/wigets";
 
 type DashboardActions = {
   setWidgets: (widgets: GridItem[]) => void;

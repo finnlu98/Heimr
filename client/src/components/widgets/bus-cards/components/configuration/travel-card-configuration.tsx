@@ -1,16 +1,15 @@
 import "./travel-card-configuration.css";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { TravelCardConfig, TravelRoute } from "../../TravelCardWidget";
-import { WidgetEnum } from "../../../model/widget-type";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { Fragment, useRef, useState } from "react";
-import ImageCircle from "../../../../shared/imageCirlce/ImageCircle";
 import UploadImageCircle from "../../../../shared/imageCirlce/UploadImageCircle";
 import SearchStop, { SearchStopHandle } from "./SearchStop";
 import { TravelStop } from "../../model/StopSearchResponse";
 import { TiArrowRightOutline } from "react-icons/ti";
 import { TripIdentifier } from "../../model/enum/TripIdentifier";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const defaultConfig = { numRows: 3, minFilter: 3 };
 const defaultColors = { general: 10, green: 7, yellow: 5 };

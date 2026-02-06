@@ -1,10 +1,10 @@
 import { FaRegSave } from "react-icons/fa";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../../model/widget-type";
 import { WeatherConfig } from "../../WeatherWidget";
 import { useState } from "react";
 import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
 import { Address } from "../../../../../model/Adress";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const WeatherConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();

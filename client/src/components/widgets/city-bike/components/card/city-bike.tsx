@@ -2,10 +2,10 @@ import "./city-bike.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useCityBike } from "../../context/CityBikeContext";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const homeIcon = L.divIcon({
   className: "home-label-icon",

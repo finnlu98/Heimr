@@ -1,6 +1,6 @@
-import { WidgetEnum } from "../../model/widget-type";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import { EditingKey } from "../../../dashboard/model/EditMode";
+import { WidgetEnum } from "../model/widget-type";
 
 interface EditWidgetProps {
   widgetKey: WidgetEnum;

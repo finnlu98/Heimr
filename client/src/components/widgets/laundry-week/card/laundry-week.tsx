@@ -5,9 +5,9 @@ import "./laundry-week.css";
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
-import { WidgetEnum } from "../../model/widget-type";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import EditWidget from "../../core/components/EditWidget";
+import { WidgetEnum } from "../../core/model/widget-type";
 
 const washingEmojis = ["✨", "💧", "🛁", "🧴", "🧼", "🧽", "🚿", "🧹", "🧤", "🫧"];
 

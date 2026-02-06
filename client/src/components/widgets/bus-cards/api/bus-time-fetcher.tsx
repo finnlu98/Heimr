@@ -1,4 +1,3 @@
-import axios from "axios";
 import { TravelResponse } from "../model/TravelResponse";
 import Configuration from "../../../../Configuration";
 import FetcherHelper from "../../../../api/FetcherHelper";

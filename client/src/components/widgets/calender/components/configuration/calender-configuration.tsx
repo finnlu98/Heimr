@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { CalenderConfig } from "../../CalenderWidget";
-import { WidgetEnum } from "../../../model/widget-type";
 import { MdDelete } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 interface CalenderConfigurationProps {}
 

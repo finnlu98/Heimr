@@ -1,39 +1,13 @@
-import { useEffect, useState } from "react";
-import NewsFetcher from "./api/news-fetcher";
 import { NewsResponse } from "./model/NewsResponse";
 import "./news.css";
 import LoadingHelperWidget from "../core/components/LoadingHelperWidget";
-import { WidgetEnum } from "../model/widget-type";
+import { WidgetEnum } from "../core/model/widget-type";
 
-const News: React.FC = () => {
-  const [news, setNews] = useState<NewsResponse>();
+interface NewsProps {
+  data?: NewsResponse;
+}
 
-  useEffect(() => {
-    const fetchAndSetNews = async () => setNews(await NewsFetcher());
-
-    fetchAndSetNews();
-  }, []);
-
-  useEffect(() => {
-    const updateInterval = setInterval(
-      () => {
-        updateNewsData();
-      },
-      10 * 60 * 1000,
-    );
-
-    return () => clearInterval(updateInterval);
-  }, []);
-
-  async function updateNewsData() {
-    try {
-      const updatedNewsData = await NewsFetcher();
-      setNews(updatedNewsData);
-    } catch (error) {
-      console.error("Can't update data:", error);
-    }
-  }
-
+const News: React.FC<NewsProps> = ({ data }) => {
   return (
     <LoadingHelperWidget widgetKey={WidgetEnum.news} loadingKeys={["fetch-news"]}>
       <div className="h-column fill-width news-container">
@@ -41,8 +15,8 @@ const News: React.FC = () => {
           <div>Current news 📰</div>
         </div>
         <div className="h-column">
-          {news &&
-            news.rss.channel.item.map((newsItem) => {
+          {data &&
+            data.rss.channel.item.map((newsItem) => {
               return (
                 <div key={newsItem.title} className="standard-rows h-row gap">
                   <div className="news-text font-small">{newsItem.title}</div>

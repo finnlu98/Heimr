@@ -1,15 +1,18 @@
-import { Widgets } from "../../../widgets/model/wigets";
-import { WidgetEnum } from "../../../widgets/model/widget-type";
 import Tab from "../../../shared/tab/Tab";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiCircleInfo } from "react-icons/ci";
 import "./widget-configuration.css";
+import { Widgets } from "../../../widgets/core/model/wigets";
+import { WidgetEnum } from "../../../widgets/core/model/widget-type";
+import { useWidgetQueryResult } from "../../../widgets/core/hooks/useWidgetQueryResult";
 
 interface WidgetConfigurationProps {
   widget: WidgetEnum;
 }
 
 const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget }) => {
+  const queryResult = useWidgetQueryResult(widget);
+
   return (
     <div className="edit-widget-container">
       <div className="edit-widget-content">
@@ -23,11 +26,10 @@ const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget }) => 
                     Settings
                   </div>
                 ),
-                content: Widgets[widget].widgetConfig?.component ? (
-                  Widgets[widget].widgetConfig?.component
-                ) : (
-                  <div>No settings available 🗅</div>
-                ),
+                content: (() => {
+                  const ConfigComponent = Widgets[widget].widgetConfig?.component;
+                  return ConfigComponent ? <ConfigComponent /> : <div>No settings available 🗅</div>;
+                })(),
               },
               {
                 label: (
@@ -36,17 +38,19 @@ const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget }) => 
                     About
                   </div>
                 ),
-                content: Widgets[widget].widgetConfig?.documentation ? (
-                  Widgets[widget].widgetConfig?.documentation
-                ) : (
-                  <div>No documentation available 🗅</div>
-                ),
+                content: (() => {
+                  const DocumentationComponent = Widgets[widget].widgetConfig?.documentation;
+                  return DocumentationComponent ? <DocumentationComponent /> : <div>No documentation available 🗅</div>;
+                })(),
               },
             ]}
           />
         </div>
         <div className="widget-container edit-widget-content-item widget-preview">
-          {Widgets[widget].widgetComponent}
+          {(() => {
+            const Preview = Widgets[widget].widgetComponent;
+            return <Preview data={queryResult?.data} isLoading={queryResult?.isLoading} error={queryResult?.error} />;
+          })()}
         </div>
       </div>
     </div>

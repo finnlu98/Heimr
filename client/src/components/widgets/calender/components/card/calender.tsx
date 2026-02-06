@@ -2,8 +2,8 @@ import "./calender.css";
 import CalenderRow from "./calender-row";
 import { v4 as uuidv4 } from "uuid";
 import { useCalender } from "../../context/CalenderContext";
-import { WidgetEnum } from "../../../model/widget-type";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const Calender: React.FC = () => {
   const { calenderEvents } = useCalender();

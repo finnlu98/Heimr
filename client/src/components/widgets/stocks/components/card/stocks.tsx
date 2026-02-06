@@ -5,8 +5,8 @@ import { IoMdArrowDropup } from "react-icons/io";
 import StockFetcher from "../../api/stock-fetcher";
 import { StockResponse } from "../../model/StockResponse";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../../model/widget-type";
 import { StocksConfig } from "../../StocksWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const Stocks: React.FC = () => {
   const [stocks, setStocks] = useState<StockResponse>();
@@ -15,8 +15,7 @@ const Stocks: React.FC = () => {
     tickers: [],
   };
   useEffect(() => {
-    const setAndFetchStocks = async () =>
-      setStocks(await StockFetcher(config.tickers));
+    const setAndFetchStocks = async () => setStocks(await StockFetcher(config.tickers));
     setAndFetchStocks();
   }, []);
 

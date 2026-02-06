@@ -1,6 +1,5 @@
 import { FaRegSave } from "react-icons/fa";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../../model/widget-type";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";
@@ -10,6 +9,7 @@ import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
 import { useAuth } from "../../../../../context/AuthContext";
 import { Address } from "../../../../../model/Adress";
 import "./cityBikeConfiguration.css";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();

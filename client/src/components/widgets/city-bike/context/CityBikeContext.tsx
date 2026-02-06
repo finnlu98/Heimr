@@ -1,11 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { CityBikeResponse, Station } from "../model/CityBikeResponse";
-import { WidgetEnum } from "../../model/widget-type";
+import { Station } from "../model/CityBikeResponse";
 import { CityBikeConfig } from "../CityBikeWidget";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import CityBikeStatusFetcher, { CityBikeStationsFetcher } from "../api/city-bike-fetcher";
 import CityBikeService from "../service/CityBikeService";
 import { Coordinate } from "../../../../model/Coordinate";
+import { WidgetEnum } from "../../core/model/widget-type";
 
 interface CityBikeContextProps {
   children: React.ReactNode;

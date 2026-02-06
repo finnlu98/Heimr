@@ -7,8 +7,8 @@ import { IoIosTimer } from "react-icons/io";
 import BarChart from "../charts/bar-chart";
 import { ElectricityLevelFormatter } from "../../model/enum/ElectricityLevel";
 import { useElectricityConsumption } from "../../context/ElectricityContext";
-import { WidgetEnum } from "../../../model/widget-type";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const ElectricyConsumption: React.FC = () => {
   const { elviaService, chartFormattedData, hasElviaKey } = useElectricityConsumption();

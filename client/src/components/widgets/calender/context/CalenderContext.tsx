@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { CalendarEvent, ICalCalendarFetcher } from "../api/calender-ical-fetcher";
 import { useDashboard } from "../../../dashboard/dashboard-context";
 import { CalenderConfig } from "../CalenderWidget";
-import { WidgetEnum } from "../../model/widget-type";
+import { WidgetEnum } from "../../core/model/widget-type";
 
 interface CalenderContextProps {
   children: React.ReactNode;

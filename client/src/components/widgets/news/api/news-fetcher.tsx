@@ -1,23 +1,14 @@
 import configuration from "../../../../Configuration";
 import { NewsResponse } from "../model/NewsResponse";
-import FetcherHelper from "../../../../api/FetcherHelper";
-import externalApiClient from "../../../../api/ExternalApiClient";
+import BaseWidgetApi from "../../core/api/BaseWidgetApi";
 
-const NewsFetcher = async () => {
-  const endpoint = configuration.getNewsConfig().NRK.Endpoint;
+class NewsApi extends BaseWidgetApi {
+  async getNewsData(): Promise<NewsResponse | undefined> {
+    const newsEndpoint = configuration.getNewsConfig().NRK.Endpoint;
+    return this.getXml<NewsResponse>(newsEndpoint, "fetch-news");
+  }
+}
 
-  const newsFetcher = new FetcherHelper<NewsResponse>(60 * 15 * 1000);
-  const newsRes = await newsFetcher.getXmlData(
-    NewsResponse.Identifier,
-    async () =>
-      (
-        await externalApiClient.get<NewsResponse>(endpoint, {
-          responseType: "text",
-          meta: { loadingKey: "fetch-news" },
-        })
-      ).data,
-  );
-  return newsRes;
-};
+const newsApi = new NewsApi();
 
-export default NewsFetcher;
+export default newsApi;

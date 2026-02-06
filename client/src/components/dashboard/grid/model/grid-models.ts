@@ -1,12 +1,12 @@
-import { WidgetDefinition, WidgetEnum } from "../../../widgets/model/widget-type";
+import { WidgetEnum } from "../../../widgets/core/model/widget-type";
 
 export type GridItem = {
   id: string;
   col: number;
-  colSpan: number
-  row: number
-  rowSpan: number
-  widget: WidgetEnum
+  colSpan: number;
+  row: number;
+  rowSpan: number;
+  widget: WidgetEnum;
 };
 
 export type Rect = {
@@ -20,15 +20,15 @@ export interface GridMetaData {
   width: number;
   height: number;
   colWidth: number;
-  colHeight: number
+  colHeight: number;
   columns: number;
-  gap: number
+  gap: number;
 }
 
-export interface PreviewState  {
+export interface PreviewState {
   id: string;
   col: number;
-  colSpan: number
-  row: number
-  rowSpan: number
+  colSpan: number;
+  row: number;
+  rowSpan: number;
 }

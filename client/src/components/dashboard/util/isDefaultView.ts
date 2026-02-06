@@ -1,4 +1,4 @@
-import { WidgetEnum } from "../../widgets/model/widget-type";
+import { WidgetEnum } from "../../widgets/core/model/widget-type";
 import { GridItem } from "../grid/model/grid-models";
 
 export function isDefaultView(widgets: GridItem[]) {

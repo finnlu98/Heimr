@@ -11,20 +11,25 @@ export enum WidgetEnum {
   busCards = "Bus Cards",
 }
 
-export interface WidgetDefinition<T> {
+export interface WidgetDefinition<TConfig, TData = unknown, TError = unknown> {
   id: WidgetEnum;
   friendlyName: string;
   widgetIcon: React.ReactNode;
-  widgetComponent: React.ReactNode;
-  widgetConfig?: WidgetConfig<T>;
+  widgetComponent: React.ComponentType<any>;
+  useQuery?: (config: TConfig) => {
+    data?: TData;
+    isLoading?: boolean;
+    error?: TError;
+  };
+  widgetConfig?: WidgetConfig<TConfig>;
   defaultWidgetStyling?: boolean;
   defaultColSpan: number;
   defaultRowSpan: number;
   boolenHiddenSupported?: boolean;
 }
 
-export interface WidgetConfig<T> {
-  component: React.ReactNode;
-  documentation?: React.ReactNode;
-  config?: T;
+export interface WidgetConfig<TConfig> {
+  component?: React.ComponentType<any>;
+  documentation?: React.ComponentType<any>;
+  config?: TConfig;
 }

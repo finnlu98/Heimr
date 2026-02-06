@@ -1,10 +1,9 @@
-import Configuration from "../../../../../Configuration";
 import BusCards from "./bus-cards";
 import "./travel-card.css";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
-import { WidgetEnum } from "../../../model/widget-type";
 import { TravelCardConfig } from "../../TravelCardWidget";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 const TravelCard: React.FC = () => {
   const { widgetConfigs } = useDashboard();

@@ -4,11 +4,11 @@ import { IoMdArrowDropright } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import "./sidebar.css";
 import { useEffect, useState } from "react";
-import { Widgets } from "../../widgets/model/wigets";
 import Profile from "../../auth/Profile";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import EditEntity from "../editMode/edit-entity";
 import { EditingKey } from "../model/EditMode";
+import { Widgets } from "../../widgets/core/model/wigets";
 
 const Sidebar: React.FC = () => {
   const { editMode, addWidget, setEditingKey } = useDashboard();
