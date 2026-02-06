@@ -3,6 +3,9 @@ import ElectricyConsumption from "./components/electricity-consumption/electrici
 import ElectricityConfiguration from "./components/configuration/electricity-configuration";
 import DocumentationBase from "../core/components/DocumentationBase";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
+import { ElviaService } from "./services/ElviaService";
+import { useElviaConsumptionQuery } from "./hook/electricity-hook";
+import { ElectricityData } from "./model/ElectricityData";
 
 const ElectricityDocumentation = () => (
   <DocumentationBase
@@ -13,10 +16,11 @@ const ElectricityDocumentation = () => (
   />
 );
 
-export const ElectricityWidget: WidgetDefinition<ElectricityConfig> = {
+export const ElectricityWidget: WidgetDefinition<ElectricityConfig, ElectricityData> = {
   id: WidgetEnum.electricity,
   friendlyName: "Electricity",
   widgetIcon: <ImPower />,
+  useQuery: useElviaConsumptionQuery,
   widgetComponent: ElectricyConsumption,
   widgetConfig: {
     component: ElectricityConfiguration,
@@ -26,6 +30,4 @@ export const ElectricityWidget: WidgetDefinition<ElectricityConfig> = {
   defaultRowSpan: 6,
 };
 
-export interface ElectricityConfig {
-  electricityKey: string;
-}
+export interface ElectricityConfig {}

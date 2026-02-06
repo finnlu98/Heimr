@@ -71,7 +71,6 @@ const TravelCardConfiguration: React.FC = () => {
 
   function onUpdateImage(dataUrl: string | null, startPlace: TravelStop, stopPlace: TravelStop) {
     if (!dataUrl) return;
-    console.log("updating image for route:", dataUrl);
     setWidgetConfig(WidgetEnum.busCards, {
       ...config,
       travelRoutes: config.travelRoutes.map((route) => {

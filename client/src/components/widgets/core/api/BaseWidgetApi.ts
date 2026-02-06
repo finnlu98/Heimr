@@ -12,13 +12,24 @@ export default abstract class BaseWidgetApi {
     return url;
   }
 
-  protected async getJson<T>(url: string, loadingKey?: string): Promise<T> {
-    const response = await externalApiClient.get<T>(url, {
+  protected async getJson<T>(client: AxiosInstance, url: string, params: any, loadingKey?: string): Promise<T> {
+    const param = {
+      ...params,
       meta: {
         loadingKey,
       },
-    });
+    };
+
+    const response = await client.get<T>(url, param);
     return response.data;
+  }
+
+  protected async getExternalJson<T>(url: string, loadingKey?: string): Promise<T> {
+    return await this.getJson<T>(externalApiClient, url, loadingKey);
+  }
+
+  protected async getInternalJson<T>(url: string, params?: any, loadingKey?: string): Promise<T> {
+    return await this.getJson<T>(apiClient, url, params, loadingKey);
   }
 
   protected async postExternalJson<T>(url: string, header: any, body: any, loadingKey?: string): Promise<T> {

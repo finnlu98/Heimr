@@ -14,10 +14,10 @@ class WeatherApi extends BaseWidgetApi {
     const weatherEndpoint = this.formatEndpoint(configuration.getWeatherEndpoint(), { lat, lon });
     const sunriseEndpoint = this.formatEndpoint(configuration.getSunriseEndpoint(), { lat, lon });
 
-    const weatherRes = await this.getJson<WeatherResponse>(weatherEndpoint, "fetch-weather");
+    const weatherRes = await this.getExternalJson<WeatherResponse>(weatherEndpoint, "fetch-weather");
     const weatherForecast = new WeatherForecast(weatherRes);
 
-    const sunriseRes = await this.getJson<SunriseResponse>(sunriseEndpoint, "fetch-sunrise");
+    const sunriseRes = await this.getExternalJson<SunriseResponse>(sunriseEndpoint, "fetch-sunrise");
 
     return new WeatherData(weatherForecast, sunriseRes);
   }

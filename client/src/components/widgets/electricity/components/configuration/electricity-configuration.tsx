@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { useElectricityConsumption } from "../../context/ElectricityContext";
 import { IoMdSend } from "react-icons/io";
 import LoadingButton from "../../../../../feedback/loading/components/Loading/LoadingButton";
+import { useElviaKeyManagement } from "../../hook/electricity-key-hook";
 
 const ElectricityConfiguration: React.FC = () => {
   const [elviaKey, setElviaKey] = useState<string>("");
-  const { postElviaKey, hasElviaKey } = useElectricityConsumption();
+  const { postElviaKey, hasElviaKey } = useElviaKeyManagement();
   const [postNewKey, setPostNewKey] = useState(false);
 
   const registerKey = async () => {
     await postElviaKey(elviaKey);
     setPostNewKey(false);
   };
+
+  console.log("hasElviaKey", hasElviaKey);
 
   return (
     <div className="h-column">

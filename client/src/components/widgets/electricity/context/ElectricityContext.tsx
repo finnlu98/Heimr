@@ -1,45 +1,58 @@
-import { createContext, useMemo, useState, useEffect, useCallback, useContext } from "react";
+import { useCallback, useMemo } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ElviaService } from "../services/ElviaService";
 import ElviaFetcher from "../api/elvia-fetcher";
 import { ComponentData } from "../model/ElectricityPrices";
 import apiClient from "../../../../api/ApiClient";
+import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
 
-interface ElectricityContextProps {
-  children: React.ReactNode;
-}
-
-type ElectricityContextState = {
-  elviaService?: ElviaService;
-  chartFormattedData?: ComponentData;
+type ElectricityHookState = {
   hasElviaKey: boolean;
-  getElectricityConsumption: () => Promise<void>;
-  postElviaKey: (key: string) => void;
+  postElviaKey: (key: string) => Promise<void>;
 };
 
-const ElectricityContext = createContext<ElectricityContextState | undefined>(undefined);
+const ELVIA_PROVIDER = "Elvia";
+const HAS_ELVIA_KEY_QUERY_KEY = ["elvia", "has-key"];
+const ELVIA_CONSUMPTION_QUERY_KEY = ["elvia", "consumption"];
 
-const ElectricityProvider: React.FC<ElectricityContextProps> = ({ children }) => {
-  const [elviaService, setElviaService] = useState<ElviaService | undefined>(undefined);
-  const [chartFormattedData, setChartFormattedData] = useState<ComponentData | undefined>(undefined);
-  const [hasElviaKey, setHasElviaKey] = useState<boolean>(false);
+export function useElectricityConsumption(): ElectricityHookState {
+  const queryClient = useQueryClient();
 
-  const getElectricityConsumption = useCallback(async (): Promise<void> => {
-    if (!hasElviaKey) return;
-    try {
-      const res = await ElviaFetcher();
-      setElviaService(res);
-    } catch (error) {
-      console.error("Failed to fetch electricity consumption data", error);
-      return undefined;
-    }
-  }, [hasElviaKey]);
+  const hasKeyQuery = useWidgetQuery<boolean>({
+    queryKey: HAS_ELVIA_KEY_QUERY_KEY,
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get<{ integration: string | null }>("/integration", {
+          params: { provider: ELVIA_PROVIDER },
+          meta: {
+            loadingKey: "has-elvia-key",
+            errorMessage: "Failed to get Elvia key status",
+          },
+        });
+        return res.data.integration !== null;
+      } catch (error) {
+        console.error("Failed to get Elvia key status", error);
+        return false;
+      }
+    },
+    staleTime: 0,
+  });
 
-  const postElviaKey = async (key: string) => {
-    try {
+  const hasElviaKey = hasKeyQuery.data ?? false;
+
+  // const consumptionQuery = useWidgetQuery<ElviaService>({
+  //   queryKey: ELVIA_CONSUMPTION_QUERY_KEY,
+  //   queryFn: ElviaFetcher,
+  //   enabled: hasElviaKey,
+  //   refetchInterval: ELVIA_CONSUMPTION_REFETCH_MS,
+  // });
+
+  const postKeyMutation = useMutation({
+    mutationFn: async (key: string) => {
       const formatKey = `Bearer ${key.trim()}`;
       await apiClient.post(
         "/integration",
-        { provider: "Elvia", key: formatKey },
+        { provider: ELVIA_PROVIDER, key: formatKey },
         {
           meta: {
             loadingKey: "post-elvia-key",
@@ -48,65 +61,27 @@ const ElectricityProvider: React.FC<ElectricityContextProps> = ({ children }) =>
           },
         },
       );
-      setHasElviaKey(true);
-      await getElectricityConsumption();
-    } catch (error) {
-      console.error("Failed to post Elvia key", error);
-    }
-  };
+    },
+    onSuccess: async () => {
+      queryClient.setQueryData(HAS_ELVIA_KEY_QUERY_KEY, true);
+      await queryClient.invalidateQueries({ queryKey: ELVIA_CONSUMPTION_QUERY_KEY });
+    },
+  });
 
-  const getHasElviaKey = async (provider: string): Promise<void> => {
-    try {
-      const res = await apiClient.get<{ integration: string | null }>(`/integration`, {
-        params: { provider: provider },
-        meta: {
-          loadingKey: "has-elvia-key",
-          errorMessage: "Failed to get Elvia key status",
-        },
-      });
-      setHasElviaKey(res.data.integration !== null);
-    } catch (error) {
-      console.error("Failed to get Elvia key status", error);
-      setHasElviaKey(false);
-    }
-  };
-
-  useEffect(() => {
-    getHasElviaKey("Elvia");
-  }, []);
-
-  useEffect(() => {
-    getElectricityConsumption();
-  }, [hasElviaKey, getElectricityConsumption]);
-
-  useEffect(() => {
-    const updateInterval = setInterval(getElectricityConsumption, 60 * 60 * 1000);
-    return () => clearInterval(updateInterval);
-  }, [getElectricityConsumption]);
-
-  useEffect(() => {
-    if (elviaService) {
-      setChartFormattedData(elviaService.getChartFormattedData());
-    }
-  }, [elviaService]);
-
-  const value = useMemo(
-    () => ({
-      elviaService,
-      chartFormattedData,
-      hasElviaKey,
-      getElectricityConsumption,
-      postElviaKey,
-    }),
-    [elviaService, chartFormattedData, hasElviaKey, getElectricityConsumption],
+  const postElviaKey = useCallback(
+    async (key: string): Promise<void> => {
+      await postKeyMutation.mutateAsync(key);
+    },
+    [postKeyMutation],
   );
-  return <ElectricityContext.Provider value={value}>{children}</ElectricityContext.Provider>;
-};
 
-export function useElectricityConsumption() {
-  const ctx = useContext(ElectricityContext);
-  if (!ctx) throw new Error("useElectricityConsumption must be used inside ElectricityProvider");
-  return ctx;
+  return {
+    hasElviaKey,
+    postElviaKey,
+  };
 }
 
-export default ElectricityProvider;
+// const getElectricityConsumption = useCallback(async (): Promise<void> => {
+//   if (!hasElviaKey) return;
+//   await consumptionQuery.refetch();
+// }, [hasElviaKey, consumptionQuery]);

@@ -6,58 +6,60 @@ import { GiLevelTwo } from "react-icons/gi";
 import { IoIosTimer } from "react-icons/io";
 import BarChart from "../charts/bar-chart";
 import { ElectricityLevelFormatter } from "../../model/enum/ElectricityLevel";
-import { useElectricityConsumption } from "../../context/ElectricityContext";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
+import { ElectricityData } from "../../model/ElectricityData";
 
-const ElectricyConsumption: React.FC = () => {
-  const { elviaService, chartFormattedData, hasElviaKey } = useElectricityConsumption();
+interface ElectricityConsumptionProps {
+  data?: ElectricityData;
+}
 
+const ElectricyConsumption: React.FC<ElectricityConsumptionProps> = ({ data }) => {
   return (
     <LoadingHelperWidget
       widgetKey={WidgetEnum.electricity}
       loadingKeys={["post-elvia-key", "fetch-elvia-consumption", "has-elvia-key"]}
-      showConfig={() => !hasElviaKey}
+      showConfig={() => !data}
     >
-      <div className="electricity-container h-column gap">
-        <div className="consumption-cards h-row gap center">
-          <div className="consumption-card h-column gap-tiny">
-            <ImPower className="react-icon-orange" />
-            <div className="font-small">{elviaService?.getConsumptionMonth()} kwh</div>
-          </div>
-          <div className="consumption-card h-column gap-tiny">
-            <MdPriceChange className="react-icon-green" />
-            <div className="font-small">{elviaService?.getEstimatedPriceMonth()} NOK</div>
-          </div>
-          <div className="consumption-card h-column gap-tiny">
-            <div className="level-header">
-              <GiLevelTwo className="react-icon-orange" />{" "}
-              {ElectricityLevelFormatter.formatLevel(elviaService?.getCapacityLevel())}
+      {data && (
+        <div className="electricity-container h-column gap">
+          <div className="consumption-cards h-row gap center">
+            <div className="consumption-card h-column gap-tiny">
+              <ImPower className="react-icon-orange" />
+              <div className="font-small">{data?.consumptionMonth} kwh</div>
             </div>
-            <div className="font-small">
-              {ElectricityLevelFormatter.formatInterval(elviaService?.getCapacityLevel())} kwh
+            <div className="consumption-card h-column gap-tiny">
+              <MdPriceChange className="react-icon-green" />
+              <div className="font-small">{data?.estimatedPrice} NOK</div>
+            </div>
+            <div className="consumption-card h-column gap-tiny">
+              <div className="level-header">
+                <GiLevelTwo className="react-icon-orange" />{" "}
+                {ElectricityLevelFormatter.formatLevel(data?.capacityLevel)}
+              </div>
+              <div className="font-small">{ElectricityLevelFormatter.formatInterval(data?.capacityLevel)} kwh</div>
+            </div>
+            <div className="consumption-card h-column gap-tiny">
+              <div className="level-header">
+                <IoIosTimer className="react-icon-gray" />{" "}
+                {moment(data?.consumptionHighestHour?.startTime).format("h a")}
+              </div>
+              <div className="font-small">{data?.consumptionHighestHour?.value} kwh</div>
             </div>
           </div>
-          <div className="consumption-card h-column gap-tiny">
-            <div className="level-header">
-              <IoIosTimer className="react-icon-gray" />{" "}
-              {moment(elviaService?.getHighestHour()?.startTime).format("h a")}
-            </div>
-            <div className="font-small">{elviaService?.getHighestHour()?.value} kwh</div>
-          </div>
-        </div>
 
-        <div className="bar-chart-container h-column center text-align-center font-small">
-          Peak kwh per day in {moment().format("MMMM")}
-          {chartFormattedData && (
-            <BarChart
-              chartData={chartFormattedData}
-              title={`Highest avg kWh per day in ${moment().format("MMMM")}`}
-              meanMax={elviaService?.getMeanMaxLevel() ?? -1}
-            />
-          )}
+          <div className="bar-chart-container h-column center text-align-center font-small">
+            Peak kwh per day in {moment().format("MMMM")}
+            {data?.chartFormattedData && (
+              <BarChart
+                chartData={data.chartFormattedData}
+                title={`Highest avg kWh per day in ${moment().format("MMMM")}`}
+                meanMax={data.meanMaxLevel ?? -1}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </LoadingHelperWidget>
   );
 };

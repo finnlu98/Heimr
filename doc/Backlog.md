@@ -3,7 +3,6 @@
 ## Bugs
 
 - widgets sometime renders with to wide width
-- electricity service throwing error when getting to new month
 - disable city bike map when moving it around
 - negative minutes for bustimes
 
@@ -26,8 +25,7 @@
 - Make dashboard smaller when opening edit mode
 - collapse sidebar media query - on tap expand - sidebar icons show when collapsed
 - when picking adress for the first time zoom to selection city bike
-- customizable header - add mini widgets (needs standard class to pick widget to add)
-- Components render more smoothly when enter editing
+- customizable header - add compact widgets (needs standard class to pick widget to add)
 - review logs from react warnings in terminal and fix them
 - make it possible to cancel edit changes
 - User needs confirmation widget settings is OK
