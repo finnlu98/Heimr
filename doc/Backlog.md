@@ -38,9 +38,7 @@
 
 ## Refactors
 
-- Electricity c service computes same computation multiple times unecessary
 - rename everything so it has the same naming convention - looking for linting package
-- add fetch interval to widgetdefinition
 
 ## Later
 
