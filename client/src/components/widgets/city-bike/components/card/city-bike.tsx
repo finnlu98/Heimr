@@ -3,9 +3,9 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import { useDashboard } from "../../../../dashboard/dashboard-context";
 import { CityBikeConfig } from "../../CityBikeWidget";
-import { useCityBike } from "../../context/CityBikeContext";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
+import { CityBikeData } from "../../model/CityBikeData";
 
 const homeIcon = L.divIcon({
   className: "home-label-icon",
@@ -13,8 +13,11 @@ const homeIcon = L.divIcon({
   iconAnchor: [15, 30],
 });
 
-const CityBike: React.FC = () => {
-  const { cityBikeData } = useCityBike();
+interface CityBikeProps {
+  data?: CityBikeData;
+}
+
+const CityBike: React.FC<CityBikeProps> = ({ data }) => {
   const { widgetConfigs } = useDashboard();
   const cityBikeConfig = widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig;
 
@@ -35,7 +38,7 @@ const CityBike: React.FC = () => {
     <LoadingHelperWidget
       widgetKey={WidgetEnum.cityBike}
       loadingKeys={["fetch-city-bike-status", "fetch-city-bike-stations"]}
-      showConfig={() => !cityBikeConfig || !cityBikeData}
+      showConfig={() => !cityBikeConfig || !data}
     >
       {cityBikeConfig && (
         <div className="city-bikes-container">
@@ -56,12 +59,12 @@ const CityBike: React.FC = () => {
                 position={[Number(cityBikeConfig.homeCoordinates.lat), Number(cityBikeConfig.homeCoordinates.lon)]}
                 icon={homeIcon}
               />
-              {cityBikeData &&
-                Array.from(cityBikeData.entries()).map(([key, entry]) => (
+              {data?.stations &&
+                data.stations.map(station => (
                   <Marker
-                    key={key}
-                    position={[Number(entry.lat), Number(entry.lon)]}
-                    icon={formatMarker(entry.num_bikes_available)}
+                    key={station.station_id}
+                    position={[Number(station.lat), Number(station.lon)]}
+                    icon={formatMarker(station.num_bikes_available)}
                   ></Marker>
                 ))}
             </MapContainer>

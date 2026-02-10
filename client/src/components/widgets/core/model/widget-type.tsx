@@ -16,7 +16,7 @@ export interface WidgetDefinition<TConfig, TData = unknown, TError = unknown> {
   friendlyName: string;
   widgetIcon: React.ReactNode;
   widgetComponent: React.ComponentType<any>;
-  useQuery?: (config: TConfig) => {
+  useQuery?: (config?: TConfig) => {
     data?: TData;
     isLoading?: boolean;
     error?: TError;

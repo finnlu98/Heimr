@@ -3,6 +3,8 @@ import CityBike from "./components/card/city-bike";
 import CityBikeConfiguration from "./components/configuration/cityBikeConfiguration";
 import DocumentationBase from "../core/components/DocumentationBase";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
+import { CityBikeData } from "./model/CityBikeData";
+import { useMappedStatusQuery } from "./hook/city-bike-hook";
 
 const CityBikeDocumentation = () => (
   <DocumentationBase
@@ -12,10 +14,11 @@ const CityBikeDocumentation = () => (
   />
 );
 
-export const CityBikeWidget: WidgetDefinition<CityBikeConfig> = {
+export const CityBikeWidget: WidgetDefinition<CityBikeConfig, CityBikeData> = {
   id: WidgetEnum.cityBike,
   friendlyName: "City Bike",
   widgetIcon: <GrBike />,
+  useQuery: useMappedStatusQuery,
   widgetComponent: CityBike,
   widgetConfig: {
     component: CityBikeConfiguration,

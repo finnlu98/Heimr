@@ -8,8 +8,10 @@
 - bustime fetch is not updated on new route and route name is always 1
 
 ## MVP launch fix tilbakemeldinger
+- Cache issues with city bike, travel card
 
 - fix on hover on tablet
+- layout template button
 
 ## Hard launch
 
@@ -26,13 +28,14 @@
 - Make dashboard smaller when opening edit mode
 - collapse sidebar media query - on tap expand - sidebar icons show when collapsed
 - when picking adress for the first time zoom to selection city bike
-- customizable header - add compact widgets (needs standard class to pick widget to add)
+- customizable header - add compact widgets (needs standard class to pick widget to add) - move config to header  
 - review logs from react warnings in terminal and fix them
-- make it possible to cancel edit changes
 - User needs confirmation widget settings is OK
 - add possiblity to add home local storage
 - gh workflow should build and deploy seperatably
 - horizontal scroll
+- edit dashboard -> green checkmark and configuration save button before commiting changes
+- buttons in sidebar button main button has - make it possible to cancel edit changes
 
 ## Refactors
 

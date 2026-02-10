@@ -11,7 +11,6 @@ import Sidebar from "./components/dashboard/sidebar/sidebar";
 import DashboardProvider from "./components/dashboard/dashboard-context";
 import AuthProvider from "./context/AuthContext";
 import apiClient from "./api/ApiClient";
-import WidgetProviders from "./components/widgets/core/context/WidgetProvider";
 import externalApiClient from "./api/ExternalApiClient";
 import { ScreenSizeSelector } from "./components/dashboard/screenSizeSelector/screen-size-selector";
 import ZoomControl from "./components/dashboard/zoomControl/zoom-control";
@@ -30,7 +29,6 @@ function App() {
         <ApiBridge apiClient={externalApiClient} />
         <AuthProvider>
           <DashboardProvider>
-            <WidgetProviders>
               <ScreenSizeSelector currentSize={screenSize} onSizeChange={setScreenSize} />
               <ZoomControl zoom={zoom} onZoomChange={setZoom} screenSize={screenSize} />
               <div className="app">
@@ -50,7 +48,6 @@ function App() {
                 </div>
                 <EditModeToggleButton />
               </div>
-            </WidgetProviders>
           </DashboardProvider>
         </AuthProvider>
       </FeedBackProvider>

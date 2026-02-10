@@ -4,17 +4,15 @@ import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";
 import L from "leaflet";
-import { useCityBike } from "../../context/CityBikeContext";
 import AdressSearch from "../../../../shared/adressSearch/AdressSearch";
-import { useAuth } from "../../../../../context/AuthContext";
 import { Address } from "../../../../../model/Adress";
 import "./cityBikeConfiguration.css";
 import { WidgetEnum } from "../../../core/model/widget-type";
+import { useCityBikeStationQuery, useClosestCityBikeStations } from "../../hook/city-bike-hook";
 
 const CityBikeConfiguration: React.FC = () => {
   const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const { cityStations, setClosestStations } = useCityBike();
-  const { home } = useAuth();
+  const { data: cityStationsResponse } = useCityBikeStationQuery();
 
   const config = (widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig) ?? {
     homeCoordinates: { lat: 0, lon: 0 },
@@ -24,6 +22,12 @@ const CityBikeConfiguration: React.FC = () => {
   };
 
   const [localConfig, setLocalConfig] = useState(config);
+
+  const closestStations = useClosestCityBikeStations(
+    cityStationsResponse,
+    localConfig.homeCoordinates,
+  );
+
 
   const handleChange = (newConfig: Partial<CityBikeConfig>) => {
     setLocalConfig({
@@ -45,7 +49,7 @@ const CityBikeConfiguration: React.FC = () => {
         [Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)],
         localConfig.zoom ?? 13,
       );
-    }, [localConfig.centerCoordinates.lat, localConfig.centerCoordinates.lon, map]);
+    }, [map]);
 
     useMapEvents({
       moveend: (e) => {
@@ -87,7 +91,6 @@ const CityBikeConfiguration: React.FC = () => {
 
   function onAddressSelect(address: Address) {
     handleChange({ homeCoordinates: address.coordinate, centerCoordinates: address.coordinate });
-    setClosestStations(address.coordinate);
   }
 
   const saveConfig = () => {
@@ -98,6 +101,7 @@ const CityBikeConfiguration: React.FC = () => {
       <div className="h-column">
         <label htmlFor="homeId">Home address:</label>
         <AdressSearch onAddressSelect={onAddressSelect} />
+        <label htmlFor="homeId">Selected stations (click on map to select):</label>
       </div>
       <div className="map">
         <MapContainer
@@ -115,8 +119,8 @@ const CityBikeConfiguration: React.FC = () => {
             icon={homeIcon}
           />
 
-          {cityStations &&
-            cityStations.map((station) => (
+          {closestStations &&
+            closestStations.map((station) => (
               <Marker
                 key={station.station_id}
                 position={[station.lat, station.lon]}

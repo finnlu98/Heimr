@@ -1,17 +1,13 @@
-import axios from "axios";
 import configuration from "../../../../Configuration";
 import FetcherHelper from "../../../../api/FetcherHelper";
 import { CityBikeStationResponse } from "../model/CityBikeStationsResponse";
 import { CityBikeStatusResponse } from "../model/CityBikeStatusResponse";
-import { Station } from "../model/CityBikeResponse";
 import externalApiClient from "../../../../api/ExternalApiClient";
 
-const CityBikeStatusFetcher = async (stationsIds: string[]) => {
+const CityBikeStatusFetcher = async () => {
   try {
     const cityBikeConfig = configuration.getOsloCityBikeConfig();
     const identifier = configuration.getIdentifierConfig();
-
-    const stationsRes = await CityBikeStationsFetcher();
 
     const statusEndpoint = cityBikeConfig.Status.Endpoint;
     const statusFetcher = new FetcherHelper<CityBikeStatusResponse>(60 * 3 * 1000);
@@ -23,22 +19,8 @@ const CityBikeStatusFetcher = async (stationsIds: string[]) => {
       return res.data;
     });
 
-    const keepIds = new Set(stationsIds.map((id) => Number(id)));
-    const filteredStations = stationsRes.data.stations.filter((station) => keepIds.has(Number(station.station_id)));
-    const filteredStatus = statusRes.data.stations.filter((station) => keepIds.has(Number(station.station_id)));
-
-    const stationMap = new Map<number, Station>(filteredStations.map((s) => [Number(s.station_id), s]));
-
-    filteredStatus.forEach((status) => {
-      const id = Number(status.station_id);
-      const station = stationMap.get(id);
-      if (station) {
-        station.last_reported = status.last_reported;
-        station.num_bikes_available = status.num_bikes_available;
-        stationMap.set(id, station);
-      }
-    });
-    return stationMap;
+    return statusRes;
+    
   } catch (error) {
     console.error("Can`t get City Bike data");
     throw error;
