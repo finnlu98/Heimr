@@ -1,19 +1,36 @@
-import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
+import { useQueries } from "@tanstack/react-query";
 import { busApi } from "../api/bus-time-fetcher";
 import { BusData } from "../model/BusData";
 import { TravelCardConfig } from "../TravelCardWidget";
 
-export function useBusQuery(config: TravelCardConfig | undefined) {
-  return useWidgetQuery<BusData[] | undefined>({
-    queryKey: ["busTimes"],
-    queryFn: () => {
-      if (!config || (config && config?.travelRoutes && config?.travelRoutes?.length < 1))
-        return Promise.resolve(undefined);
 
-      return busApi.getBusTimes(config.travelRoutes);
-    },
-    enabled: Boolean(config?.travelRoutes && config?.travelRoutes.length > 0),
-    refetchInterval: 7 * 60 * 1000,
-    staleTime: 5 * 60 * 1000,
+export function useBusQueries(config: TravelCardConfig | undefined): { data: BusData[] | undefined } {
+  const routes = config?.travelRoutes ?? [];
+  const results = useQueries({
+    queries: routes.map((travelRoute) => ({
+      queryKey: ["busTimes", travelRoute?.startPlace.properties.id, travelRoute?.stopPlace.properties.id],
+      queryFn: () => {
+        if (!travelRoute) return Promise.resolve(undefined);
+
+        return busApi.getBusTimes(travelRoute);
+      },
+      enabled: Boolean(travelRoute),
+      refetchInterval: 7 * 60 * 1000,
+      staleTime: 5 * 60 * 1000,
+    })),
   });
+
+  if (routes.length === 0) {
+    return { data: undefined };
+  }
+
+  const busTimes: BusData[] = [];
+  results.forEach((result, index) => {
+    const travelResponse = result.data;
+    if (travelResponse) {
+      busTimes.push(new BusData(travelResponse, routes[index]));
+    }
+  });
+
+  return { data: busTimes };
 }

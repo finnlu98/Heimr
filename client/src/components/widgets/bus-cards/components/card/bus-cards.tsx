@@ -42,7 +42,7 @@ const BusCards: React.FC<BusCardsProps> = ({ tripIdentifier, travelRoute, tripPa
     <div className="h-column">
       {tripIdentifier === TripIdentifier.title && (
         <div className="trip-identifier">
-          <p>{tripIdentifier} </p>
+          <p>{travelRoute.startPlace.properties.name} - {travelRoute.stopPlace.properties.name} </p>
         </div>
       )}
       <div className="bus-cards">

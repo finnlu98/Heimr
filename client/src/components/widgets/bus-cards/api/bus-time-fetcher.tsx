@@ -5,21 +5,17 @@ import { TravelRoute } from "../TravelCardWidget";
 import { BusData } from "../model/BusData";
 
 class BusApi extends BaseWidgetApi {
-  async getBusTimes(travelRoutes: TravelRoute[]): Promise<BusData[] | undefined> {
-    const busTimes: BusData[] = [];
+  async getBusTimes(travelRoute: TravelRoute): Promise<TravelResponse | undefined> {
 
-    for (const route of travelRoutes) {
       try {
-        const busTime = await this.fetchBusTimes(route.startPlace.properties.id, route.stopPlace.properties.id);
-        busTimes.push(new BusData(busTime, route));
+        const busTime = await this.fetchBusTimes(travelRoute.startPlace.properties.id, travelRoute.stopPlace.properties.id);
+        return busTime;
       } catch (error) {
         console.error(
-          `Error fetching bus times for route from ${route.startPlace.properties.id} to ${route.stopPlace.properties.id}:`,
+          `Error fetching bus times for route from ${travelRoute.startPlace.properties.id} to ${travelRoute.stopPlace.properties.id}:`,
           error,
         );
       }
-    }
-    return busTimes;
   }
 
   private async fetchBusTimes(fromPlace: string, toPlace: string): Promise<TravelResponse> {

@@ -6,7 +6,7 @@ import DocumentationBase from "../core/components/DocumentationBase";
 import { TripIdentifier } from "./model/enum/TripIdentifier";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
 import { BusData } from "./model/BusData";
-import { useBusQuery } from "./hooks/bus-hook";
+import { useBusQueries } from "./hooks/bus-hook";
 
 const TravelDocumentation = () => (
   <DocumentationBase
@@ -20,7 +20,7 @@ export const TravelCardWidget: WidgetDefinition<TravelCardConfig, BusData[]> = {
   id: WidgetEnum.busCards,
   friendlyName: "Travel",
   widgetIcon: <BiSolidBus />,
-  useQuery: useBusQuery,
+  useQuery: useBusQueries,
   widgetComponent: TravelCard,
   widgetConfig: {
     component: TravelCardConfiguration,
