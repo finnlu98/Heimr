@@ -4,7 +4,7 @@ import { CalenderConfig } from "../CalenderWidget";
 
 export function useCalenderQuery(config: CalenderConfig | undefined) {
   return useWidgetQuery<CalendarEvent[] | undefined>({
-    queryKey: ["calenderEvents"],
+    queryKey: ["calenderEvents", config?.calenderICalEndpoints],
     queryFn: async () => {
       if (!config?.calenderICalEndpoints || config.calenderICalEndpoints.length === 0)
         return Promise.resolve(undefined);
