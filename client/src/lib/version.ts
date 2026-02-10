@@ -1,6 +1,6 @@
-import { GridItem } from "../components/dashboard/grid/model/grid-models";
-import { WidgetEnum } from "../components/widgets/core/model/widget-type";
-import { WidgetConfigs } from "../components/widgets/core/model/wigets";
+import { GridItem } from "../core/dashboard/grid/model/grid-models";
+import { WidgetEnum } from "../widgets/core/model/widget-type";
+import { WidgetConfigs } from "../widgets/core/model/wigets";
 
 const LAYOUT_VERSION = process.env.REACT_APP_LAYOUT_VERSION || "1.0.0";
 const CONFIG_VERSION = process.env.REACT_APP_CONFIG_VERSION || "1.0.0";

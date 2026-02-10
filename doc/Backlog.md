@@ -8,7 +8,6 @@
 - bustime fetch is not updated on new route and route name is always 1
 
 ## MVP launch fix tilbakemeldinger
-- Cache issues with city bike, travel card
 
 - fix on hover on tablet
 - layout template button
