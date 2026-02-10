@@ -1,51 +1,41 @@
 import configuration from "../../../../Configuration";
-import FetcherHelper from "../../../../api/FetcherHelper";
 import { CityBikeStationResponse } from "../model/CityBikeStationsResponse";
 import { CityBikeStatusResponse } from "../model/CityBikeStatusResponse";
 import externalApiClient from "../../../../api/ExternalApiClient";
+import BaseWidgetApi from "../../core/api/BaseWidgetApi";
 
-const CityBikeStatusFetcher = async () => {
-  try {
-    const cityBikeConfig = configuration.getOsloCityBikeConfig();
-    const identifier = configuration.getIdentifierConfig();
 
-    const statusEndpoint = cityBikeConfig.Status.Endpoint;
-    const statusFetcher = new FetcherHelper<CityBikeStatusResponse>(60 * 3 * 1000);
-    const statusRes = await statusFetcher.getData(CityBikeStatusResponse.Identifier, async () => {
-      var res = await externalApiClient.get<CityBikeStatusResponse>(statusEndpoint, {
+class CityBikeApi extends BaseWidgetApi {
+  async getCityBikeStatus(): Promise<CityBikeStatusResponse> {
+    try {
+      const statusEndpoint = configuration.getOsloCityBikeConfig().Status.Endpoint;
+      const identifier = configuration.getIdentifierConfig();
+      const statusRes = await externalApiClient.get<CityBikeStatusResponse>(statusEndpoint, {
         headers: { "Client-Identifier": identifier },
         meta: { loadingKey: "fetch-city-bike-status" },
       });
-      return res.data;
-    });
-
-    return statusRes;
-    
-  } catch (error) {
-    console.error("Can`t get City Bike data");
-    throw error;
+      return statusRes.data;
+    } catch (error) {
+      console.error("Can`t get City Bike data");
+      throw error;
+    }
   }
-};
 
-export const CityBikeStationsFetcher = async () => {
-  try {
-    const cityBikeConfig = configuration.getOsloCityBikeConfig();
-    const identifier = configuration.getIdentifierConfig();
-
-    const stationEndpoint = cityBikeConfig.StationsInformation.Endpoint;
-    const stationFetcher = new FetcherHelper<CityBikeStationResponse>(60 * 60 * 24 * 7 * 1000); // Once a week
-    const stationsRes = await stationFetcher.getData(CityBikeStationResponse.Identifier, async () => {
-      var res = await externalApiClient.get<CityBikeStationResponse>(stationEndpoint, {
+  async getCityBikeStations(): Promise<CityBikeStationResponse> {
+    try {
+      const stationEndpoint = configuration.getOsloCityBikeConfig().StationsInformation.Endpoint;
+      const identifier = configuration.getIdentifierConfig();
+      const stationRes = await externalApiClient.get<CityBikeStationResponse>(stationEndpoint, {
         headers: { "Client-Identifier": identifier },
         meta: { loadingKey: "fetch-city-bike-stations" },
       });
-      return res.data;
-    });
-    return stationsRes;
-  } catch (error) {
-    console.error("Can`t get City Bike stations data");
-    throw error;
+      return stationRes.data;
+    } catch (error) {
+      console.error("Can`t get City Bike stations data");
+      throw error;
+    }
   }
-};
+}
 
-export default CityBikeStatusFetcher;
+const cityBikeApi = new CityBikeApi();
+export default cityBikeApi;

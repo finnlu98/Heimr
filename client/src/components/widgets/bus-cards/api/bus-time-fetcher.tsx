@@ -2,7 +2,6 @@ import { TravelResponse } from "../model/TravelResponse";
 import Configuration from "../../../../Configuration";
 import BaseWidgetApi from "../../core/api/BaseWidgetApi";
 import { TravelRoute } from "../TravelCardWidget";
-import { BusData } from "../model/BusData";
 
 class BusApi extends BaseWidgetApi {
   async getBusTimes(travelRoute: TravelRoute): Promise<TravelResponse | undefined> {
