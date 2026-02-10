@@ -7,14 +7,7 @@ import { TripIdentifier } from "./model/enum/TripIdentifier";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
 import { BusData } from "./model/BusData";
 import { useBusQueries } from "./hooks/bus-hook";
-
-const TravelDocumentation = () => (
-  <DocumentationBase
-    imgPaths={["./img/integrations/entur_logo.svg"]}
-    generalDocumentation="<p>The Travel Card widget provides real-time information about your selected travel routes, including departure times and delays. Stay informed and plan your journeys effectively with up-to-date transit data.</p>"
-    dataUpdateInterval="7 minutes"
-  />
-);
+import TravelCardDocumentation from "./components/documentation/travel-card-configuration";
 
 export const TravelCardWidget: WidgetDefinition<TravelCardConfig, BusData[]> = {
   id: WidgetEnum.busCards,
@@ -24,10 +17,11 @@ export const TravelCardWidget: WidgetDefinition<TravelCardConfig, BusData[]> = {
   widgetComponent: TravelCard,
   widgetConfig: {
     component: TravelCardConfiguration,
-    documentation: TravelDocumentation,
+    documentation: TravelCardDocumentation,
   },
   defaultColSpan: 12,
   defaultRowSpan: 8,
+  fetchtingInterval: 7 * 60 * 1000,
 };
 
 export interface TravelCardConfig {

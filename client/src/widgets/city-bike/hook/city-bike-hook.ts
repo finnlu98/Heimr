@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
-import { CityBikeConfig } from "../CityBikeWidget";
+import { CityBikeConfig, CityBikeWidget } from "../CityBikeWidget";
 import { CityBikeData } from "../model/CityBikeData";
 import { CityBikeResponse, Station } from "../model/CityBikeResponse";
 import CityBikeService from "../service/CityBikeService";
@@ -16,7 +16,7 @@ export function useCityBikeStatusQuery(config: CityBikeConfig | undefined) {
         return await cityBikeApi.getCityBikeStatus();
     },
     enabled: Boolean(config),
-    refetchInterval: 3 * 60 * 1000,
+    refetchInterval: CityBikeWidget.fetchtingInterval,
     staleTime: 2 * 60 * 1000,
   });
 }

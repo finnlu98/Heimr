@@ -1,7 +1,7 @@
-import { NewsResponse } from "./model/NewsResponse";
+import { NewsResponse } from "../../model/NewsResponse";
 import "./news.css";
-import LoadingHelperWidget from "../core/components/LoadingHelperWidget";
-import { WidgetEnum } from "../core/model/widget-type";
+import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
+import { WidgetEnum } from "../../../core/model/widget-type";
 
 interface NewsProps {
   data?: NewsResponse;

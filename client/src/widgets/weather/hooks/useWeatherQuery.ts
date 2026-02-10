@@ -1,6 +1,6 @@
 import { WeatherData } from "../model/data/WeatherData";
 import weatherApi from "../api/WeatherApi";
-import { WeatherConfig } from "../WeatherWidget";
+import { WeatherConfig, WeatherWidget } from "../WeatherWidget";
 import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
 
 export function useWeatherQuery(config: WeatherConfig | undefined) {
@@ -11,7 +11,7 @@ export function useWeatherQuery(config: WeatherConfig | undefined) {
       return weatherApi.getWeatherData(config.lat, config.lon);
     },
     enabled: Boolean(config?.lat && config?.lon),
-    refetchInterval: 60 * 60 * 1000,
+    refetchInterval: WeatherWidget.fetchtingInterval,
     staleTime: 50 * 60 * 1000,
   });
 }

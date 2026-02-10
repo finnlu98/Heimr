@@ -1,11 +1,12 @@
 import { AiTwotoneDatabase } from "react-icons/ai";
 import { MdOutlineUpdate } from "react-icons/md";
 import "./DocumentationBase.css";
+import { formatDuration } from "../../../lib/format-duration";
 
 interface DocumentationWrapperProps {
   provider?: string;
   imgPaths?: string[];
-  dataUpdateInterval: string;
+  dataUpdateInterval: number | string;
   generalDocumentation: string;
   extraRequirements?: string;
 }
@@ -33,7 +34,7 @@ const DocumentationBase: React.FC<DocumentationWrapperProps> = ({
         </div>
         <div>
           <p className="h-row">
-            <MdOutlineUpdate /> {dataUpdateInterval}
+            <MdOutlineUpdate />  {formatDuration(typeof dataUpdateInterval === "string" ? parseInt(dataUpdateInterval) : dataUpdateInterval)}
           </p>
         </div>
       </div>

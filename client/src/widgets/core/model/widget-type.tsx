@@ -26,6 +26,7 @@ export interface WidgetDefinition<TConfig, TData = unknown, TError = unknown> {
   defaultColSpan: number;
   defaultRowSpan: number;
   boolenHiddenSupported?: boolean;
+  fetchtingInterval?: number;
 }
 
 export interface WidgetConfig<TConfig> {

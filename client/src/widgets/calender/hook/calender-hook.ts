@@ -1,6 +1,6 @@
 import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
 import calenderApi, { CalendarEvent } from "../api/calender-ical-fetcher";
-import { CalenderConfig } from "../CalenderWidget";
+import { CalenderConfig, CalenderWidget } from "../CalenderWidget";
 
 export function useCalenderQuery(config: CalenderConfig | undefined) {
   return useWidgetQuery<CalendarEvent[] | undefined>({
@@ -12,7 +12,7 @@ export function useCalenderQuery(config: CalenderConfig | undefined) {
       return response;
     },
     enabled: Boolean(config?.calenderICalEndpoints && config.calenderICalEndpoints.length > 0),
-    refetchInterval: 15 * 60 * 1000,
-    staleTime: 10 * 60 * 1000,
+    refetchInterval: CalenderWidget.fetchtingInterval,
+    staleTime: 23 * 60 * 60 * 1000,
   });
 }

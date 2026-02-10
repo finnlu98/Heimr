@@ -5,14 +5,7 @@ import DocumentationBase from "../core/components/DocumentationBase";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
 import { CityBikeData } from "./model/CityBikeData";
 import { useMappedStatusQuery } from "./hook/city-bike-hook";
-
-const CityBikeDocumentation = () => (
-  <DocumentationBase
-    provider="Oslo City Bike"
-    generalDocumentation="<p>The City Bike widget displays real-time information about available city bikes at various stations in your selected area. Stay updated on bike availability and plan your rides accordingly.</p>"
-    dataUpdateInterval="3 minutes"
-  />
-);
+import CityBikeDocumentation from "./components/documentation/city-bike-documentation";
 
 export const CityBikeWidget: WidgetDefinition<CityBikeConfig, CityBikeData> = {
   id: WidgetEnum.cityBike,
@@ -26,6 +19,7 @@ export const CityBikeWidget: WidgetDefinition<CityBikeConfig, CityBikeData> = {
   },
   defaultColSpan: 8,
   defaultRowSpan: 8,
+  fetchtingInterval: 3 * 60 * 1000,
 };
 
 export interface CityBikeConfig {
