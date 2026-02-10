@@ -1,7 +1,7 @@
 import "./city-bike.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";

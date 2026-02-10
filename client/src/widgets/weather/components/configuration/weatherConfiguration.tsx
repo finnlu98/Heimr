@@ -1,5 +1,5 @@
 import { FaRegSave } from "react-icons/fa";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { WeatherConfig } from "../../WeatherWidget";
 import { useState } from "react";
 import AdressSearch from "../../../../core/shared/adressSearch/AdressSearch";

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import { CiEdit } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import "./edit-mode-button.css";

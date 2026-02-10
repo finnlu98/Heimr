@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { CalenderConfig } from "../../CalenderWidget";
 import { MdDelete } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";

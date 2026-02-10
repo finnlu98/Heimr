@@ -5,7 +5,7 @@ import "./laundry-week.css";
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
-import { useDashboard } from "../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import EditWidget from "../../core/components/EditWidget";
 import { WidgetEnum } from "../../core/model/widget-type";
 

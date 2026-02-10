@@ -8,13 +8,13 @@ import "leaflet/dist/leaflet.css";
 import { Grid } from "./core/dashboard/grid/grid";
 import EditModeToggleButton from "./core/dashboard/editMode/edit-mode-button";
 import Sidebar from "./core/dashboard/sidebar/sidebar";
-import DashboardProvider from "./core/dashboard/dashboard-context";
+import DashboardProvider from "./context/dashboard-context";
 import AuthProvider from "./context/AuthContext";
 import apiClient from "./api/ApiClient";
 import externalApiClient from "./api/ExternalApiClient";
 import { ScreenSizeSelector } from "./core/dashboard/screenSizeSelector/screen-size-selector";
 import ZoomControl from "./core/dashboard/zoomControl/zoom-control";
-import ErrorBoundary from "./core/error/error-boundary";
+import ErrorBoundary from "./feedback/error/error-boundary";
 import { ApiBridge } from "./feedback/loading/components/ApiBridge";
 import FeedBackProvider from "./feedback/FeedProvider";
 

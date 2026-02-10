@@ -5,7 +5,7 @@ import WidgetContainer from "./widget/widget-container";
 import GridService from "./service/grid-service";
 import { MoveType } from "./model/move-type";
 import { ResizeDirection } from "./model/resize-direction";
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import DefaultDashboardActions from "../default/DefaultDashboardActions";
 import "./grid.css";
 import { isDefaultView } from "../util/isDefaultView";

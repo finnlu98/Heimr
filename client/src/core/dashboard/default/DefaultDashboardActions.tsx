@@ -1,5 +1,5 @@
 import { useAuth } from "../../../context/AuthContext";
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import { EditingKey } from "../model/EditMode";
 
 const DefaultDashboardActions: React.FC = () => {

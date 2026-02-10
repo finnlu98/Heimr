@@ -5,7 +5,7 @@ import { IoMdArrowDropup } from "react-icons/io";
 import StockFetcher from "../../api/stock-fetcher";
 import { StockResponse } from "../../model/StockResponse";
 import { StocksConfig } from "../../StocksWidget";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { WidgetEnum } from "../../../core/model/widget-type";
 
 const Stocks: React.FC = () => {

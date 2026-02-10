@@ -1,5 +1,5 @@
 import "./travel-card-configuration.css";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { TravelCardConfig, TravelRoute } from "../../TravelCardWidget";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";

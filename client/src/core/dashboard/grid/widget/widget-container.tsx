@@ -1,6 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import { GridItem, GridMetaData } from "../model/grid-models";
-import { useDashboard } from "../../dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { MdDelete } from "react-icons/md";
 import GridService from "../service/grid-service";
 import { ResizeHandles } from "../resize-handles";

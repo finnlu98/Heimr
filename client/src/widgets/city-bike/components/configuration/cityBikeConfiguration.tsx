@@ -1,5 +1,5 @@
 import { FaRegSave } from "react-icons/fa";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";

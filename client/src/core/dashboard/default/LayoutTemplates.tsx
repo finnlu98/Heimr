@@ -1,4 +1,4 @@
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import "./LayoutTemplates.css";
 import { useState } from "react";
 import defaultTemplate from "./templates/DefaultTemplate";

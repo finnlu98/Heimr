@@ -3,7 +3,7 @@ import "./travel-card.css";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
 import { BusData } from "../../model/BusData";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { TravelCardConfig } from "../../TravelCardWidget";
 import { TripIdentifier } from "../../model/enum/TripIdentifier";
 

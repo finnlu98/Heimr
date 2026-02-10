@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./screen-size-selector.css";
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 
 interface ScreenSize {
   width: number;

@@ -1,4 +1,4 @@
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import { IoAddCircle } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";

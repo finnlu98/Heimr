@@ -1,7 +1,7 @@
 import { MdOutlineZoomIn, MdOutlineZoomOut } from "react-icons/md";
 import { TbZoomScan } from "react-icons/tb";
 import "./zoom-control.css";
-import { useDashboard } from "../dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import { use, useEffect } from "react";
 
 interface ZoomControlProps {

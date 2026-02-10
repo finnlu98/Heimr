@@ -2,7 +2,7 @@ import { IoAddCircle } from "react-icons/io5";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { StocksConfig } from "../../StocksWidget";
-import { useDashboard } from "../../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../../context/dashboard-context";
 import { WidgetEnum } from "../../../core/model/widget-type";
 
 const StocksConfiguration: React.FC = () => {

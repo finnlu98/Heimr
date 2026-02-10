@@ -1,4 +1,4 @@
-import { useDashboard } from "../../../core/dashboard/dashboard-context";
+import { useDashboard } from "../../../context/dashboard-context";
 import { EditingKey } from "../../../core/dashboard/model/EditMode";
 import { WidgetEnum } from "../model/widget-type";
 
