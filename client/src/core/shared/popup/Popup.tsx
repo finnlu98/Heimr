@@ -1,30 +1,82 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./Popup.css";
 import React from "react";
 
 interface PopupProps {
   children: (closePopup: () => void) => React.ReactNode[] | React.ReactNode[];
+  position?: "top" | "bottom" | "left" | "right";
+  align?: "center" | "start" | "end";
+  surface?: "surface";
   closePopupSeconds?: number;
 }
 
-const PopupButton: React.FC<PopupProps> = ({ children, closePopupSeconds }) => {
+const PopupButton: React.FC<PopupProps> = ({
+  children,
+  closePopupSeconds,
+  position = "top",
+  align = "center",
+  surface = "",
+}) => {
   const [showPopup, setShowPopup] = useState(false);
   const [cords, setCords] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const closePopup = () => setShowPopup(false);
   const [trigger, content] = typeof children === "function" ? children(closePopup) : children;
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+  const updatePosition = useCallback(() => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const gap = 8;
+    let top = rect.top - gap;
+    let left = rect.left + rect.width / 2;
+
+    if (position === "bottom") {
+      top = rect.bottom + gap;
+    } else if (position === "left") {
+      top = rect.top + rect.height / 2;
+      left = rect.left - gap;
+    } else if (position === "right") {
+      top = rect.top + rect.height / 2;
+      left = rect.right + gap;
+    }
+
+    if (position === "top" || position === "bottom") {
+      if (align === "start") {
+        left = rect.left;
+      } else if (align === "end") {
+        left = rect.right;
+      }
+    } else {
+      if (align === "start") {
+        top = rect.top;
+      } else if (align === "end") {
+        top = rect.bottom;
+      }
+    }
 
     setCords({
-      top: rect.top - 50,
-      left: rect.left + rect.width / 2,
+      top,
+      left,
     });
+  }, [align, position]);
+
+  const handleClick = () => {
+    updatePosition();
 
     setShowPopup((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (!showPopup) return;
+
+    updatePosition();
+
+    const handleResize = () => updatePosition();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [showPopup, updatePosition]);
 
   useEffect(() => {
     if (!showPopup) return;
@@ -53,9 +105,14 @@ const PopupButton: React.FC<PopupProps> = ({ children, closePopupSeconds }) => {
 
   return (
     <div className="popup-container" ref={containerRef}>
-      <div onClick={(e) => handleClick(e)}>{trigger}</div>
+      <button className="popup-trigger" onClick={handleClick} ref={triggerRef}>
+        {trigger}
+      </button>
       {showPopup && (
-        <div className="popup" style={{ top: cords.top, left: cords.left }}>
+        <div
+          className={`popup popup-${position} popup-align-${align} ${surface}`}
+          style={{ top: cords.top, left: cords.left }}
+        >
           {content}
         </div>
       )}

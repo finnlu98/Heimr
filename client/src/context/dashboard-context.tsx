@@ -14,6 +14,7 @@ import { useAlert } from "../feedback/alert/provider/AltertProvider";
 import { AlertVariant } from "../feedback/alert/model/AlertTypes";
 import { WidgetDefinition, WidgetEnum } from "../widgets/core/model/widget-type";
 import { WidgetConfigs, Widgets } from "../widgets/core/model/wigets";
+import ScreenSize from "../core/dashboard/model/ScreenSize";
 
 type DashboardActions = {
   setWidgets: (widgets: GridItem[]) => void;
@@ -22,23 +23,40 @@ type DashboardActions = {
   updateWidget: (item: GridItem) => void;
   onGridResize: (meta: GridMetaData) => void;
   toggleEditMode: (editKey?: EditingKey) => void;
+  saveEdit: () => void;
+  cancelEdit: () => void;
   setEditingKey: (key: EditingKey | null) => void;
   setWidgetConfig: (id: WidgetEnum, cfg: any) => void;
+  setDashboardSize: (size: ScreenSize) => void;
 };
 
 type DashboardState = {
   widgets: GridItem[];
+  savedWidgets: GridItem[];
+  dashboardSize: ScreenSize;
+  savedDashboardSize: ScreenSize;
   editMode: EditModeState;
   isDirty: boolean;
   widgetConfigs: Record<WidgetEnum, object>;
+  savedWidgetConfigs: Record<WidgetEnum, object>;
   gridMetaData?: GridMetaData;
 };
 
+const initialWidgets: GridItem[] = [
+  { widget: WidgetEnum.header, id: uuidv4(), col: 0, row: 0, colSpan: 24, rowSpan: 3 },
+];
+
+const defaultDashboardSize: ScreenSize = { width: 800, height: 1064 };
+
 const initialState: DashboardState = {
-  widgets: [{ widget: WidgetEnum.header, id: uuidv4(), col: 0, row: 0, colSpan: 24, rowSpan: 3 }],
+  widgets: initialWidgets,
+  savedWidgets: initialWidgets,
   widgetConfigs: WidgetConfigs,
+  savedWidgetConfigs: WidgetConfigs,
   editMode: { editMode: false, editingWidgetKey: null },
   isDirty: false,
+  dashboardSize: defaultDashboardSize,
+  savedDashboardSize: defaultDashboardSize,
 };
 
 interface DashboardContextProps {
@@ -58,19 +76,25 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
     try {
       const cachedLayout = localStorage.getItem("heimr-grid-layout");
       const cachedConfig = localStorage.getItem("heimr-widget-config");
+      const cachedSize = localStorage.getItem("heimr-dashboard-size");
 
       const parsedLayout = cachedLayout ? JSON.parse(cachedLayout) : null;
       const parsedConfig = cachedConfig ? JSON.parse(cachedConfig) : null;
+      const parsedSize = cachedSize ? JSON.parse(cachedSize) : null;
 
       const widgetLayout = ConfigMigration.migrateLayout(parsedLayout ?? initialState.widgets);
       const widgetConfig = ConfigMigration.migrateConfig(parsedConfig ?? initialState.widgetConfigs);
 
       return {
         widgets: widgetLayout,
+        savedWidgets: widgetLayout,
         widgetConfigs: widgetConfig,
+        savedWidgetConfigs: widgetConfig,
         editMode: { editMode: false, editingWidgetKey: null },
         isDirty: false,
         gridMetaData: undefined,
+        dashboardSize: parsedSize ?? defaultDashboardSize,
+        savedDashboardSize: parsedSize ?? defaultDashboardSize,
       };
     } catch (e) {
       console.warn("Failed to load from localStorage:", e);
@@ -93,7 +117,10 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
           setState((prev) => ({
             ...prev,
             widgets: ConfigMigration.migrateLayout(serverConfig?.widgetPositions ?? prev.widgets),
+            savedWidgets: ConfigMigration.migrateLayout(serverConfig?.widgetPositions ?? prev.widgets),
             widgetConfigs: ConfigMigration.migrateConfig(serverConfig?.widgetConfig ?? prev.widgetConfigs),
+            savedWidgetConfigs: ConfigMigration.migrateConfig(serverConfig?.widgetConfig ?? prev.widgetConfigs),
+            isDirty: false,
           }));
           return;
         }
@@ -124,18 +151,21 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
       setState((prev) => ({
         ...prev,
         widgets: ConfigMigration.migrateLayout(serverConfig.widgetPositions),
+        savedWidgets: ConfigMigration.migrateLayout(serverConfig.widgetPositions),
+        savedWidgetConfigs: ConfigMigration.migrateConfig(serverConfig.widgetConfig),
         widgetConfigs: ConfigMigration.migrateConfig(serverConfig.widgetConfig),
+        isDirty: false,
       }));
     }
   }
 
-  function updateConfig() {
+  function updateConfig(widgets: GridItem[], widgetConfigs: Record<WidgetEnum, object>) {
     try {
       apiClient.post("/me/home/config", {
-        widgetPositions: ConfigMigration.wrapLayout(state.widgets),
-        widgetConfig: ConfigMigration.wrapConfig(state.widgetConfigs),
+        widgetPositions: ConfigMigration.wrapLayout(widgets),
+        widgetConfig: ConfigMigration.wrapConfig(widgetConfigs),
       });
-      showAlert("Dashboard configuration saved successfully.", AlertVariant.SUCCESS);
+      showAlert("Saved", AlertVariant.SUCCESS);
     } catch (error) {
       console.error("Failed to initiate config save to backend:", error);
       return;
@@ -144,21 +174,21 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
 
   useEffect(() => {
     try {
-      const verisonedLayout = ConfigMigration.wrapLayout(state.widgets);
-      localStorage.setItem("heimr-grid-layout", JSON.stringify(verisonedLayout));
+      const versionedLayout = ConfigMigration.wrapLayout(state.savedWidgets);
+      localStorage.setItem("heimr-grid-layout", JSON.stringify(versionedLayout));
     } catch (e) {
       console.warn("Failed to write heimr-grid-layout to localStorage", e);
     }
-  }, [state.widgets]);
+  }, [state.savedWidgets]);
 
   useEffect(() => {
     try {
-      const versionedConfig = ConfigMigration.wrapConfig(state.widgetConfigs);
+      const versionedConfig = ConfigMigration.wrapConfig(state.savedWidgetConfigs);
       localStorage.setItem("heimr-widget-config", JSON.stringify(versionedConfig));
     } catch (e) {
       console.warn("Failed to write heimr-widget-config to localStorage", e);
     }
-  }, [state.widgetConfigs]);
+  }, [state.savedWidgetConfigs]);
 
   const setWidgetConfig = (id: WidgetEnum, cfg: any) => {
     setState((prev) => ({
@@ -167,6 +197,7 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         ...prev.widgetConfigs,
         [id]: cfg,
       },
+      isDirty: true,
     }));
   };
 
@@ -212,8 +243,22 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
   };
 
   const toggleEditMode = (editKey?: EditingKey) => {
-    const shouldSave = state.isDirty && state.editMode.editMode && user;
-    if (state.isDirty && state.editMode.editMode && !user) {
+    if (state.editMode.editMode) {
+      saveEdit();
+      return;
+    }
+
+    setState((prev) => ({
+      ...prev,
+      editMode: {
+        editMode: true,
+        editingWidgetKey: editKey ?? null,
+      },
+    }));
+  };
+
+  const saveEdit = () => {
+    if (state.isDirty && !user) {
       showAlert(
         "Your changes have not been saved to your profile since you are not logged in. Go to home settings and log in to save your changes.",
         AlertVariant.INFO,
@@ -221,16 +266,27 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
       );
     }
 
-    if (shouldSave) {
-      updateConfig();
+    if (state.isDirty && user) {
+      updateConfig(state.widgets, state.widgetConfigs);
     }
 
     setState((prev) => ({
       ...prev,
-      editMode: {
-        editMode: !prev.editMode.editMode,
-        editingWidgetKey: !prev.editMode.editMode ? (editKey ?? null) : null,
-      },
+      savedWidgets: prev.widgets,
+      savedWidgetConfigs: prev.widgetConfigs,
+      savedDashboardSize: prev.dashboardSize,
+      editMode: { editMode: false, editingWidgetKey: null },
+      isDirty: false,
+    }));
+  };
+
+  const cancelEdit = () => {
+    setState((prev) => ({
+      ...prev,
+      widgets: prev.savedWidgets,
+      widgetConfigs: prev.savedWidgetConfigs,
+      editMode: { editMode: false, editingWidgetKey: null },
+      dashboardSize: prev.savedDashboardSize,
       isDirty: false,
     }));
   };
@@ -242,6 +298,15 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         ...prev.editMode,
         editingWidgetKey: key,
       },
+    }));
+  };
+
+  const setDashboardSize = (size: ScreenSize) => {
+    localStorage.setItem("heimr-dashboard-size", JSON.stringify(size));
+
+    setState((prev) => ({
+      ...prev,
+      dashboardSize: size,
     }));
   };
 
@@ -282,6 +347,9 @@ const DashboardProvider: React.FC<DashboardContextProps> = ({ children }) => {
         updateWidget,
         removeWidget,
         toggleEditMode,
+        saveEdit,
+        cancelEdit,
+        setDashboardSize,
         setEditingKey,
         onGridResize,
       }}
