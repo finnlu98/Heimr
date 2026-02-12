@@ -269,6 +269,15 @@ button:active {
   transform: scale(0.98);
 }
 
+button:disabled,
+button[aria-disabled="true"] {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+}
+
 .button-tertiary {
   background: transparent;
   border: 2px solid var(--color-off-gray);

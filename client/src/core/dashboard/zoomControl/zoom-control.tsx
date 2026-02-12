@@ -2,16 +2,16 @@ import { MdOutlineZoomIn, MdOutlineZoomOut } from "react-icons/md";
 import { TbZoomScan } from "react-icons/tb";
 import "./zoom-control.css";
 import { useDashboard } from "../../../context/dashboard-context";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 interface ZoomControlProps {
   zoom: number;
   onZoomChange: (zoom: number) => void;
-  screenSize: { width: number; height: number };
 }
 
-const ZoomControl: React.FC<ZoomControlProps> = ({ zoom, onZoomChange, screenSize }) => {
+const ZoomControl: React.FC<ZoomControlProps> = ({ zoom, onZoomChange }) => {
   const { editMode } = useDashboard();
+  const { dashboardSize } = useDashboard();
   const handleZoomIn = () => onZoomChange(Math.min(zoom + 0.1, 2));
   const handleZoomOut = () => onZoomChange(Math.max(zoom - 0.1, 0.5));
 
@@ -19,8 +19,8 @@ const ZoomControl: React.FC<ZoomControlProps> = ({ zoom, onZoomChange, screenSiz
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    const scaleX = viewportWidth / screenSize.width;
-    const scaleY = viewportHeight / screenSize.height;
+    const scaleX = viewportWidth / dashboardSize.width;
+    const scaleY = viewportHeight / dashboardSize.height;
 
     const fitZoom = Math.min(scaleX, scaleY, 2);
     onZoomChange(Math.max(fitZoom, 0.5));
@@ -28,7 +28,7 @@ const ZoomControl: React.FC<ZoomControlProps> = ({ zoom, onZoomChange, screenSiz
 
   useEffect(() => {
     handleZoomToFit();
-  }, [screenSize]);
+  }, [dashboardSize]);
 
   return (
     <>

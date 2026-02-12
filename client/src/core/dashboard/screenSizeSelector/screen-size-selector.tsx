@@ -1,45 +1,55 @@
 import React, { useEffect, useState } from "react";
 import "./screen-size-selector.css";
 import { useDashboard } from "../../../context/dashboard-context";
-
-interface ScreenSize {
-  width: number;
-  height: number;
-}
-
-interface ScreenSizeSelectorProps {
-  onSizeChange: (size: ScreenSize) => void;
-  currentSize: ScreenSize;
-}
+import ScreenSize from "../model/ScreenSize";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import PopupButton from "../../shared/popup/Popup";
 
 const PRESETS = [
   { name: "Tablet (Portrait)", width: 768, height: 1024 },
   { name: "Tablet (Landscape)", width: 1024, height: 768 },
 ];
 
-export const ScreenSizeSelector: React.FC<ScreenSizeSelectorProps> = ({ onSizeChange, currentSize }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [customWidth, setCustomWidth] = useState(currentSize.width.toString());
-  const [customHeight, setCustomHeight] = useState(currentSize.height.toString());
+export const ScreenSizeSelector: React.FC = () => {
+  const [isDirty, setIsDirty] = useState(false);
+  const { dashboardSize, setDashboardSize } = useDashboard();
+  const [prevCustomSize, setPrevCustomSize] = useState<ScreenSize[]>([]);
   const { editMode } = useDashboard();
+  const [customSize, setCustomSize] = useState<ScreenSize>(dashboardSize);
 
-  const handlePresetClick = (preset: { width: number; height: number }) => {
-    onSizeChange(preset);
-    setCustomWidth(preset.width.toString());
-    setCustomHeight(preset.height.toString());
+  const onSetCustomSize = (size: ScreenSize) => {
+    setCustomSize(size);
+    setIsDirty(true);
+  };
+
+  const handlePresetClick = (preset: ScreenSize) => {
+    setPrevCustomSize([...prevCustomSize, dashboardSize]);
+    setDashboardSize(preset);
+    setCustomSize(preset);
+    setIsDirty(false);
   };
 
   const handleCustomSubmit = () => {
-    const width = parseInt(customWidth);
-    const height = parseInt(customHeight);
+    const { width, height } = customSize;
     if (!isNaN(width) && !isNaN(height) && width > 0 && height > 0) {
-      onSizeChange({ width, height });
+      setDashboardSize(customSize);
+      setIsDirty(false);
+    }
+  };
+
+  const handleBack = () => {
+    if (prevCustomSize.length > 0) {
+      const lastSize = prevCustomSize[prevCustomSize.length - 1];
+      setDashboardSize(lastSize);
+      setCustomSize(lastSize);
+      setPrevCustomSize(prevCustomSize.slice(0, -1));
+      setIsDirty(false);
     }
   };
 
   useEffect(() => {
-    if (editMode) {
-      setIsOpen(false);
+    if (editMode.editMode === false) {
+      setPrevCustomSize([]);
     }
   }, [editMode]);
 
@@ -47,45 +57,52 @@ export const ScreenSizeSelector: React.FC<ScreenSizeSelectorProps> = ({ onSizeCh
     <>
       {editMode.editMode && (
         <div className="screen-size-selector">
-          <button className="animate-appear" onClick={() => setIsOpen(!isOpen)}>
-            📐
-          </button>
+          <PopupButton position="bottom" align="end" surface="surface">
+            {() => [
+              <span>📐</span>,
 
-          {isOpen && (
-            <div className="screen-size-dropdown h-column surface">
-              <div className="screen-size-presets h-column">
-                <h4>Presets</h4>
-                {PRESETS.map((preset) => (
-                  <button key={preset.name} className="preset-button" onClick={() => handlePresetClick(preset)}>
-                    <span>{preset.name}</span>
-                    <span>
-                      {preset.width} × {preset.height}
-                    </span>
-                  </button>
-                ))}
-              </div>
-              <hr></hr>
-              <div className="h-column gap-large">
-                <h4>Custom Size</h4>
-                <div className="h-row">
-                  <input
-                    type="number"
-                    placeholder="Width"
-                    value={customWidth}
-                    onChange={(e) => setCustomWidth(e.target.value)}
-                  />
-                  <span>×</span>
-                  <input
-                    type="number"
-                    placeholder="Height"
-                    value={customHeight}
-                    onChange={(e) => setCustomHeight(e.target.value)}
-                  />
-                  <button onClick={handleCustomSubmit}>Apply</button>
+              <div className="screen-size-dropdown h-column">
+                <div className="screen-size-presets h-column">
+                  <div className="h-row custom-header">
+                    <h4>Presets</h4>
+                    <button onClick={handleBack} className="button-tertiary" disabled={prevCustomSize.length === 0}>
+                      <MdOutlineKeyboardBackspace size={20} />
+                    </button>
+                  </div>
+                  {PRESETS.map((preset) => (
+                    <button key={preset.name} className="preset-button" onClick={() => handlePresetClick(preset)}>
+                      <span>{preset.name}</span>
+                      <span>
+                        {preset.width} × {preset.height}
+                      </span>
+                    </button>
+                  ))}
                 </div>
-              </div>
-            </div>
-          )}
+                <hr></hr>
+                <div className="h-column gap-large">
+                  <h4>Custom Size</h4>
+                  <div className="h-row">
+                    <input
+                      type="number"
+                      placeholder="Width"
+                      value={customSize.width}
+                      onChange={(e) => onSetCustomSize({ ...customSize, width: parseInt(e.target.value) })}
+                    />
+                    <span>×</span>
+                    <input
+                      type="number"
+                      placeholder="Height"
+                      value={customSize.height}
+                      onChange={(e) => onSetCustomSize({ ...customSize, height: parseInt(e.target.value) })}
+                    />
+                    <button onClick={handleCustomSubmit} disabled={!isDirty}>
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>,
+            ]}
+          </PopupButton>
         </div>
       )}
     </>

@@ -1,15 +1,28 @@
 import React from "react";
 import { useDashboard } from "../../../context/dashboard-context";
 import { CiEdit } from "react-icons/ci";
-import { IoClose } from "react-icons/io5";
 import "./edit-mode-button.css";
+import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 const EditModeToggleButton: React.FC = () => {
-  const { editMode, toggleEditMode } = useDashboard();
+  const { editMode, toggleEditMode, saveEdit, cancelEdit } = useDashboard();
+
+  if (!editMode.editMode) {
+    return (
+      <button onClick={() => toggleEditMode()} className="edit-button" aria-label="Edit dashboard">
+        <CiEdit />
+      </button>
+    );
+  }
 
   return (
-    <div onClick={() => toggleEditMode()} className={`edit-button ${editMode.editMode ? "active" : ""}`}>
-      {editMode.editMode ? <IoClose /> : <CiEdit />}
+    <div className="edit-controls">
+      <button onClick={cancelEdit} className="edit-button cancel" aria-label="Cancel changes">
+        <IoMdClose />
+      </button>
+      <button onClick={saveEdit} className="edit-button active" aria-label="Save dashboard">
+        <IoMdCheckmark />
+      </button>
     </div>
   );
 };
