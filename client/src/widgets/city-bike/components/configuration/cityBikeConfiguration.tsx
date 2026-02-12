@@ -1,5 +1,3 @@
-import { FaRegSave } from "react-icons/fa";
-import { useDashboard } from "../../../../context/dashboard-context";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";
@@ -7,33 +5,30 @@ import L from "leaflet";
 import AdressSearch from "../../../../core/shared/adressSearch/AdressSearch";
 import { Address } from "../../../../model/Adress";
 import "./cityBikeConfiguration.css";
-import { WidgetEnum } from "../../../core/model/widget-type";
 import { useCityBikeStationQuery, useClosestCityBikeStations } from "../../hook/city-bike-hook";
 
-const CityBikeConfiguration: React.FC = () => {
-  const { widgetConfigs, setWidgetConfig } = useDashboard();
+interface CityBikeConfigurationProps {
+  config?: CityBikeConfig;
+  setConfig: React.Dispatch<React.SetStateAction<CityBikeConfig>>;
+}
+
+const defaultConfig: CityBikeConfig = {
+  homeCoordinates: { lat: 0, lon: 0 },
+  centerCoordinates: { lat: 0, lon: 0 },
+  zoom: 0,
+  stations: [],
+};
+
+const CityBikeConfiguration: React.FC<CityBikeConfigurationProps> = ({ config = defaultConfig, setConfig }) => {
   const { data: cityStationsResponse } = useCityBikeStationQuery();
 
-  const config = (widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig) ?? {
-    homeCoordinates: { lat: 0, lon: 0 },
-    centerCoordinates: { lat: 0, lon: 0 },
-    zoom: 0,
-    stations: [],
-  };
-
-  const [localConfig, setLocalConfig] = useState(config);
-
-  const closestStations = useClosestCityBikeStations(
-    cityStationsResponse,
-    localConfig.homeCoordinates,
-  );
-
+  const closestStations = useClosestCityBikeStations(cityStationsResponse, config.homeCoordinates);
 
   const handleChange = (newConfig: Partial<CityBikeConfig>) => {
-    setLocalConfig({
-      ...localConfig,
+    setConfig((prev) => ({
+      ...prev,
       ...newConfig,
-    });
+    }));
   };
 
   const homeIcon = L.divIcon({
@@ -45,14 +40,12 @@ const CityBikeConfiguration: React.FC = () => {
   const MapEventHandler = () => {
     const map = useMap();
     useEffect(() => {
-      map.setView(
-        [Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)],
-        localConfig.zoom ?? 13,
-      );
+      map.setView([Number(config.centerCoordinates.lat), Number(config.centerCoordinates.lon)], config.zoom ?? 13);
     }, [map]);
 
     useMapEvents({
       moveend: (e) => {
+        console.log("moveend", e.target.getCenter(), e.target.getZoom());
         const center = e.target.getCenter();
         handleChange({
           centerCoordinates: {
@@ -67,19 +60,17 @@ const CityBikeConfiguration: React.FC = () => {
   };
 
   const handleStationClick = (stationId: string) => {
-    const isSelected = localConfig.stations.includes(stationId);
+    const isSelected = config.stations.includes(stationId);
 
     handleChange({
-      stations: isSelected
-        ? localConfig.stations.filter((id) => id !== stationId)
-        : [...localConfig.stations, stationId],
+      stations: isSelected ? config.stations.filter((id) => id !== stationId) : [...config.stations, stationId],
     });
   };
 
   function formatMarker(stationId: string) {
     var selected = "☑️";
 
-    if (localConfig.stations.includes(stationId)) selected = "✅";
+    if (config.stations.includes(stationId)) selected = "✅";
 
     return L.divIcon({
       className: "bike-label-icon",
@@ -90,12 +81,9 @@ const CityBikeConfiguration: React.FC = () => {
   }
 
   function onAddressSelect(address: Address) {
-    handleChange({ homeCoordinates: address.coordinate, centerCoordinates: address.coordinate });
+    setConfig((prev) => ({ ...prev, homeCoordinates: address.coordinate, centerCoordinates: address.coordinate }));
   }
 
-  const saveConfig = () => {
-    setWidgetConfig(WidgetEnum.cityBike, localConfig);
-  };
   return (
     <div className="city-bike-configuration h-column">
       <div className="h-column">
@@ -107,17 +95,14 @@ const CityBikeConfiguration: React.FC = () => {
         <MapContainer
           key={`map-config`}
           className="map-component"
-          center={[Number(localConfig.centerCoordinates.lat), Number(localConfig.centerCoordinates.lon)]}
-          zoom={localConfig?.zoom ?? 13}
+          center={[Number(config.centerCoordinates.lat), Number(config.centerCoordinates.lon)]}
+          zoom={config?.zoom ?? 13}
           zoomControl={false}
         >
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
           <ZoomControl position="bottomright" />
           <MapEventHandler />
-          <Marker
-            position={[Number(localConfig.homeCoordinates.lat), Number(localConfig.homeCoordinates.lon)]}
-            icon={homeIcon}
-          />
+          <Marker position={[Number(config.homeCoordinates.lat), Number(config.homeCoordinates.lon)]} icon={homeIcon} />
 
           {closestStations &&
             closestStations.map((station) => (
@@ -131,11 +116,6 @@ const CityBikeConfiguration: React.FC = () => {
               />
             ))}
         </MapContainer>
-      </div>
-      <div className="justify-end">
-        <button onClick={saveConfig}>
-          Save <FaRegSave />
-        </button>
       </div>
     </div>
   );

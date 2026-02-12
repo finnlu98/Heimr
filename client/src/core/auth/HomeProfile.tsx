@@ -65,11 +65,17 @@ const HomeProfile: React.FC<HomeProfileProps> = ({ editMode, onSave }) => {
               value={homeName}
               readOnly={!editMode}
               onChange={(e) => setHomeName(e.target.value)}
+              disabled={!editMode}
             />
           </div>
           <div className="h-row">
             <p>📍</p>
-            <AdressSearch onAddressSelect={onAddressSelect} adress={homeName} readonly={!editMode} />
+            <AdressSearch
+              onAddressSelect={onAddressSelect}
+              adress={homeName}
+              readonly={!editMode}
+              disabled={!editMode}
+            />
           </div>
           <div className="h-row">
             <p>🖼️</p>

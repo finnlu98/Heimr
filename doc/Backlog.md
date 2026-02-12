@@ -10,7 +10,8 @@
 ## MVP launch fix tilbakemeldinger
 
 - fix on hover on tablet
-- layout template button
+- Gi gode tilbakemeldinger for elvia nøkkel og kalender
+- gjøre add ikoner større i sidebar
 
 ## Hard launch
 
@@ -27,7 +28,7 @@
 - Make dashboard smaller when opening edit mode
 - collapse sidebar media query - on tap expand - sidebar icons show when collapsed
 - when picking adress for the first time zoom to selection city bike
-- customizable header - add compact widgets (needs standard class to pick widget to add) - move config to header  
+- customizable header - add compact widgets (needs standard class to pick widget to add) - move config to header
 - review logs from react warnings in terminal and fix them
 - User needs confirmation widget settings is OK
 - add possiblity to add home local storage

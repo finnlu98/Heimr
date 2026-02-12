@@ -5,20 +5,23 @@ import "./laundry-week.css";
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
-import { useDashboard } from "../../../context/dashboard-context";
 import EditWidget from "../../core/components/EditWidget";
 import { WidgetEnum } from "../../core/model/widget-type";
 
 const washingEmojis = ["✨", "💧", "🛁", "🧴", "🧼", "🧽", "🚿", "🧹", "🧤", "🫧"];
 
-const LaundryWeek: React.FC = () => {
+interface LaundryWeekProps {
+  config?: LaundryWeekConfig;
+}
+
+const defaultConfig = {
+  responsibles: [],
+};
+
+const LaundryWeek: React.FC<LaundryWeekProps> = ({ config = defaultConfig }) => {
   const currentWeek = moment().isoWeekday(1).isoWeek();
   const currentEmoji = washingEmojis[currentWeek % washingEmojis.length];
   const [isExpanded, setIsExpanded] = useState(false);
-  const { widgetConfigs } = useDashboard();
-  const laundryConfig = (widgetConfigs[WidgetEnum.laundryWeek] as LaundryWeekConfig) ?? {
-    responsibles: [],
-  };
 
   const createLaundryList = (startWeek: number, endWeek: number, names: string[]) => {
     const records = [];
@@ -35,7 +38,7 @@ const LaundryWeek: React.FC = () => {
     return records;
   };
 
-  const allWeeks = createLaundryList(1, 52, laundryConfig.responsibles ?? []);
+  const allWeeks = createLaundryList(1, 52, config.responsibles);
   const displayedWeeks = isExpanded ? allWeeks : allWeeks.filter((week) => week.week === currentWeek);
 
   return (
@@ -43,7 +46,7 @@ const LaundryWeek: React.FC = () => {
       <div className="laundry-week-header widget-title">
         <div>Washing in week {currentWeek}</div>
       </div>
-      {laundryConfig.responsibles.length !== 0 ? (
+      {config.responsibles.length !== 0 ? (
         <>
           {displayedWeeks.map((week, weekIndex) => (
             <div

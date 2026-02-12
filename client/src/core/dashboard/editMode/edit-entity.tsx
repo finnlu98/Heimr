@@ -19,7 +19,7 @@ const EditEntity: React.FC<EditEntityProps> = ({ onClose, editKey }) => {
     <>
       {editKey && (
         <Modal open={!!editKey} onClose={onClose} title={`Configure ${editKey}`}>
-          {isWidgetEdit && <WidgetConfiguration widget={editKey as unknown as WidgetEnum} />}
+          {isWidgetEdit && <WidgetConfiguration widget={editKey as unknown as WidgetEnum} onClose={onClose} />}
           {editKey === EditingKey.profile && <ProfileOverview />}
           {editKey === EditingKey.layoutTemplate && <LayoutTemplates />}
         </Modal>
