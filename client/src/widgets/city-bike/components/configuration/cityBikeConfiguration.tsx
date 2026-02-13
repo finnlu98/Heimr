@@ -1,5 +1,5 @@
 import { CityBikeConfig } from "../../CityBikeWidget";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import AdressSearch from "../../../../core/shared/adressSearch/AdressSearch";
@@ -40,12 +40,23 @@ const CityBikeConfiguration: React.FC<CityBikeConfigurationProps> = ({ config = 
   const MapEventHandler = () => {
     const map = useMap();
     useEffect(() => {
-      map.setView([Number(config.centerCoordinates.lat), Number(config.centerCoordinates.lon)], config.zoom ?? 13);
-    }, [map]);
+      const currentCenter = map.getCenter();
+      const currentZoom = map.getZoom();
+      const configLat = Number(config.centerCoordinates.lat);
+      const configLon = Number(config.centerCoordinates.lon);
+      const configZoom = config.zoom ?? 13;
+
+      const latDiff = Math.abs(currentCenter.lat - configLat);
+      const lonDiff = Math.abs(currentCenter.lng - configLon);
+      const zoomDiff = Math.abs(currentZoom - configZoom);
+
+      if (latDiff > 0.0001 || lonDiff > 0.0001 || zoomDiff > 0.1) {
+        map.setView([configLat, configLon], configZoom);
+      }
+    }, [map, config]);
 
     useMapEvents({
       moveend: (e) => {
-        console.log("moveend", e.target.getCenter(), e.target.getZoom());
         const center = e.target.getCenter();
         handleChange({
           centerCoordinates: {

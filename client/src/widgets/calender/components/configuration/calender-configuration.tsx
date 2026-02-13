@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { useDashboard } from "../../../../context/dashboard-context";
 import { CalenderConfig } from "../../CalenderWidget";
 import { MdDelete } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 import { WidgetEnum } from "../../../core/model/widget-type";
 
-interface CalenderConfigurationProps {}
+interface CalenderConfigurationProps {
+  config?: CalenderConfig;
+  setConfig: (newConfig: CalenderConfig) => void;
+}
 
-const CalenderConfiguration: React.FC<CalenderConfigurationProps> = () => {
-  const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const config = (widgetConfigs[WidgetEnum.calender] as CalenderConfig) ?? {
-    calenderId: "",
-    calenderKey: "",
-    calenderICalEndpoints: [],
-  };
+const defaultConfig: CalenderConfig = {
+  calenderId: "",
+  calenderKey: "",
+  calenderICalEndpoints: [],
+};
+
+const CalenderConfiguration: React.FC<CalenderConfigurationProps> = ({ config = defaultConfig, setConfig }) => {
   const [newEndpoint, setNewEndpoint] = useState<string>("");
 
-  const saveConfig = (newConfig: Partial<CalenderConfig>) => {
-    setWidgetConfig(WidgetEnum.calender, {
+  const addEndpoint = (newConfig: Partial<CalenderConfig>) => {
+    setConfig({
       ...config,
       ...newConfig,
     });
@@ -26,7 +28,7 @@ const CalenderConfiguration: React.FC<CalenderConfigurationProps> = () => {
 
   const removeEndpoint = (index: number) => {
     const updatedEndpoints = config.calenderICalEndpoints.filter((_, i) => i !== index);
-    saveConfig({ calenderICalEndpoints: updatedEndpoints });
+    addEndpoint({ calenderICalEndpoints: updatedEndpoints });
   };
   return (
     <>
@@ -44,7 +46,9 @@ const CalenderConfiguration: React.FC<CalenderConfigurationProps> = () => {
         ))}
         <div className="h-row gap-large">
           <input type="text" value={newEndpoint} onChange={(e) => setNewEndpoint(e.target.value)} />
-          <button onClick={() => saveConfig({ calenderICalEndpoints: [...config.calenderICalEndpoints, newEndpoint] })}>
+          <button
+            onClick={() => addEndpoint({ calenderICalEndpoints: [...config.calenderICalEndpoints, newEndpoint] })}
+          >
             <IoAddCircle />
           </button>
         </div>

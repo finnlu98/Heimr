@@ -12,6 +12,7 @@
 - fix on hover on tablet
 - Gi gode tilbakemeldinger for elvia nøkkel og kalender
 - gjøre add ikoner større i sidebar
+- kalender cache bugs med server --
 
 ## Hard launch
 
