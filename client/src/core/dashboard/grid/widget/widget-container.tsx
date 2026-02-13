@@ -48,6 +48,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
           >
             <MdDelete />
           </button>
+
           <ResizeHandles gridItem={gridItem} />
         </div>
       )}
