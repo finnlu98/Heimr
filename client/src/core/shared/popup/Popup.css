@@ -13,10 +13,7 @@
   position: fixed;
   padding: 12px;
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 9999;
-  font-size: 14px;
-  color: black;
 }
 
 .popup-top.popup-align-center,

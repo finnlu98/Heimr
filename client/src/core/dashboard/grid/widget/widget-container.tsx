@@ -38,8 +38,8 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
     >
       {editMode.editMode && (
         <div className="edit-widget-actions">
-          <div
-            className="edit-widget-handle"
+          <button
+            className="edit-widget-handle button-text-only"
             onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
@@ -47,7 +47,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
             }}
           >
             <MdDelete />
-          </div>
+          </button>
           <ResizeHandles gridItem={gridItem} />
         </div>
       )}

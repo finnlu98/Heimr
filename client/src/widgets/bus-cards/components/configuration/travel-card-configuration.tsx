@@ -142,12 +142,9 @@ const TravelCardConfiguration: React.FC<TravelCardConfigurationProps> = ({ confi
                   <TiArrowRightOutline />
                 </p>
                 <div> {route.stopPlace.properties.name}</div>
-                <div
-                  className="travel-action-button"
-                  onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}
-                >
+                <button onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}>
                   <MdDelete size={20} />
-                </div>
+                </button>
               </Fragment>
             );
           })}
@@ -174,9 +171,9 @@ const TravelCardConfiguration: React.FC<TravelCardConfigurationProps> = ({ confi
             ref={endStopRef}
           />
         </div>
-        <div className="travel-action-button" onClick={() => addTravelRoute(travelRoute)}>
+        <button onClick={() => addTravelRoute(travelRoute)}>
           <IoAddCircle size={20} />
-        </div>
+        </button>
       </div>
     </div>
   );

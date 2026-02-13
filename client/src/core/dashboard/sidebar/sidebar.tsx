@@ -1,14 +1,15 @@
 import { useDashboard } from "../../../context/dashboard-context";
-import { IoAddCircle } from "react-icons/io5";
-import { IoMdArrowDropright } from "react-icons/io";
+import { IoMdAdd, IoMdArrowDropright } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import "./sidebar.css";
 import { useEffect, useState } from "react";
 import Profile from "../../auth/Profile";
-import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaCaretRight } from "react-icons/fa";
 import EditEntity from "../editMode/edit-entity";
 import { EditingKey } from "../model/EditMode";
 import { Widgets } from "../../../widgets/core/model/wigets";
+import { IoSettingsOutline } from "react-icons/io5";
+import { AiOutlineLayout } from "react-icons/ai";
 
 const Sidebar: React.FC = () => {
   const { editMode, addWidget, setEditingKey } = useDashboard();
@@ -30,25 +31,33 @@ const Sidebar: React.FC = () => {
             </div>
             <div className="sidebar-title animate-appear-left">
               <div>
-                <IoMdArrowDropright /> Home
+                <IoMdArrowDropright /> General
               </div>
             </div>
             <div className="widget-menu-row surface animate-appear-left">
-              <div className="item friendly-display-item">Home settings</div>
+              <div className="h-row">
+                <div className="item friendly-display-item">
+                  <IoSettingsOutline />
+                </div>
+                <div className="item friendly-display-item">Home settings</div>
+              </div>
               <div className="item widget-action-buttons">
-                <CiEdit className="icon" onClick={() => setEditingKey(EditingKey.profile)} />
+                <button className="small" onClick={() => setEditingKey(EditingKey.profile)}>
+                  <FaCaretRight />
+                </button>
               </div>
             </div>
-            <div className="sidebar-title animate-appear-left">
-              <div>
-                <IoMdArrowDropright /> Templates
-              </div>
-            </div>
-
             <div className="widget-menu-row surface animate-appear-left">
-              <div className="item friendly-display-item">Layout templates</div>
+              <div className="h-row">
+                <div className="item friendly-display-item">
+                  <AiOutlineLayout />
+                </div>
+                <div className="item friendly-display-item">Layout templates</div>
+              </div>
               <div className="item widget-action-buttons">
-                <IoAddCircle className="icon" onClick={() => setEditingKey(EditingKey.layoutTemplate)} />
+                <button className="small" onClick={() => setEditingKey(EditingKey.layoutTemplate)}>
+                  <FaCaretRight />
+                </button>
               </div>
             </div>
             <div className="sidebar-title animate-appear-left">
@@ -70,12 +79,12 @@ const Sidebar: React.FC = () => {
                   <div className="friendly-display-item">{entries.friendlyName} </div>
                 </div>
                 <div className="item widget-action-buttons">
-                  <div className="icon">
-                    <CiEdit onClick={() => setEditingKey(key as unknown as EditingKey)} />
-                  </div>
-                  <div className="icon" onClick={() => addWidget(entries.id)}>
-                    <IoAddCircle />
-                  </div>
+                  <button className="small" onClick={() => setEditingKey(key as unknown as EditingKey)}>
+                    <CiEdit />
+                  </button>
+                  <button className="small" onClick={() => addWidget(entries.id)}>
+                    <IoMdAdd />
+                  </button>
                 </div>
               </div>
             ))}

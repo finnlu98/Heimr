@@ -13,6 +13,8 @@
 - Gi gode tilbakemeldinger for elvia nøkkel og kalender
 - gjøre add ikoner større i sidebar
 - kalender cache bugs med server --
+- Bug widget not spinning on updating data load
+- Need to get rid of data if its not used in preview
 
 ## Hard launch
 

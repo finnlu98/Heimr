@@ -3,6 +3,7 @@
   --color-background: rgb(250, 229, 209);
   --color-widget-background: rgb(201, 160, 113);
 
+  /* --color-surface1: rgba(248, 248, 248); */
   --color-surface1: rgba(248, 248, 248);
 
   --color-off-white: rgb(248, 248, 248);
@@ -18,6 +19,8 @@
   --color-icon-gray: rgb(#7c7a7aff);
   --color-icon-gray: rgb(#e6c93aff);
 
-  --color-primary-button: var(--color-off-white);
+  --color-primary-button: #e9b588;
+  --color-secondary-button: var(--color-surface1);
+
   --color-disabled: #8a8a8a;
 }
