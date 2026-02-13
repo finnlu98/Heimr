@@ -4,6 +4,8 @@ import { useDashboard } from "../../../context/dashboard-context";
 import ScreenSize from "../model/ScreenSize";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import PopupButton from "../../shared/popup/Popup";
+import { GiPencilRuler } from "react-icons/gi";
+import { FaRulerCombined } from "react-icons/fa";
 
 const PRESETS = [
   { name: "Tablet (Portrait)", width: 768, height: 1024 },
@@ -56,21 +58,31 @@ export const ScreenSizeSelector: React.FC = () => {
   return (
     <>
       {editMode.editMode && (
-        <div className="screen-size-selector">
+        <div className="screen-size-selector animate-appear">
           <PopupButton position="bottom" align="end" surface="surface">
             {() => [
-              <span>📐</span>,
+              <span>
+                <FaRulerCombined />
+              </span>,
 
               <div className="screen-size-dropdown h-column">
                 <div className="screen-size-presets h-column">
                   <div className="h-row custom-header">
                     <h4>Presets</h4>
-                    <button onClick={handleBack} className="button-tertiary" disabled={prevCustomSize.length === 0}>
+                    <button
+                      onClick={handleBack}
+                      className="secondary button-tertiary"
+                      disabled={prevCustomSize.length === 0}
+                    >
                       <MdOutlineKeyboardBackspace size={20} />
                     </button>
                   </div>
                   {PRESETS.map((preset) => (
-                    <button key={preset.name} className="preset-button" onClick={() => handlePresetClick(preset)}>
+                    <button
+                      key={preset.name}
+                      className="secondary preset-button"
+                      onClick={() => handlePresetClick(preset)}
+                    >
                       <span>{preset.name}</span>
                       <span>
                         {preset.width} × {preset.height}

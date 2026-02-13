@@ -28,11 +28,11 @@ const HomeUsers: React.FC<HomeUsersProps> = ({ editMode, onSave }) => {
             .map((user, index) => <UserProfile key={user.email} user={user} editMode={editMode} onSave={onSave} />)}
         {editMode && (
           <div className="h-row center">
-            <PopupButton>
+            <PopupButton position="bottom">
               {(closePopup) => [
-                <button className="center" disabled={!editMode}>
+                <span className="center">
                   Add Member <IoAddCircleOutline />
-                </button>,
+                </span>,
                 <div className="h-row">
                   <input
                     type="text"

@@ -16,12 +16,6 @@
   font-weight: bold;
 }
 
-.travel-action-button:hover {
-  cursor: pointer;
-  filter: brightness(1.15);
-  transform: scale(1.15);
-}
-
 .travel-input {
   width: 100%;
 }

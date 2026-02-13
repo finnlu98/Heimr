@@ -237,6 +237,12 @@ button {
   justify-content: center;
 }
 
+button.small {
+  padding: 8px 12px;
+  font-size: 14px;
+  size: 20px;
+}
+
 .animate-appear {
   animation: slideIn 0.3s ease-out;
 }
@@ -269,6 +275,7 @@ button {
 
 button:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: color-mix(in srgb, var(--color-primary-button) 97%, white 15%);
 }
 
 button:active {
@@ -282,6 +289,10 @@ button[aria-disabled="true"] {
   box-shadow: none;
   transform: none;
   opacity: 1;
+}
+
+button.secondary {
+  background-color: var(--color-secondary-button);
 }
 
 .button-tertiary {
