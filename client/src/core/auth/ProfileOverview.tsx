@@ -81,7 +81,7 @@ const ProfileOverview: React.FC = () => {
         {user && (
           <div className="h-row action-buttons">
             <div>
-              <LoadingButton onClick={() => logout()} loadingKey="logout">
+              <LoadingButton className="button-tertiary" onClick={() => logout()} loadingKey="logout">
                 Sign out <FaSignOutAlt />
               </LoadingButton>
             </div>

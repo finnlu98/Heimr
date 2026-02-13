@@ -7,6 +7,7 @@ import { ResizeHandles } from "../resize-handles";
 import "./widget-container.css";
 import { Widgets } from "../../../../widgets/core/model/wigets";
 import { useWidgetQueryResult } from "../../../../widgets/core/hooks/useWidgetQueryResult";
+import { useWidgetConfig } from "../../../../widgets/core/hooks/useWidgetConfig";
 
 interface WidgetContainerProps {
   gridItem: GridItem;
@@ -17,6 +18,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
   const { id } = gridItem;
   const { attributes, listeners, setNodeRef, transform: moveTransform } = useDraggable({ id });
   const { editMode, removeWidget } = useDashboard();
+  const config = useWidgetConfig(gridItem.widget);
   const queryResult = useWidgetQueryResult(gridItem.widget);
 
   const style: React.CSSProperties = GridService.computeWidthAndHeight(
@@ -53,7 +55,14 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
       <div className="widget-content">
         {(() => {
           const Component = Widgets[gridItem.widget].widgetComponent;
-          return <Component data={queryResult?.data} isLoading={queryResult?.isLoading} error={queryResult?.error} />;
+          return (
+            <Component
+              data={queryResult?.data}
+              isLoading={queryResult?.isLoading}
+              error={queryResult?.error}
+              config={config}
+            />
+          );
         })()}
       </div>
     </div>

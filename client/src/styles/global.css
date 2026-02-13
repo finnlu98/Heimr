@@ -150,6 +150,12 @@
   gap: 15px;
 }
 
+.action-buttons {
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+}
+
 p {
   margin: 0;
   padding: 0;

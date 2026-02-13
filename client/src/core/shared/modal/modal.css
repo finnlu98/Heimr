@@ -17,6 +17,8 @@
 
 .modal-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
   background: var(--color-background, #fff);
   color: var(--color-text, #000);
 

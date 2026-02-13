@@ -1,20 +1,24 @@
 import { IoAddCircle } from "react-icons/io5";
-import { useDashboard } from "../../../context/dashboard-context";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
-import { WidgetEnum } from "../../core/model/widget-type";
 
-const LaundryWeekConfiguration: React.FC = () => {
-  const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const config = (widgetConfigs[WidgetEnum.laundryWeek] as LaundryWeekConfig) ?? { responsibles: [] };
+interface LaundryWeekConfigurationProps {
+  config?: LaundryWeekConfig;
+  setConfig: (config: LaundryWeekConfig) => void;
+}
 
+const defaultConfig = {
+  responsibles: [],
+};
+
+const LaundryWeekConfiguration: React.FC<LaundryWeekConfigurationProps> = ({ config = defaultConfig, setConfig }) => {
   const [newResponsible, setNewResponsible] = useState("");
 
   function handleAddResponsible() {
     if (newResponsible.trim() === "") return;
     const updatedResponsibles = [...(config.responsibles || []), newResponsible.trim()];
-    setWidgetConfig(WidgetEnum.laundryWeek, {
+    setConfig({
       ...config,
       responsibles: updatedResponsibles,
     });
@@ -23,7 +27,7 @@ const LaundryWeekConfiguration: React.FC = () => {
 
   function handleRemoveResponsible(responsible: string) {
     const updatedResponsibles = config.responsibles.filter((r) => r !== responsible);
-    setWidgetConfig(WidgetEnum.laundryWeek, {
+    setConfig({
       ...config,
       responsibles: updatedResponsibles,
     });

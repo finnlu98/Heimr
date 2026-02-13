@@ -1,5 +1,4 @@
 import "./travel-card-configuration.css";
-import { useDashboard } from "../../../../context/dashboard-context";
 import { TravelCardConfig, TravelRoute } from "../../TravelCardWidget";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
@@ -9,24 +8,37 @@ import SearchStop, { SearchStopHandle } from "./SearchStop";
 import { TravelStop } from "../../model/StopSearchResponse";
 import { TiArrowRightOutline } from "react-icons/ti";
 import { TripIdentifier } from "../../model/enum/TripIdentifier";
-import { WidgetEnum } from "../../../core/model/widget-type";
 
-const defaultConfig = { numRows: 3, minFilter: 3 };
+const defaultConfigMeta = { numRows: 3, minFilter: 3 };
 const defaultColors = { general: 10, green: 7, yellow: 5 };
 
-const TravelCardConfiguration: React.FC = () => {
-  const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const config = (widgetConfigs[WidgetEnum.busCards] as TravelCardConfig) ?? {
-    travelRoutes: [],
-    tripIdentifier: TripIdentifier.title,
-  };
+const defaultTravelRoute: TravelRoute = {
+  imgIdentifier: "",
+  startPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
+  stopPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
+  configCard: defaultConfigMeta,
+  configColor: defaultColors,
+};
+
+const defaultConfig: TravelCardConfig = {
+  travelRoutes: [],
+  tripIdentifier: TripIdentifier.title,
+};
+
+interface TravelCardConfigurationProps {
+  config?: TravelCardConfig;
+  setConfig: (config: TravelCardConfig) => void;
+}
+
+const TravelCardConfiguration: React.FC<TravelCardConfigurationProps> = ({ config = defaultConfig, setConfig }) => {
   const [travelRoute, setTravelRoute] = useState<TravelRoute>({
     imgIdentifier: "",
     startPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
     stopPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
-    configCard: defaultConfig,
+    configCard: defaultConfigMeta,
     configColor: defaultColors,
   });
+
   const [travelIdentifier, setTravelIdentifier] = useState<TripIdentifier>(config.tripIdentifier);
   const startStopRef = useRef<SearchStopHandle>(null);
   const endStopRef = useRef<SearchStopHandle>(null);
@@ -38,7 +50,7 @@ const TravelCardConfiguration: React.FC = () => {
       travelRoutes: updatedRoutes,
     };
 
-    setWidgetConfig(WidgetEnum.busCards, updatedConfig);
+    setConfig(updatedConfig);
   }
 
   function addTravelRoute(travelRoute: TravelRoute) {
@@ -47,14 +59,8 @@ const TravelCardConfiguration: React.FC = () => {
       travelRoutes: [...config.travelRoutes, travelRoute],
     };
 
-    setWidgetConfig(WidgetEnum.busCards, updatedConfig);
-    setTravelRoute({
-      imgIdentifier: "",
-      startPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
-      stopPlace: { geometry: { coordinates: [0, 0] }, properties: { id: "", label: "", name: "", county: "" } },
-      configCard: defaultConfig,
-      configColor: defaultColors,
-    });
+    setConfig(updatedConfig);
+    setTravelRoute(defaultTravelRoute);
     startStopRef.current?.clear();
     endStopRef.current?.clear();
   }
@@ -71,7 +77,7 @@ const TravelCardConfiguration: React.FC = () => {
 
   function onUpdateImage(dataUrl: string | null, startPlace: TravelStop, stopPlace: TravelStop) {
     if (!dataUrl) return;
-    setWidgetConfig(WidgetEnum.busCards, {
+    setConfig({
       ...config,
       travelRoutes: config.travelRoutes.map((route) => {
         if (route.startPlace === startPlace && route.stopPlace === stopPlace) {
@@ -87,7 +93,7 @@ const TravelCardConfiguration: React.FC = () => {
 
   function onSetTravelIdentifier(identifier: TripIdentifier) {
     setTravelIdentifier(identifier);
-    setWidgetConfig(WidgetEnum.busCards, {
+    setConfig({
       ...config,
       tripIdentifier: identifier,
     });

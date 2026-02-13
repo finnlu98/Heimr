@@ -14,14 +14,14 @@ const LayoutTemplates: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="layout-templates">
       <div
         className={`square layout-square${layoutSelected ? " selected" : ""}`}
         onClick={() => setLayoutSelected(!layoutSelected)}
       >
         Default layout
       </div>
-      <div className="action-buttons-right">
+      <div className="action-buttons-layout">
         <button onClick={applyDefaultTemplate} disabled={!layoutSelected}>
           Apply Template
         </button>

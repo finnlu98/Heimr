@@ -1,7 +1,6 @@
 import "./city-bike.css";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
-import { useDashboard } from "../../../../context/dashboard-context";
 import { CityBikeConfig } from "../../CityBikeWidget";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
@@ -15,12 +14,10 @@ const homeIcon = L.divIcon({
 
 interface CityBikeProps {
   data?: CityBikeData;
+  config?: CityBikeConfig;
 }
 
-const CityBike: React.FC<CityBikeProps> = ({ data }) => {
-  const { widgetConfigs } = useDashboard();
-  const cityBikeConfig = widgetConfigs[WidgetEnum.cityBike] as CityBikeConfig;
-
+const CityBike: React.FC<CityBikeProps> = ({ data, config }) => {
   function formatMarker(available: number) {
     var formattedClass = "bike-label";
 
@@ -38,9 +35,9 @@ const CityBike: React.FC<CityBikeProps> = ({ data }) => {
     <LoadingHelperWidget
       widgetKey={WidgetEnum.cityBike}
       loadingKeys={["fetch-city-bike-status", "fetch-city-bike-stations"]}
-      showConfig={() => !cityBikeConfig || !data}
+      showConfig={() => !config || !data}
     >
-      {cityBikeConfig && (
+      {config && (
         <div className="city-bikes-container">
           <div className="widget-title">
             <div>Available city bikes</div>
@@ -48,19 +45,19 @@ const CityBike: React.FC<CityBikeProps> = ({ data }) => {
           </div>
           <div className="map">
             <MapContainer
-              key={`${cityBikeConfig.centerCoordinates.lat}-${cityBikeConfig.centerCoordinates.lon}-${cityBikeConfig.zoom}`}
+              key={`${config.centerCoordinates.lat}-${config.centerCoordinates.lon}-${config.zoom}`}
               className="map-component"
-              center={[Number(cityBikeConfig.centerCoordinates.lat), Number(cityBikeConfig.centerCoordinates.lon)]}
-              zoom={cityBikeConfig.zoom}
+              center={[Number(config.centerCoordinates.lat), Number(config.centerCoordinates.lon)]}
+              zoom={config.zoom}
               zoomControl={false}
             >
               <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
               <Marker
-                position={[Number(cityBikeConfig.homeCoordinates.lat), Number(cityBikeConfig.homeCoordinates.lon)]}
+                position={[Number(config.homeCoordinates.lat), Number(config.homeCoordinates.lon)]}
                 icon={homeIcon}
               />
               {data?.stations &&
-                data.stations.map(station => (
+                data.stations.map((station) => (
                   <Marker
                     key={station.station_id}
                     position={[Number(station.lat), Number(station.lon)]}

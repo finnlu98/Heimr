@@ -8,6 +8,7 @@ interface AdressSearchProps {
   adress?: string;
   debounceMs?: number;
   readonly?: boolean;
+  disabled?: boolean;
 }
 
 const AdressSearch: React.FC<AdressSearchProps> = ({
@@ -15,6 +16,7 @@ const AdressSearch: React.FC<AdressSearchProps> = ({
   adress = "",
   debounceMs = 500,
   readonly = false,
+  disabled = false,
 }) => {
   const [searchTerm, setSearchTerm] = useState(adress);
   const { results, isLoading, error, searchAddresses, clearResults } = useAddressSearch();
@@ -63,6 +65,7 @@ const AdressSearch: React.FC<AdressSearchProps> = ({
       error={error}
       results={results}
       readonly={readonly}
+      disabled={disabled}
     />
   );
 };
