@@ -19,16 +19,6 @@ const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget, onClo
   const [config, setConfig] = useState(useWidgetConfig(widget));
   const widgetData = useWidgetQuery(widget, config);
 
-  // 1. fetch data with loaded data (x)
-  // 2. get current config - need to add config is passed to config (x)
-  // 3. on changes update current config and load data with new config (x)
-  // 4. pass new temporary data to preview component (x)
-  // 5. on apply, save config and refetch data with new config
-  // 6. on cancel, discard temporary data and config
-
-  // Bug widget not spinning on updating data load
-  // Need to get rid of data if its not used in preview
-
   const handleApply = () => {
     setWidgetConfig(widget, config);
     onClose();
