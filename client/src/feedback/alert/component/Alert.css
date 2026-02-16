@@ -8,7 +8,7 @@
 
 .alert {
   min-width: 220px;
-  max-width: 400px;
+  max-width: 600px;
   padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid transparent;
@@ -63,4 +63,8 @@
 .alert-error {
   border-color: #d32f2f;
   background-color: rgba(211, 47, 47, 0.12);
+}
+
+.alert-button-action {
+  margin-left: auto;
 }

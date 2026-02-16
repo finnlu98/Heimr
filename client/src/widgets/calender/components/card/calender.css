@@ -36,3 +36,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.empty-calender {
+  margin-top: 1rem;
+}

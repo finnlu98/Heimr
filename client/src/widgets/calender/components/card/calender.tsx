@@ -13,7 +13,8 @@ const Calender: React.FC<CalenderProps> = ({ data }) => {
   const [firstEvent, ...secondaryEvents] = data ?? [];
 
   function setCalenderRows() {
-    if (data?.length === 0) return <div>No activities planned here, come on guys. Have some fun 🤦‍♂️</div>;
+    if (data?.length === 0)
+      return <div className="empty-calender">No activities planned here, come on guys. Have some fun 🤦‍♂️</div>;
 
     return (
       <div className="secondary-items-container">

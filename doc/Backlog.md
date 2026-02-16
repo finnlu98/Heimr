@@ -10,11 +10,11 @@
 ## MVP launch fix tilbakemeldinger
 
 - fix on hover on tablet
-- Gi gode tilbakemeldinger for elvia nøkkel og kalender
-- gjøre add ikoner større i sidebar
-- kalender cache bugs med server --
-- Bug widget not spinning on updating data load
-- Need to get rid of data if its not used in preview
+- Bug widget not spinning on updating data load - weather
+- cache issues on server - grow to large
+- upload banner issue in prod
+- need to fix calender name
+- look at modal size
 
 ## Hard launch
 

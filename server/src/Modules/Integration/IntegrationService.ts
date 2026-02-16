@@ -1,5 +1,6 @@
 import { Session, SessionData } from "express-session";
 import { encrypt, decrypt } from "../../Lib/encryption";
+import BaseFetcherEndpoint from "../Common/BaseFetcherEndpoint";
 
 declare module "express-session" {
   interface SessionData {
@@ -8,14 +9,36 @@ declare module "express-session" {
 }
 
 export default class IntegrationService {
-  setIntegration(session: Session & Partial<SessionData>, provider: string, key: string): boolean {
+  private readonly testIntegration: BaseFetcherEndpoint;
+
+  constructor() {
+    this.testIntegration = new BaseFetcherEndpoint(0);
+  }
+
+  async setIntegration(
+    session: Session & Partial<SessionData>,
+    provider: string,
+    key: string,
+    endpoint: string,
+  ): Promise<boolean> {
     if (provider && key) {
+      this.testIntegration.setEndpoint(endpoint);
+      this.testIntegration.setHeader({ authorization: key });
+
+      try {
+        await this.testIntegration.getData(`test_${key}`);
+      } catch (error) {
+        console.log("Failed to validate integration:");
+        return false;
+      }
+
       if (!session.integrations) {
         session.integrations = {};
       }
       session.integrations[provider] = encrypt(key);
       return true;
     }
+
     return false;
   }
 

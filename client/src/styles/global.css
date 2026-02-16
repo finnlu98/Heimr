@@ -150,6 +150,10 @@
   gap: 15px;
 }
 
+.gap-xlarge {
+  gap: 20px;
+}
+
 .action-buttons {
   justify-content: space-between;
   width: 100%;
