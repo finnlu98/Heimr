@@ -15,6 +15,7 @@
 - upload banner issue in prod
 - need to fix calender name
 - look at modal size
+- fix one registry for fetching interval
 
 ## Hard launch
 

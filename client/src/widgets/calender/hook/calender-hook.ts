@@ -1,8 +1,10 @@
 import { useQueries } from "@tanstack/react-query";
 import calenderApi, { CalendarEvent } from "../api/calender-ical-fetcher";
-import { CalenderConfig, CalenderWidget } from "../CalenderWidget";
+import { CalenderConfig } from "../CalenderWidget";
 import { calenderMapper } from "../mapper/calender-mappers";
 import { AlertVariant } from "../../../feedback/alert/model/AlertTypes";
+
+const CALENDER_FETCH_INTERVAL = 24 * 60 * 60 * 1000;
 
 export function useCalenderQueries(config: CalenderConfig | undefined) {
   const results = useQueries({
@@ -39,7 +41,7 @@ export function createCalenderQuery(endpoint: string) {
       }
     },
     enabled: Boolean(endpoint),
-    refetchInterval: CalenderWidget.fetchtingInterval,
+    refetchInterval: CALENDER_FETCH_INTERVAL,
     staleTime: 23 * 60 * 60 * 1000,
   };
 }
