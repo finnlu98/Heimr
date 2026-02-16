@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { CalendarEvent } from "../../api/calender-ical-fetcher";
 
 interface CalenderRowProps {
@@ -7,11 +7,12 @@ interface CalenderRowProps {
 }
 
 const CalenderRow: React.FC<CalenderRowProps> = ({ item, hiearchy }) => {
-  function formatDate(date: moment.Moment | undefined) {
+  function formatDate(date: Moment | undefined) {
     if (date === undefined) return "Unkown date";
-    const now = moment();
 
-    const diffDays = date.startOf("day").diff(now.startOf("day"), "days");
+    const now = moment();
+    const momentDate = moment.isMoment(date) ? date : moment(date);
+    const diffDays = momentDate.clone().startOf("day").diff(now.startOf("day"), "days");
 
     if (diffDays === 0) {
       return `Today`;
@@ -22,7 +23,7 @@ const CalenderRow: React.FC<CalenderRowProps> = ({ item, hiearchy }) => {
     } else if (diffDays === 3) {
       return `In 3 days`;
     } else {
-      return date.format("dddd MMM Do");
+      return momentDate.format("dddd MMM Do");
     }
   }
 
@@ -32,7 +33,7 @@ const CalenderRow: React.FC<CalenderRowProps> = ({ item, hiearchy }) => {
 
   return (
     <div className={`standard-rows ${hiearchy}-item`}>
-      <div className="content-container">
+      <div>
         <div className="date-row">
           <div className={`${hiearchy}-item-date`}>🗓️ {item && formatDate(item.start)}</div>
         </div>

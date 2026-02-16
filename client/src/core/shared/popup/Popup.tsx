@@ -8,6 +8,7 @@ interface PopupProps {
   align?: "center" | "start" | "end";
   surface?: "surface";
   closePopupSeconds?: number;
+  buttonHiearchy?: "primary" | "secondary";
 }
 
 const PopupButton: React.FC<PopupProps> = ({
@@ -16,6 +17,7 @@ const PopupButton: React.FC<PopupProps> = ({
   position = "top",
   align = "center",
   surface = "",
+  buttonHiearchy = "primary",
 }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [cords, setCords] = useState({ top: 0, left: 0 });
@@ -105,7 +107,7 @@ const PopupButton: React.FC<PopupProps> = ({
 
   return (
     <div className="popup-container" ref={containerRef}>
-      <button className="popup-trigger" onClick={handleClick} ref={triggerRef}>
+      <button className={`popup-trigger ${buttonHiearchy}`} onClick={handleClick} ref={triggerRef}>
         {trigger}
       </button>
       {showPopup && (

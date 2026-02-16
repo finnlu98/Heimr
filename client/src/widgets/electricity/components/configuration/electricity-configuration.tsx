@@ -2,21 +2,26 @@ import { useState } from "react";
 import { IoMdSend } from "react-icons/io";
 import LoadingButton from "../../../../feedback/loading/components/Loading/LoadingButton";
 import { useElviaKeyManagement } from "../../hook/electricity-key-hook";
+import AlertResponse from "../../../../feedback/alert/component/AlertResponse";
+import { AlertVariant } from "../../../../feedback/alert/model/AlertTypes";
 
 const ElectricityConfiguration: React.FC = () => {
   const [elviaKey, setElviaKey] = useState<string>("");
   const { postElviaKey, hasElviaKey } = useElviaKeyManagement();
   const [postNewKey, setPostNewKey] = useState(false);
+  const [isValidKey, setIsValidKey] = useState<boolean | null>(null);
 
   const registerKey = async () => {
-    await postElviaKey(elviaKey);
+    const trimmedKey = elviaKey.trim();
+    const isValid = await postElviaKey(trimmedKey);
+    setIsValidKey(isValid);
     setPostNewKey(false);
   };
 
   return (
     <div className="h-column">
       <div className="h-row">
-        {hasElviaKey && !postNewKey ? (
+        {hasElviaKey && !postNewKey && isValidKey !== false ? (
           <div className="h-column gap-tiny">
             <label htmlFor="electricityKey">Elvia API Key:</label>
 
@@ -45,6 +50,7 @@ const ElectricityConfiguration: React.FC = () => {
                 type="text"
                 value={elviaKey}
                 onChange={(e) => setElviaKey(e.target.value)}
+                onFocus={() => setIsValidKey(null)}
                 placeholder="Paste your elvia API key"
               />
               <LoadingButton onClick={registerKey} loadingKey="post-elvia-key">
@@ -55,6 +61,9 @@ const ElectricityConfiguration: React.FC = () => {
               Note: due to security reasons, once you send the key, it cannot be retrieved again and the changes cannot
               be canceled. You can at any time regsiter a new key or delete it.
             </label>
+            {isValidKey === false && (
+              <AlertResponse variant={AlertVariant.ERROR} message="The provided key is not valid, please try again." />
+            )}
           </div>
         )}
       </div>

@@ -30,4 +30,3 @@ export const WidgetConfigs: Record<WidgetEnum, object> = (Object.keys(Widgets) a
   },
   {} as Record<WidgetEnum, object>,
 );
-

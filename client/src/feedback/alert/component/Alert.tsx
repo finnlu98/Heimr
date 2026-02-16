@@ -13,7 +13,7 @@ const AlertContainer: React.FC<{ alerts: AlertItem[]; onDismiss: (id: string) =>
               <Icon />
             </span>
             <span className="alert-message">{alert.message}</span>
-            <button onClick={() => onDismiss(alert.id)} aria-label="Close alert">
+            <button className="secondary" onClick={() => onDismiss(alert.id)} aria-label="Close alert">
               <IoMdClose />
             </button>
           </div>

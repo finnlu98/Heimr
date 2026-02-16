@@ -27,9 +27,21 @@ class ElviaApi extends BaseWidgetApi {
     }
   }
 
-  async postElviaKey(key: string): Promise<void> {
+  async postElviaKey(key: string): Promise<boolean> {
     const formatKey = `Bearer ${key.trim()}`;
-    await this.postInternalJson("/integration", { provider: "Elvia", key: formatKey }, {}, "post-elvia-key");
+
+    try {
+      const res = await this.postInternalJson<{ success: boolean }>(
+        "/integration",
+        {},
+        { provider: "Elvia", key: formatKey, endpoint: this.formatEndpoint() },
+        "post-elvia-key",
+      );
+      return res.success;
+    } catch (error) {
+      console.error("Failed to post Elvia key", error);
+      throw error;
+    }
   }
 
   async getHasElviaKey(): Promise<boolean> {
@@ -46,6 +58,13 @@ class ElviaApi extends BaseWidgetApi {
       console.error("Failed to get Elvia key status", error);
       return false;
     }
+  }
+
+  formatEndpoint(): string {
+    const consumptionEndpoint = configuration.getElviaConfig().Consumption.Endpoint;
+    const formattedEndpoint = new URL(consumptionEndpoint);
+    formattedEndpoint.searchParams.set("startTime", moment().startOf("month").format());
+    return formattedEndpoint.toString();
   }
 }
 

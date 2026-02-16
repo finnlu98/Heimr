@@ -1,5 +1,11 @@
 .calender-container {
-  margin: 5px 0 5px 0;
+  height: 100%;
+  min-width: 70%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .main-item {
@@ -8,7 +14,6 @@
 
 .main-item-date {
   font-weight: 500;
-  font-size: medium;
 }
 
 .main-item-summary {
@@ -26,12 +31,12 @@
   margin-left: auto;
 }
 
-.content-container {
-  margin: 0px 5px 0px 5px;
-}
-
 .summary {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.empty-calender {
+  margin-top: 1rem;
 }

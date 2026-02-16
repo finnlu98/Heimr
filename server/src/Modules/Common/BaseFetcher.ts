@@ -15,11 +15,11 @@ export default abstract class BaseFetcher implements IFetcher {
   async getData(key: string = ""): Promise<any> {
     const cache = this.caches.returnCache(key, this.TTL_MS);
     if (cache) {
-      console.log(`Returning cached request`);
+      console.log(`Returning cached request for key: ${key}`);
       return cache.data;
     }
 
-    console.log(`Sending request to get data`);
+    console.log(`Sending request to get data for key: ${key}`);
     var res = await this.fetchData();
     if (res && "data" in res) {
       this.caches.addCache(key, res.data);
