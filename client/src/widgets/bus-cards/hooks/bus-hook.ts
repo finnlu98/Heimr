@@ -1,8 +1,9 @@
 import { useQueries } from "@tanstack/react-query";
 import { busApi } from "../api/bus-time-fetcher";
 import { BusData } from "../model/BusData";
-import { TravelCardConfig, TravelCardWidget } from "../TravelCardWidget";
-import TravelCard from "../components/card/travel-card";
+import type { TravelCardConfig } from "../TravelCardWidget";
+
+const TRAVEL_CARD_FETCH_INTERVAL = 7 * 60 * 1000;
 
 
 export function useBusQueries(config: TravelCardConfig | undefined): { data: BusData[] | undefined } {
@@ -16,7 +17,7 @@ export function useBusQueries(config: TravelCardConfig | undefined): { data: Bus
         return busApi.getBusTimes(travelRoute);
       },
       enabled: Boolean(travelRoute),
-      refetchInterval: TravelCardWidget.fetchtingInterval,
+      refetchInterval: TRAVEL_CARD_FETCH_INTERVAL,
       staleTime: 5 * 60 * 1000,
     })),
   });

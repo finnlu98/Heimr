@@ -3,17 +3,15 @@ import "./travel-card.css";
 import LoadingHelperWidget from "../../../core/components/LoadingHelperWidget";
 import { WidgetEnum } from "../../../core/model/widget-type";
 import { BusData } from "../../model/BusData";
-import { useDashboard } from "../../../../context/dashboard-context";
 import { TravelCardConfig } from "../../TravelCardWidget";
 import { TripIdentifier } from "../../model/enum/TripIdentifier";
 
 interface TravelCardProps {
   data?: BusData[] | undefined;
+  config?: TravelCardConfig;
 }
 
-const TravelCard: React.FC<TravelCardProps> = ({ data }) => {
-  const { widgetConfigs } = useDashboard();
-  const config = widgetConfigs[WidgetEnum.busCards] as TravelCardConfig;
+const TravelCard: React.FC<TravelCardProps> = ({ data, config }) => {
   return (
     <LoadingHelperWidget
       widgetKey={WidgetEnum.busCards}

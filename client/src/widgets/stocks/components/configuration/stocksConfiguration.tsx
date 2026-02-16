@@ -2,20 +2,23 @@ import { IoAddCircle } from "react-icons/io5";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { StocksConfig } from "../../StocksWidget";
-import { useDashboard } from "../../../../context/dashboard-context";
-import { WidgetEnum } from "../../../core/model/widget-type";
 
-const StocksConfiguration: React.FC = () => {
-  const { widgetConfigs, setWidgetConfig } = useDashboard();
-  const config = (widgetConfigs[WidgetEnum.stocks] as StocksConfig) ?? {
-    tickers: [],
-  };
+interface StocksConfigurationProps {
+  config?: StocksConfig;
+  setConfig?: (config: StocksConfig) => void;
+}
+
+const defaultConfig: StocksConfig = {
+  tickers: [],
+};
+
+const StocksConfiguration: React.FC<StocksConfigurationProps> = ({ config = defaultConfig, setConfig }) => {
   const [newTicker, setNewTicker] = useState("");
 
   function handleAddTicker() {
     if (newTicker.trim() === "") return;
     const updatedTickers = [...(config.tickers || []), newTicker.trim().toUpperCase()];
-    setWidgetConfig(WidgetEnum.stocks, {
+    setConfig?.({
       ...config,
       tickers: updatedTickers,
     });
@@ -24,7 +27,7 @@ const StocksConfiguration: React.FC = () => {
 
   function handleRemoveTicker(ticker: string) {
     const updatedTickers = config.tickers.filter((t) => t !== ticker);
-    setWidgetConfig(WidgetEnum.stocks, { ...config, tickers: updatedTickers });
+    setConfig?.({ ...config, tickers: updatedTickers });
   }
 
   return (

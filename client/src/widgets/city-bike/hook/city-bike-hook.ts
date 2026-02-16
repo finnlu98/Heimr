@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 import { useWidgetQuery } from "../../core/hooks/useWidgetQuery";
-import { CityBikeConfig, CityBikeWidget } from "../CityBikeWidget";
+import type { CityBikeConfig } from "../CityBikeWidget";
 import { CityBikeData } from "../model/CityBikeData";
 import { CityBikeResponse, Station } from "../model/CityBikeResponse";
 import CityBikeService from "../service/CityBikeService";
 import { CityBikeStatusResponse } from "../model/CityBikeStatusResponse";
 import { cityBikeStatusMapper } from "../mapper/city-bike-mapper";
 import cityBikeApi from "../api/city-bike-fetcher";
+
+const CITY_BIKE_FETCH_INTERVAL = 3 * 60 * 1000;
 
 export function useCityBikeStatusQuery(config: CityBikeConfig | undefined) {
   return useWidgetQuery<CityBikeStatusResponse | undefined>({
@@ -16,7 +18,7 @@ export function useCityBikeStatusQuery(config: CityBikeConfig | undefined) {
         return await cityBikeApi.getCityBikeStatus();
     },
     enabled: Boolean(config),
-    refetchInterval: CityBikeWidget.fetchtingInterval,
+    refetchInterval: CITY_BIKE_FETCH_INTERVAL,
     staleTime: 2 * 60 * 1000,
   });
 }

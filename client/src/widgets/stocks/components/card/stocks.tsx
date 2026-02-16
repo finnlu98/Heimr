@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react";
 import "./stocks.css";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
-import StockFetcher from "../../api/stock-fetcher";
 import { StockResponse } from "../../model/StockResponse";
-import { StocksConfig } from "../../StocksWidget";
-import { useDashboard } from "../../../../context/dashboard-context";
-import { WidgetEnum } from "../../../core/model/widget-type";
 
-const Stocks: React.FC = () => {
-  const [stocks, setStocks] = useState<StockResponse>();
-  const { widgetConfigs } = useDashboard();
-  const config = (widgetConfigs[WidgetEnum.stocks] as StocksConfig) ?? {
-    tickers: [],
-  };
-  useEffect(() => {
-    const setAndFetchStocks = async () => setStocks(await StockFetcher(config.tickers));
-    setAndFetchStocks();
-  }, []);
+interface StocksProps {
+  data?: StockResponse;
+}
 
+const Stocks: React.FC<StocksProps> = ({ data }) => {
   function formatPercantage(perc: string) {
     const value = Number(perc);
     if (isNaN(value)) return "N/A";
@@ -42,8 +31,8 @@ const Stocks: React.FC = () => {
 
   return (
     <div className="h-row font-small font-bold">
-      {stocks &&
-        stocks.stocks.map((stock) => {
+      {data &&
+        data.stocks.map((stock) => {
           return (
             <div key={stock.symbol} className="stock h-column">
               <div>{stock.symbol}:</div>
