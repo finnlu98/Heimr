@@ -1,0 +1,91 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.edit-mode {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  gap: 10px;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+  padding: 10px;
+  font-weight: bold;
+  color: black;
+}
+
+.widget-menu-row {
+  display: flex;
+  border-radius: 10px;
+  border: 1px solid rgba(136, 118, 118, 0.611);
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.widget-menu-row.item {
+  display: flex;
+}
+
+.friendly-display {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.friendly-display-item {
+  display: flex;
+}
+
+.widget-action-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.sidebar-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}

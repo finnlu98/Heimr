@@ -22,8 +22,8 @@ export default class IntegrationRouter extends BaseRouter {
     });
 
     this.route.post(this.subRoute, async (req, res) => {
-      const { provider, key } = req.body;
-      const result = this.integrationService.setIntegration(req.session, provider, key);
+      const { provider, key, endpoint } = req.body;
+      const result = await this.integrationService.setIntegration(req.session, provider, key, endpoint);
       res.send({ success: result });
     });
   }

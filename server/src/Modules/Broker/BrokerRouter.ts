@@ -20,8 +20,9 @@ export default class BrokerRouter extends BaseRouter {
         return res.status(400).send({ error: "Endpoint is required" });
       }
 
+      let auth = null;
       if (integration && typeof integration === "string") {
-        const auth = this.fetcher.formatHeader(req.session, integration);
+        auth = this.fetcher.formatHeader(req.session, integration);
         if (auth) this.fetcher.setHeader(auth);
         else
           return res
@@ -31,7 +32,9 @@ export default class BrokerRouter extends BaseRouter {
 
       this.fetcher.setEndpoint(endpoint);
 
-      res.send(await this.fetcher.getData(`${sessionId}_${endpoint}`));
+      const cacheKey = `${sessionId}_${endpoint}` + (integration ? `_${integration}` : "") + (auth ? `_${auth}` : "");
+
+      res.send(await this.fetcher.getData(cacheKey));
     });
   }
 }

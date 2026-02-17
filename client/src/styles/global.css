@@ -150,6 +150,17 @@
   gap: 15px;
 }
 
+.gap-xlarge {
+  gap: 20px;
+}
+
+.action-buttons {
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 5px;
+}
+
 p {
   margin: 0;
   padding: 0;
@@ -231,6 +242,16 @@ button {
   justify-content: center;
 }
 
+button.small {
+  padding: 8px 12px;
+  font-size: 14px;
+  size: 20px;
+}
+
+button.large {
+  font-size: 18px;
+}
+
 .animate-appear {
   animation: slideIn 0.3s ease-out;
 }
@@ -263,10 +284,24 @@ button {
 
 button:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: color-mix(in srgb, var(--color-primary-button) 97%, white 15%);
 }
 
 button:active {
   transform: scale(0.98);
+}
+
+button:disabled,
+button[aria-disabled="true"] {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+}
+
+button.secondary {
+  background-color: var(--color-secondary-button);
 }
 
 .button-tertiary {
@@ -283,6 +318,11 @@ button:active {
   border: none;
   padding: 0;
   color: #333;
+}
+
+.button-text-only:hover {
+  background: transparent;
+  border: solid 1px #333;
 }
 
 .button-text-only-padding {

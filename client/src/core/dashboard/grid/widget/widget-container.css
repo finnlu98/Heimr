@@ -1,0 +1,33 @@
+.edit-widget-handle {
+  display: flex;
+  position: absolute;
+  cursor: pointer;
+  right: 12px;
+  top: 8px;
+  z-index: 11;
+  border-radius: 5px;
+  gap: 10px;
+  padding: 4px;
+}
+
+.edit-widget-handle .delete:hover {
+  border: 0.25px solid var(--color-standard-red);
+  color: var(--color-standard-red);
+}
+
+.edit-widget-handle .edit:hover {
+  border: 0.25px solid var(--color-standard-blue);
+  color: var(--color-standard-blue);
+}
+
+.edit-widget-actions {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.widget-container:hover .edit-widget-actions,
+.widget-container-no-bg:hover .edit-widget-actions {
+  opacity: 1;
+  pointer-events: auto;
+}

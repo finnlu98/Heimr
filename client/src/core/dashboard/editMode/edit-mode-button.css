@@ -1,0 +1,55 @@
+.edit-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  color: white;
+
+  width: 40px;
+  height: 40px;
+  margin: 0;
+
+  border: none;
+  padding: 0;
+
+  border-radius: 50%;
+  background: #aaa9a9ff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.edit-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button.active {
+  background: var(--color-standard-green);
+}
+
+.edit-button.cancel {
+  background: #c24b4b;
+}
+
+.edit-controls .edit-button {
+  position: static;
+}

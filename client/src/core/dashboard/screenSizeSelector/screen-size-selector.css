@@ -1,0 +1,29 @@
+.screen-size-selector {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+hr {
+  color: var(--color-off-black);
+  border: 1px solid var(--color-off-black);
+}
+
+.custom-header {
+  justify-content: space-between;
+}
+
+.screen-size-dropdown {
+  min-width: 300px;
+}
+
+.preset-button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.screen-size-custom {
+  margin-top: 1rem;
+}

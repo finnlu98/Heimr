@@ -26,8 +26,3 @@ h6 {
 .app {
   min-height: 100vh;
 }
-
-.grid-container {
-  margin: 0 auto;
-  padding: 1rem;
-}

@@ -1,0 +1,42 @@
+.calender-container {
+  height: 100%;
+  min-width: 70%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.main-item {
+  border-bottom: 3px solid var(--color-off-white);
+}
+
+.main-item-date {
+  font-weight: 500;
+}
+
+.main-item-summary {
+  font-weight: bold;
+  font-size: large;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.avatar-calender {
+  margin-left: auto;
+}
+
+.summary {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty-calender {
+  margin-top: 1rem;
+}

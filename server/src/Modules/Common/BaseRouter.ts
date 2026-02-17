@@ -1,17 +1,16 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import IRoute from "../../Model/Interface/IRoute";
 
 export default abstract class BaseRouter implements IRoute {
-    route: Router;
-    subRoute: string;
+  route: Router;
+  subRoute: string;
 
-    constructor(subRoute: string) {
-        this.route = Router()
-        this.subRoute = subRoute;
+  constructor(subRoute: string) {
+    this.route = Router();
+    this.subRoute = subRoute;
 
-        this.setRoute()
-        
-    }
+    this.setRoute();
+  }
 
-    abstract setRoute(): void 
-} 
+  abstract setRoute(): void;
+}

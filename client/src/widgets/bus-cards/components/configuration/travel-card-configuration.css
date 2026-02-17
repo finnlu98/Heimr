@@ -1,0 +1,25 @@
+.travel-config-container {
+  width: 100%;
+  min-height: 200px;
+  overflow: visible;
+}
+
+.travel-config {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.travel-header {
+  font-weight: bold;
+}
+
+.travel-input {
+  width: 100%;
+}
+
+.search-input {
+  z-index: 100;
+}
