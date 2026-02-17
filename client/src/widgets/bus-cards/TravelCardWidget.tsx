@@ -2,7 +2,6 @@ import { BiSolidBus } from "react-icons/bi";
 import TravelCard from "./components/card/travel-card";
 import TravelCardConfiguration from "./components/configuration/travel-card-configuration";
 import { TravelStop } from "./model/StopSearchResponse";
-import DocumentationBase from "../core/components/DocumentationBase";
 import { TripIdentifier } from "./model/enum/TripIdentifier";
 import { WidgetDefinition, WidgetEnum } from "../core/model/widget-type";
 import { BusData } from "./model/BusData";

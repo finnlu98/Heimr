@@ -8,6 +8,8 @@ import "./widget-container.css";
 import { Widgets } from "../../../../widgets/core/model/wigets";
 import { useWidgetQueryResult } from "../../../../widgets/core/hooks/useWidgetQueryResult";
 import { useWidgetConfig } from "../../../../widgets/core/hooks/useWidgetConfig";
+import { CiEdit } from "react-icons/ci";
+import { EditingKey } from "../../model/EditMode";
 
 interface WidgetContainerProps {
   gridItem: GridItem;
@@ -17,7 +19,7 @@ interface WidgetContainerProps {
 const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData }) => {
   const { id } = gridItem;
   const { attributes, listeners, setNodeRef, transform: moveTransform } = useDraggable({ id });
-  const { editMode, removeWidget } = useDashboard();
+  const { editMode, removeWidget, setEditingKey } = useDashboard();
   const config = useWidgetConfig(gridItem.widget);
   const queryResult = useWidgetQueryResult(gridItem.widget);
 
@@ -37,17 +39,29 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ gridItem, gridData })
       style={style}
     >
       {editMode.editMode && (
-        <div className="edit-widget-actions">
-          <button
-            className="edit-widget-handle button-text-only"
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              removeWidget(id);
-            }}
-          >
-            <MdDelete />
-          </button>
+        <div className="edit-widget-actions h-row gap-large">
+          <div className="edit-widget-handle surface">
+            <button
+              className="button-text-only edit"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditingKey(gridItem.widget as unknown as EditingKey);
+              }}
+            >
+              <CiEdit size={19} />
+            </button>
+            <button
+              className="button-text-only delete"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeWidget(id);
+              }}
+            >
+              <MdDelete size={19} />
+            </button>
+          </div>
 
           <ResizeHandles gridItem={gridItem} />
         </div>

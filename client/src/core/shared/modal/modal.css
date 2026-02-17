@@ -16,7 +16,6 @@
 }
 
 .modal-container {
-  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--color-background, #fff);
@@ -52,19 +51,21 @@
   }
 }
 
+.modal-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .modal-title {
   border-bottom: 2px solid black;
   width: 100%;
   margin-bottom: 10px;
+  padding-bottom: 5px;
   font-weight: bold;
-}
-
-.modal-close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin-right: 10px;
-  margin-top: 5px;
+  justify-content: space-between;
 }
 
 .modal-close:hover {

@@ -8,7 +8,7 @@ interface PopupProps {
   align?: "center" | "start" | "end";
   surface?: "surface";
   closePopupSeconds?: number;
-  buttonHiearchy?: "primary" | "secondary";
+  buttonHiearchy?: string;
 }
 
 const PopupButton: React.FC<PopupProps> = ({

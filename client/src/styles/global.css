@@ -158,6 +158,7 @@
   justify-content: space-between;
   width: 100%;
   margin-top: auto;
+  padding-top: 5px;
 }
 
 p {
@@ -247,6 +248,10 @@ button.small {
   size: 20px;
 }
 
+button.large {
+  font-size: 18px;
+}
+
 .animate-appear {
   animation: slideIn 0.3s ease-out;
 }
@@ -313,6 +318,11 @@ button.secondary {
   border: none;
   padding: 0;
   color: #333;
+}
+
+.button-text-only:hover {
+  background: transparent;
+  border: solid 1px #333;
 }
 
 .button-text-only-padding {

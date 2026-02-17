@@ -10,7 +10,6 @@
 ## MVP launch fix tilbakemeldinger
 
 - fix on hover on tablet
-- Bug widget not spinning on updating data load - weather
 - cache issues on server - grow to large
 - upload banner issue in prod
 - need to fix calender name

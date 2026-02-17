@@ -12,9 +12,17 @@ const DefaultDashboardActions: React.FC = () => {
           <p>Welcome! 👋</p>
           <p>Start building your dashboard 🏠</p>
         </div>
-        {!user && <button onClick={() => setEditingKey(EditingKey.profile)}>Log in</button>}
-        <button onClick={() => toggleEditMode()}>Edit Dashboard</button>
-        <button onClick={() => setEditingKey(EditingKey.layoutTemplate)}>Apply Template</button>
+        {!user && (
+          <button className="secondary" onClick={() => setEditingKey(EditingKey.profile)}>
+            Log in
+          </button>
+        )}
+        <button className="secondary" onClick={() => toggleEditMode()}>
+          Edit Dashboard
+        </button>
+        <button className="secondary" onClick={() => setEditingKey(EditingKey.layoutTemplate)}>
+          Apply Template
+        </button>
       </div>
     </>
   );

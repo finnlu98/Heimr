@@ -7,6 +7,7 @@ import { SlArrowUp } from "react-icons/sl";
 import { LaundryWeekConfig } from "../LaundryWeekWidget";
 import EditWidget from "../../core/components/EditWidget";
 import { WidgetEnum } from "../../core/model/widget-type";
+import LoadingHelperWidget from "../../core/components/LoadingHelperWidget";
 
 const washingEmojis = ["✨", "💧", "🛁", "🧴", "🧼", "🧽", "🚿", "🧹", "🧤", "🫧"];
 
@@ -38,46 +39,46 @@ const LaundryWeek: React.FC<LaundryWeekProps> = ({ config = defaultConfig }) => 
     return records;
   };
 
-  const allWeeks = createLaundryList(1, 52, config.responsibles);
+  const allWeeks = createLaundryList(1, 52, config?.responsibles ?? []);
   const displayedWeeks = isExpanded ? allWeeks : allWeeks.filter((week) => week.week === currentWeek);
 
   return (
-    <div className="laundry-week">
-      <div className="laundry-week-header widget-title">
-        <div>Washing in week {currentWeek}</div>
-      </div>
-      {config.responsibles.length !== 0 ? (
-        <>
-          {displayedWeeks.map((week, weekIndex) => (
-            <div
-              className={`week-row ${isExpanded ? "expand" : ""} ${week.week === currentWeek ? "highlight" : ""}`}
-              key={weekIndex}
-            >
-              {isExpanded ? (
-                <>
-                  <div>{week.week}</div>
-                  <div>{week.name}</div>
-                </>
-              ) : (
-                <div>
-                  {week.name} {currentEmoji}
-                </div>
-              )}
-            </div>
-          ))}
+    <LoadingHelperWidget widgetKey={WidgetEnum.laundryWeek} showConfig={() => !config}>
+      <div className="laundry-week">
+        <div className="laundry-week-header widget-title">
+          <div>Washing in week {currentWeek}</div>
+        </div>
+        {config && (
+          <>
+            {displayedWeeks.map((week, weekIndex) => (
+              <div
+                className={`week-row ${isExpanded ? "expand" : ""} ${week.week === currentWeek ? "highlight" : ""}`}
+                key={weekIndex}
+              >
+                {isExpanded ? (
+                  <>
+                    <div>{week.week}</div>
+                    <div>{week.name}</div>
+                  </>
+                ) : (
+                  <div>
+                    {week.name} {currentEmoji}
+                  </div>
+                )}
+              </div>
+            ))}
 
-          <div className="expand-icon" onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? <SlArrowUp /> : <SlArrowDown />}
-          </div>
-          <div className="rodt-slogan">
-            <img src={"./img/laundry-week/rodt_logo.png"} width={40} height={40} alt="Fordi felleskap fungerer" />
-            <p>Fordi felleskap fungerer</p>
-          </div>
-        </>
-      ) : (
-        <EditWidget widgetKey={WidgetEnum.laundryWeek} />
-      )}
-    </div>
+            <div className="expand-icon" onClick={() => setIsExpanded(!isExpanded)}>
+              {isExpanded ? <SlArrowUp /> : <SlArrowDown />}
+            </div>
+            <div className="rodt-slogan">
+              <img src={"./img/laundry-week/rodt_logo.png"} width={40} height={40} alt="Fordi felleskap fungerer" />
+              <p>Fordi felleskap fungerer</p>
+            </div>
+          </>
+        )}
+      </div>
+    </LoadingHelperWidget>
   );
 };
 
