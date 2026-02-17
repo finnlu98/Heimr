@@ -14,8 +14,8 @@ interface CityBikeConfigurationProps {
 
 const defaultConfig: CityBikeConfig = {
   homeCoordinates: { lat: 0, lon: 0 },
-  centerCoordinates: { lat: 0, lon: 0 },
-  zoom: 0,
+  centerCoordinates: { lat: 59.92159991761743, lon: 10.737959825316603 },
+  zoom: 12,
   stations: [],
 };
 
@@ -53,7 +53,7 @@ const CityBikeConfiguration: React.FC<CityBikeConfigurationProps> = ({ config = 
       if (latDiff > 0.0001 || lonDiff > 0.0001 || zoomDiff > 0.1) {
         map.setView([configLat, configLon], configZoom);
       }
-    }, [map, config]);
+    }, [map]);
 
     useMapEvents({
       moveend: (e) => {
@@ -71,17 +71,19 @@ const CityBikeConfiguration: React.FC<CityBikeConfigurationProps> = ({ config = 
   };
 
   const handleStationClick = (stationId: string) => {
-    const isSelected = config.stations.includes(stationId);
+    const isSelected = config?.stations?.includes(stationId);
 
     handleChange({
-      stations: isSelected ? config.stations.filter((id) => id !== stationId) : [...config.stations, stationId],
+      stations: isSelected
+        ? config?.stations?.filter((id) => id !== stationId)
+        : [...(config?.stations ?? []), stationId],
     });
   };
 
   function formatMarker(stationId: string) {
     var selected = "☑️";
 
-    if (config.stations.includes(stationId)) selected = "✅";
+    if (config?.stations?.length > 0 && config?.stations.includes(stationId)) selected = "✅";
 
     return L.divIcon({
       className: "bike-label-icon",

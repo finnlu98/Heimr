@@ -16,13 +16,14 @@ export const Modal: React.FC<ModalProps> = ({ title, children, open, onClose, si
 
   return createPortal(
     <div className="modal-overlay">
-      <div className={`modal-container ${size}`} onClick={(e) => e.stopPropagation()}>
-        <div onClick={onClose} className="modal-close">
-          {" "}
-          <IoMdClose />{" "}
+      <div className={`modal-container ${size} h-column`} onClick={(e) => e.stopPropagation()}>
+        <div className="h-row modal-title">
+          {title && <div className="">{title}</div>}
+          <button onClick={onClose} className="modal-close button-text-only large">
+            <IoMdClose />
+          </button>
         </div>
-        {title && <div className="modal-title">{title}</div>}
-        {children}
+        <div className="modal-content h-column">{children}</div>
       </div>
     </div>,
     document.body,

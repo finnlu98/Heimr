@@ -142,7 +142,10 @@ const TravelCardConfiguration: React.FC<TravelCardConfigurationProps> = ({ confi
                   <TiArrowRightOutline />
                 </p>
                 <div> {route.stopPlace.properties.name}</div>
-                <button onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}>
+                <button
+                  className="button-text-only-padding"
+                  onClick={() => removeTravelRoute(route.startPlace, route.stopPlace)}
+                >
                   <MdDelete size={20} />
                 </button>
               </Fragment>

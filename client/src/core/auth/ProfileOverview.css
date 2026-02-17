@@ -3,6 +3,7 @@
   position: relative;
   padding: 20px;
   flex: 1;
+  width: 100%;
 }
 
 .logged-out {

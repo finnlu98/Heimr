@@ -22,7 +22,10 @@ export function useCalenderQueries(config: CalenderConfig | undefined) {
   const isError = results.some((result) => result.isError);
 
   return {
-    data: calenderMapper.sortEvents(events),
+    data:
+      !config?.calenderICalEndpoints || config?.calenderICalEndpoints.length === 0
+        ? undefined
+        : calenderMapper.sortEvents(events),
     isLoading,
     isError,
   };

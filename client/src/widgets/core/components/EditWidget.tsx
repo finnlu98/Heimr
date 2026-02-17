@@ -20,7 +20,7 @@ const EditWidget: React.FC<EditWidgetProps> = ({ widgetKey }) => {
   return (
     <div className="h-column">
       <p>Configuration is missing for {widgetKey}</p>
-      <button onPointerDown={(e) => e.stopPropagation()} onClick={handleEditClick}>
+      <button className="secondary" onPointerDown={(e) => e.stopPropagation()} onClick={handleEditClick}>
         Edit widgets
       </button>
     </div>

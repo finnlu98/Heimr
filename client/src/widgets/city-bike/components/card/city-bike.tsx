@@ -35,7 +35,7 @@ const CityBike: React.FC<CityBikeProps> = ({ data, config }) => {
     <LoadingHelperWidget
       widgetKey={WidgetEnum.cityBike}
       loadingKeys={["fetch-city-bike-status", "fetch-city-bike-stations"]}
-      showConfig={() => !config || !data}
+      showConfig={() => !config && !data}
     >
       {config && (
         <div className="city-bikes-container">

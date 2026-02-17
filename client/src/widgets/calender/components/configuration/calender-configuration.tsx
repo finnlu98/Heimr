@@ -67,7 +67,7 @@ const CalenderConfiguration: React.FC<CalenderConfigurationProps> = ({ config = 
       <div className="h-column gap-xlarge">
         <div className="h-row fill-width">
           <label>iCal links:</label>
-          <PopupButton position="bottom" surface="surface" buttonHiearchy="secondary" align="start">
+          <PopupButton position="bottom" surface="surface" buttonHiearchy="secondary small" align="start">
             {(closePopup) => [
               <span>Default calendars</span>,
               <button
