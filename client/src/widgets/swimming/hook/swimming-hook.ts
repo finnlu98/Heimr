@@ -7,9 +7,9 @@ const SWIMMING_FETCH_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 
 export function useSwimmingQuery(config: SwimmingConfig | undefined) {
   return useWidgetQuery<SwimmingResponse[] | undefined>({
-    queryKey: ["swimming", config?.searchLocation.frienldyName],
+    queryKey: ["swimming", config?.searchLocation?.frienldyName],
     queryFn: () => {
-      if (!config) return Promise.resolve(undefined);
+      if (!config || !config?.searchLocation) return Promise.resolve(undefined);
       return swimmingApi.getSwimmingData(config.searchLocation);
     },
     enabled: Boolean(config),
