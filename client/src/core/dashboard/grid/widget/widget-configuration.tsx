@@ -41,7 +41,11 @@ const WidgetConfiguration: React.FC<WidgetConfigurationProps> = ({ widget, onClo
                   content: (() => {
                     const ConfigComponent = Widgets[widget].widgetConfig?.component;
                     return ConfigComponent ? (
-                      <ConfigComponent {...(config != null ? { config } : {})} setConfig={setConfig} />
+                      <ConfigComponent
+                        {...(config != null ? { config } : {})}
+                        setConfig={setConfig}
+                        data={widgetData?.data}
+                      />
                     ) : (
                       <div>No settings available 🗅</div>
                     );

@@ -10,7 +10,7 @@ interface NewsProps {
 const News: React.FC<NewsProps> = ({ data }) => {
   return (
     <LoadingHelperWidget widgetKey={WidgetEnum.news} loadingKeys={["fetch-news"]}>
-      <div className="h-column fill-width news-container">
+      <div className="h-column fill-width widget-overflow">
         <div className="widget-title">
           <div>Current news 📰</div>
         </div>

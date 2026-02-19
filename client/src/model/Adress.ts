@@ -3,5 +3,7 @@ import { Coordinate } from "./Coordinate";
 export interface Address {
   frienldyName: string;
   coordinate: Coordinate;
-  municipalityName?: string;
+  municipalityName: string;
+  countyNumber: string;
+  municipalityNumber: string;
 }

@@ -27,7 +27,7 @@ const Calender: React.FC<CalenderProps> = ({ data }) => {
 
   return (
     <LoadingHelperWidget widgetKey={WidgetEnum.calender} showConfig={() => !data} loadingKeys={["fetch-ical-events"]}>
-      <div className="calender-container">
+      <div className="widget-overflow fill-width">
         <div className="main-item-container">
           <div className="widget-title">Next activities..</div>
           {data?.length !== 0 && <CalenderRow item={firstEvent} hiearchy="main" />}
