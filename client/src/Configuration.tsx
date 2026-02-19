@@ -21,10 +21,6 @@ class Configuration {
     return this.configuration.Entur;
   }
 
-  public getBusStopConfigs(): BusStopConfiguration[] {
-    return this.configuration.Entur.BusStopConfiguration;
-  }
-
   public getKanyeQuoteEndpoint(): string {
     return this.configuration.KanyeQuoute.Endpoint;
   }
@@ -68,6 +64,10 @@ class Configuration {
   public getAdressLookupEndpoint(): string {
     return this.configuration.Kartverket.AdressLookup.Endpoint;
   }
+
+  public getSwimmingConfig(): SwimmingConfig {
+    return this.configuration.Swimming;
+  }
 }
 
 interface AppConfiguration {
@@ -84,6 +84,7 @@ interface AppConfiguration {
   News: NewsConfig;
   Stocks: StockConfig;
   Kartverket: KartverketConfig;
+  Swimming: SwimmingConfig;
 }
 
 interface ClientData {
@@ -100,27 +101,6 @@ interface EnturConfig {
   Identifier: string;
   StopRegister: EndpointConfig;
   TravelPlanner: EndpointConfig;
-  BusStopConfiguration: BusStopConfiguration[];
-}
-
-interface ConfigColor {
-  general: number;
-  green: number;
-  yellow: number;
-}
-
-interface ConfigCard {
-  numRows: number;
-  minFilter: number;
-}
-
-interface BusStopConfiguration {
-  title: string;
-  imgPath: string;
-  startPlace: string;
-  stopPlace: string;
-  configCard: ConfigCard;
-  configColor: ConfigColor;
 }
 
 interface EndpointConfig {
@@ -149,14 +129,8 @@ interface ElviaConfig {
 }
 
 interface OsloCityBikeConfig {
-  Stations: TrackStation[];
   StationsInformation: EndpointConfig;
   Status: EndpointConfig;
-}
-
-interface TrackStation {
-  StationId: number;
-  Name: string;
 }
 
 interface NewsConfig {
@@ -164,13 +138,14 @@ interface NewsConfig {
 }
 
 interface StockConfig {
-  Tickers: string[];
   StockData: EndpointConfig;
 }
 
 interface KartverketConfig {
   AdressLookup: EndpointConfig;
 }
+
+interface SwimmingConfig extends EndpointConfig {}
 
 const configuration = new Configuration();
 export default configuration;

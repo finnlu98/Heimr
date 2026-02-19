@@ -11,7 +11,13 @@
   --color-standard-green: rgb(57, 187, 115);
   --color-standard-yellow: rgb(255, 145, 101);
   --color-standard-red: firebrick;
+
   --color-standard-blue: rgb(0, 153, 241);
+  --color-standard-blue-text: rgb(42, 148, 184);
+  --color-standard-orange: rgb(243, 167, 26);
+
+  --color-standard-red-text: #e74c3c;
+  --color-standard-blue-text: rgb(42, 148, 184);
 
   --color-icon-orange: #f3a71aff;
   --color-icon-green: rgb(57, 187, 115);

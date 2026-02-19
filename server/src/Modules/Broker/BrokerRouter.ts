@@ -14,22 +14,20 @@ export default class BrokerRouter extends BaseRouter {
   setRoute(): void {
     this.route.post(this.subRoute, async (req: Request, res: Response) => {
       const sessionId = req.session.id;
-      const { endpoint, integration } = req.body;
-
+      const { endpoint, integration, internalIntegration } = req.body;
       if (typeof endpoint !== "string") {
         return res.status(400).send({ error: "Endpoint is required" });
       }
 
       let auth = null;
       if (integration && typeof integration === "string") {
-        auth = this.fetcher.formatHeader(req.session, integration);
+        auth = this.fetcher.formatHeader(req.session, integration, internalIntegration);
         if (auth) this.fetcher.setHeader(auth);
         else
           return res
             .status(401)
             .send({ error: "Required authentication does not exist for the requested integration" });
       }
-
       this.fetcher.setEndpoint(endpoint);
 
       const cacheKey = `${sessionId}_${endpoint}` + (integration ? `_${integration}` : "") + (auth ? `_${auth}` : "");
