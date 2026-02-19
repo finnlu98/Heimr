@@ -17,8 +17,8 @@ export const SwimmingWidget: WidgetDefinition<SwimmingConfig, SwimmingResponse[]
     component: SwimmingConfiguration,
     documentation: SwimmingDocumentation,
   },
-  defaultColSpan: 0,
-  defaultRowSpan: 0,
+  defaultColSpan: 6,
+  defaultRowSpan: 6,
 };
 
 export interface SwimmingConfig {

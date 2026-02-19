@@ -22,6 +22,7 @@
   position: relative;
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  padding-inline: 5px;
 }
 
 .widget-content {
