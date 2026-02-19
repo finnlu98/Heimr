@@ -35,13 +35,15 @@ const Swimming: React.FC<SwimmingProps> = ({ data, config }) => {
       <div className="fill-width h-column widget-overflow">
         <div className="widget-title h-column">
           <span>Swimming temperatures 🏊🏻‍♂️</span>
-          <span className="h-row font-small swimming-row gap-small">
-            <span>Avg in your area:</span>
-            <span>{avgTemperature !== null ? `${avgTemperature.toFixed(2)}°` : ""}</span>
-            <span className={`${getTemperatureClass(avgTemperature)}`}>
-              <FaThermometerFull />
+          {avgTemperature !== null && (
+            <span className="h-row gap-small font-small swimming-row">
+              <span>For {config?.searchLocation?.municipalityName}</span>
+              <span className="swimming-temperature">~{avgTemperature.toFixed(1)}°</span>
+              <span className={`${getTemperatureClass(avgTemperature)}`}>
+                <FaThermometerFull />
+              </span>
             </span>
-          </span>
+          )}
         </div>
         {data && data.length > 0 ? (
           sortedLocations.map((location, index) => (
