@@ -46,4 +46,12 @@ export default class IntegrationService {
     const encryptedKey = session.integrations?.[provider];
     return encryptedKey ? decrypt(encryptedKey) : null;
   }
+
+  getInternalIntegration(provider: string): any | null {
+    if (provider === "yr") {
+      return { apikey: process.env.YRAPI_KEY || null };
+    }
+
+    return null;
+  }
 }

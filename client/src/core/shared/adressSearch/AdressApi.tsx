@@ -20,6 +20,8 @@ const mapToAddress = (res: SearchAddressResponse): Address[] => {
     frienldyName: adress.adressetekst,
     coordinate: adress.representasjonspunkt,
     municipalityName: toTitleCase(adress.kommunenavn),
+    countyNumber: adress.kommunenummer.slice(0, 2),
+    municipalityNumber: adress.kommunenummer,
   }));
 };
 

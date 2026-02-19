@@ -1,0 +1,20 @@
+.swimming-row {
+  justify-content: space-between;
+  padding-inline: 5px;
+}
+
+.swimming-row svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.hot {
+  color: var(--color-standard-red);
+}
+.warm {
+  color: var(--color-standard-orange);
+}
+.cold {
+  color: var(--color-standard-blue-text);
+}

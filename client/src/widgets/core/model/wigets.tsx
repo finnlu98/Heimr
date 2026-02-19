@@ -9,6 +9,7 @@ import { NewsWidget } from "../../news/NewsWidget";
 import { StocksWidget } from "../../stocks/StocksWidget";
 import { WeatherWidget } from "../../weather/WeatherWidget";
 import { WidgetDefinition, WidgetEnum } from "./widget-type";
+import { SwimmingWidget } from "../../swimming/swimming-widget";
 
 export const Widgets: Record<WidgetEnum, WidgetDefinition<any>> = {
   [WidgetEnum.header]: HeaderWidget,
@@ -21,6 +22,7 @@ export const Widgets: Record<WidgetEnum, WidgetDefinition<any>> = {
   [WidgetEnum.cityBike]: CityBikeWidget,
   [WidgetEnum.calender]: CalenderWidget,
   [WidgetEnum.busCards]: TravelCardWidget,
+  [WidgetEnum.swimming]: SwimmingWidget,
 };
 
 export const WidgetConfigs: Record<WidgetEnum, object> = (Object.keys(Widgets) as WidgetEnum[]).reduce(

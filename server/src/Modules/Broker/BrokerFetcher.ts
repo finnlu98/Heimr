@@ -1,6 +1,7 @@
 import { Session, SessionData } from "express-session";
 import BaseFetcherEndpoint from "../Common/BaseFetcherEndpoint";
 import IntegrationService from "../Integration/IntegrationService";
+import e from "express";
 
 export default class BrokerFetcher extends BaseFetcherEndpoint {
   private integrationService: IntegrationService;
@@ -10,9 +11,18 @@ export default class BrokerFetcher extends BaseFetcherEndpoint {
     this.integrationService = new IntegrationService();
   }
 
-  formatHeader(session: Session & Partial<SessionData>, integration: string): any {
-    const authorization = this.integrationService.getIntegration(session, integration);
-    if (!authorization) return null;
-    return { authorization };
+  formatHeader(
+    session: Session & Partial<SessionData>,
+    integration: string,
+    internalIntegration: boolean = false,
+  ): any {
+    if (!internalIntegration) {
+      const auth = this.integrationService.getIntegration(session, integration);
+      if (!auth) return null;
+      return { authorization: auth };
+    }
+
+    const authorization = this.integrationService.getInternalIntegration(integration);
+    return authorization;
   }
 }

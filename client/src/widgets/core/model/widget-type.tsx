@@ -9,6 +9,7 @@ export enum WidgetEnum {
   cityBike = "City Bike",
   calender = "Calender",
   busCards = "Bus Cards",
+  swimming = "Swimming",
 }
 
 export interface WidgetDefinition<TConfig, TData = unknown, TError = unknown> {

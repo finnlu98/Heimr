@@ -15,6 +15,15 @@
   background-color: var(--color-widget-background);
 }
 
+.widget-overflow {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
 .widget-content {
   display: flex;
   justify-content: center;
